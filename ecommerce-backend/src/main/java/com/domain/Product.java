@@ -19,7 +19,6 @@ public class Product {
 	private Integer quantity;
 	
 	public Product() {
-		super();
 	}
 
 	public Long getId() {
