@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.exceptions.EmailAlreadyRegisteredException;
+import com.exceptions.ProductNotFoundException;
 import com.responses.ValidationErrorResponse;
 
 @RestControllerAdvice
@@ -28,6 +29,12 @@ public class GlobalExceptionHandler {
             .toList();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+    
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handlerProductNotFoundException(ProductNotFoundException ex){
+    	Map<String, String> response = Map.of("message", ex.getMessage());
+    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(Exception.class)
