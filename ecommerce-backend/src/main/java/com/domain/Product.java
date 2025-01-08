@@ -1,10 +1,12 @@
 package com.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_product")
@@ -13,9 +15,18 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotNull
+	@Column(nullable = false)
 	private String productName;
 	private String description;
+	
+	@NotNull
+	@Column(nullable = false)
 	private Double price;
+	
+	@NotNull
+	@Column(nullable = false)
 	private Integer quantity;
 	
 	public Product() {

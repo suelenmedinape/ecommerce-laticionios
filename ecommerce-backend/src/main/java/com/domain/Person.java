@@ -1,11 +1,14 @@
 package com.domain;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @MappedSuperclass
 public class Person {
@@ -14,9 +17,18 @@ public class Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
+	@Column(nullable = false)
 	private String name;
+	
+	@NotNull
+	@Column(nullable = false, unique = true)
 	private String email;
 	private String phone;
+	
+	@NotNull
+	@Size(min = 8, message = "A senha deve ter pelo menos 8 caracteres")
+	@Column(nullable = false)
 	private String password;
 	
 	@OneToOne(cascade = CascadeType.ALL)
