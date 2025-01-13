@@ -7,6 +7,7 @@ import com.domain.Cart;
 import com.domain.CartItem;
 import com.domain.Product;
 import com.exceptions.CartNotFoundException;
+import com.exceptions.ClientNotFoundException;
 import com.exceptions.ProductNotFoundException;
 import com.repositories.CartRepository;
 import com.repositories.ProductRepository;
@@ -46,5 +47,12 @@ public class CartService {
 		}
 		
 		cartRepository.save(cart);
+	}
+
+	public Cart findByClientId(Long clientId) {
+		Cart cart = cartRepository.findByClientId(clientId)
+				.orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado"));
+		
+		return cart;
 	}
 }
