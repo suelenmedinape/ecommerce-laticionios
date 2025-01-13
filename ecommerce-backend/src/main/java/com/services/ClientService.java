@@ -3,6 +3,7 @@ package com.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.domain.Cart;
 import com.domain.Client;
 import com.exceptions.EmailAlreadyRegisteredException;
 import com.repositories.ClientRepository;
@@ -21,6 +22,11 @@ public class ClientService {
         if (clientRepository.findByEmail(client.getEmail()) != null) {
             throw new EmailAlreadyRegisteredException("Email já registrado.");
         }
+        
+        Cart cart = new Cart();
+        cart.setClient(client);
+        client.setCart(cart);
+        
         clientRepository.save(client);
     }
 }
