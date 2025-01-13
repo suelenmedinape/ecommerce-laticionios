@@ -2,9 +2,11 @@ package com.domain;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,6 +14,9 @@ import jakarta.persistence.Table;
 public class Client extends Person{
 
 	private String cpf;
+	
+	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+	private Cart cart;
 	
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
 	private List<Order> orders;
@@ -26,6 +31,14 @@ public class Client extends Person{
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
 
 	public List<Order> getOrders() {
