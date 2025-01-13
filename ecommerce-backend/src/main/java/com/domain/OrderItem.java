@@ -1,21 +1,42 @@
 package com.domain;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_order_item")
 public class OrderItem {
 
-	@EmbeddedId
-    private OrderItemPK id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	private Double unitPrice;
 	private Integer quantity;
 	private Double totalPrice;
+	
+	@ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
 	public OrderItem() {
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Double getUnitPrice() {
@@ -24,7 +45,6 @@ public class OrderItem {
 
 	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
-		this.totalPrice = calculateTotalPrice();
 	}
 
 	public Integer getQuantity() {
@@ -33,29 +53,29 @@ public class OrderItem {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
-		this.totalPrice = calculateTotalPrice();
 	}
 
 	public Double getTotalPrice() {
 		return totalPrice;
 	}
-	
+
 	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
-	public OrderItemPK getId() {
-		return id;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setId(OrderItemPK id) {
-		this.id = id;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
-	public Double calculateTotalPrice() {
-		if (unitPrice != null && quantity != null) {
-			return unitPrice * quantity;
-		}
-		return 0.0;
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 }
