@@ -1,6 +1,7 @@
 package com.services;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,7 +82,7 @@ public class CartService {
 		Order order = new Order();
 		order.setClient(cart.getClient());
 		order.setDate(new Date());
-
+		
 		double totalValue = 0.0;
 		for (CartItem cartItem : cart.getCartItems()) {
 			OrderItem orderItem = new OrderItem();
@@ -99,6 +100,13 @@ public class CartService {
 		 order.setTotalValue(totalValue);
 
 	     orderRepository.save(order);
+	     
+	     for(CartItem cartItem : cart.getCartItems()) {
+	    	 Product updateProduct = productRepository.findById(cartItem.getProduct().getId())
+	    			 .orElseThrow(() -> new ProductNotFoundException("Produto não encontrado"));
+	    	 updateProduct.setQuantity(updateProduct.getQuantity() - cartItem.getQuantity());
+	    	 productRepository.save(updateProduct);
+	     }
 
 		 cartItemRepository.deleteAllByCartId(cart.getId());
 	}
