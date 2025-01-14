@@ -27,4 +27,9 @@ public class ProductService {
 		return productRepository.findById(id)
 				.orElseThrow(() -> new ProductNotFoundException("Produto não encontrado."));
 	}
+
+	public List<Product> listProductsByName(String name) {
+		
+		return productRepository.findByProductNameContainingIgnoreCase(name);
+	}
 }
