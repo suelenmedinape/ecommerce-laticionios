@@ -24,7 +24,7 @@ public class Client extends Person{
 	public Client() {
 		super();
 	}
-
+	
 	public String getCpf() {
 		return cpf;
 	}

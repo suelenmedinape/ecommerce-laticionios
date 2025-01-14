@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.domain.Client;
-import com.dtos.ClientDTO;
+import com.dtos.RegisterClientDTO;
 import com.services.ClientService;
 
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ public class AuthController {
 	private ClientService clientService;
 	
 	@PostMapping("/register")
-	public ResponseEntity<Map<String, String>> register(@Valid @RequestBody ClientDTO clientDTO) {
+	public ResponseEntity<Map<String, String>> register(@Valid @RequestBody RegisterClientDTO clientDTO) {
 	    Client newClient = new Client();
 	    newClient.setName(clientDTO.getName());
 	    newClient.setEmail(clientDTO.getEmail());
