@@ -3,5 +3,5 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 
 ## Diagrama de Classes
 
-![Diagrama de Classes](ClasseUML.png)
+![Diagrama de Classes](CLASSE_UML.png)
 
