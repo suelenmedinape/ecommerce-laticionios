@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,4 +37,17 @@ public class CartItemController {
 		
 		return ResponseEntity.ok(cart.getCartItems());
 	}
+	
+	@DeleteMapping("/{clientId}/{productId}")
+	public ResponseEntity<Void> removeItemFromCart(@PathVariable Long clientId, @PathVariable Long productId){
+		cartService.removeProductByCartItems(clientId, productId);
+	
+		return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping("/buy/{clientId}")
+	 public ResponseEntity<Void> buyItemsCart(@PathVariable Long clientId) {
+        cartService.buyItemsFromCart(clientId);
+        return ResponseEntity.ok().build();
+    }
 }
