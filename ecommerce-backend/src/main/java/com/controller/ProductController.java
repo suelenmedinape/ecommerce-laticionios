@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,6 +72,12 @@ public class ProductController {
 	public ResponseEntity<Void> updateProduct(@PathVariable Long productId, @RequestBody ProductDTO dto){
 		productService.updateProduct(productId, dto);
 				
+		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping("/{productId}")
+	public ResponseEntity<Void> deleteProduct(@PathVariable Long productId){
+		productService.removeProduct(productId);
 		return ResponseEntity.ok().build();
 	}
 }
