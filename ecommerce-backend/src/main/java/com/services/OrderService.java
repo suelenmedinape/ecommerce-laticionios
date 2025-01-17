@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.domain.Order;
 import com.dtos.OrderDTO;
+import com.enums.OrderStatus;
+import com.exceptions.OrderNotFoundException;
 import com.repositories.OrderRepository;
 
 @Service
@@ -22,4 +24,25 @@ public class OrderService {
 		
 		return orderDTOs;
 	}
+	
+	public Order findOrderById(Long id) {
+		return orderRepository.findById(id)
+				.orElseThrow(() -> new OrderNotFoundException("Pedido com id: " + id + " não encontrado"));
+	}
+
+	public void updateOrderStatus(Long id, String status) {
+		Order order = findOrderById(id);
+		
+		if(status.equalsIgnoreCase(OrderStatus.FINALIZADO.name())) {
+			order.setOrderStatus(OrderStatus.FINALIZADO);
+		}
+		
+		if(status.equalsIgnoreCase(OrderStatus.CANCELADO.name())) {
+			order.setOrderStatus(OrderStatus.CANCELADO);
+		}
+		
+		orderRepository.save(order);
+	}
+	
+	
 }
