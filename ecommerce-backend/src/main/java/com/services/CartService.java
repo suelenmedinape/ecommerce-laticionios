@@ -10,6 +10,7 @@ import com.domain.CartItem;
 import com.domain.Order;
 import com.domain.OrderItem;
 import com.domain.Product;
+import com.enums.OrderStatus;
 import com.exceptions.CartNotFoundException;
 import com.exceptions.ProductNotFoundException;
 import com.repositories.CartItemRepository;
@@ -81,6 +82,7 @@ public class CartService {
 		Order order = new Order();
 		order.setClient(cart.getClient());
 		order.setDate(new Date());
+		order.setOrderStatus(OrderStatus.SOLICITADO);
 		
 		double totalValue = 0.0;
 		for (CartItem cartItem : cart.getCartItems()) {

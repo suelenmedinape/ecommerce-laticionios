@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.enums.OrderStatus;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,6 +26,9 @@ public class Order {
 	private Long id;
 	private Date date;
 	private Double totalValue;
+	
+	@Enumerated(EnumType.STRING)
+	private OrderStatus orderStatus;
 	
 	@ManyToOne
 	private Client client;
@@ -71,5 +78,13 @@ public class Order {
 
 	public void setOrderItems(List<OrderItem> orderItens) {
 		this.orderItems = orderItens;
+	}
+
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 }
