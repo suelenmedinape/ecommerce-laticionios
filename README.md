@@ -31,7 +31,7 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 
 ## Funcionalidades para adicionar:
 ###  Usuario comum / Cliente
-* Cliente poder realizar login;
+* Cliente poder realizar login(incluir validações);
 * Cliente poder saber o andamento do seu pedido;
 
 ### ADM / Produtor
