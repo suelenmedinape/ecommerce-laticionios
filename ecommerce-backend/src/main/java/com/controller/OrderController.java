@@ -22,7 +22,7 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<List<OrderDTO>> listAllOrders(){
 			
 		return ResponseEntity.ok(orderService.listOrders());
@@ -32,6 +32,12 @@ public class OrderController {
 	public ResponseEntity<Order> listOrderById(@PathVariable Long orderId){
 					
 		return ResponseEntity.ok(orderService.findOrderById(orderId));
+	}
+	
+	@GetMapping("/status")
+	public ResponseEntity<List<OrderDTO>> listAllOrdersByStatus(@RequestParam String status){
+		
+		return ResponseEntity.ok(orderService.findAllOrdersBystatus(status));
 	}
 	
 	@PutMapping("{orderId}")

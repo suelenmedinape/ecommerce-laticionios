@@ -1,5 +1,6 @@
 package com.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,22 @@ public class OrderService {
 		
 		orderRepository.save(order);
 	}
-	
-	
+
+	public List<OrderDTO> findAllOrdersBystatus(String status) {
+		List<OrderDTO> orderDTOs = new ArrayList<>();
+		
+		if(status.equalsIgnoreCase(OrderStatus.SOLICITADO.name())) {
+			orderDTOs = orderRepository.findAllByOrderStatus(OrderStatus.SOLICITADO);
+		}
+		
+		if(status.equalsIgnoreCase(OrderStatus.FINALIZADO.name())) {
+			orderDTOs = orderRepository.findAllByOrderStatus(OrderStatus.FINALIZADO);
+		}
+		
+		if(status.equalsIgnoreCase(OrderStatus.CANCELADO.name())) {
+			orderDTOs = orderRepository.findAllByOrderStatus(OrderStatus.CANCELADO);
+		}
+		
+		return orderDTOs;
+	}
 }
