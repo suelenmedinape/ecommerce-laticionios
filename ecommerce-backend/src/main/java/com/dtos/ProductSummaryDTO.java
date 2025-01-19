@@ -1,12 +1,14 @@
 package com.dtos;
 
+import java.math.BigDecimal;
+
 import com.domain.Product;
 
 public class ProductSummaryDTO {
 	
 	private Long id;
 	private String productName;
-	private Double price;
+	private BigDecimal price;
 
 	public ProductSummaryDTO() {
 	}
@@ -25,7 +27,7 @@ public class ProductSummaryDTO {
 		return productName;
 	}
 
-	public Double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 }

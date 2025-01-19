@@ -1,5 +1,6 @@
 package com.dtos;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.domain.Order;
@@ -9,7 +10,7 @@ public class OrderDTO {
 
 	private Long id;
 	private Date date;
-	private Double totalValue;	
+	private BigDecimal totalValue;	
 	private OrderStatus orderStatus;
 	
 	public OrderDTO() {		
@@ -38,11 +39,11 @@ public class OrderDTO {
 		this.date = date;
 	}
 
-	public Double getTotalValue() {
+	public BigDecimal getTotalValue() {
 		return totalValue;
 	}
 
-	public void setTotalValue(Double totalValue) {
+	public void setTotalValue(BigDecimal totalValue) {
 		this.totalValue = totalValue;
 	}
 

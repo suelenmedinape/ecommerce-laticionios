@@ -1,5 +1,6 @@
 package com.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Order {
 	private Date date;
 	
 	@Column(precision = 13, scale = 2 )
-	private Double totalValue;
+	private BigDecimal totalValue;
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
@@ -59,11 +60,11 @@ public class Order {
 		this.date = date;
 	}
 	
-	public Double getTotalValue() {
+	public BigDecimal getTotalValue() {
 		return totalValue;
 	}
 
-	public void setTotalValue(Double totalValue) {
+	public void setTotalValue(BigDecimal totalValue) {
 		this.totalValue = totalValue;
 	}
 

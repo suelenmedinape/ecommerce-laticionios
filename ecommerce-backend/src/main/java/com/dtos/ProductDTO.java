@@ -1,5 +1,7 @@
 package com.dtos;
 
+import java.math.BigDecimal;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,7 +14,7 @@ public class ProductDTO{
 	private String description;
 	
     @NotNull(message = "Preço não pode estar vazio.")
-	private Double price;
+	private BigDecimal price;
 	
 	private Integer quantity;
 
@@ -35,11 +37,11 @@ public class ProductDTO{
 		this.description = description;
 	}
 
-	public Double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

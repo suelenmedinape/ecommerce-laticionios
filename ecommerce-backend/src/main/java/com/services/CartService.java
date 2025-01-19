@@ -1,5 +1,6 @@
 package com.services;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +46,25 @@ public class CartService {
 		CartItem existsItemToCart = cart.getCartItems().stream()
 				.filter(item -> item.getProduct().getId().equals(productId)).findFirst().orElse(null);
 
+		BigDecimal totalPrice = BigDecimal.ZERO;
+		
 		if (existsItemToCart != null) {
 			existsItemToCart.setQuantity(quantity);
-			existsItemToCart.setTotalPrice(existsItemToCart.getQuantity() * existsItemToCart.getUnitPrice());
+			totalPrice = existsItemToCart.getUnitPrice()
+		                .multiply(BigDecimal.valueOf(quantity));
+			
+			existsItemToCart.setTotalPrice(totalPrice);
 		} else {
 			CartItem cartItem = new CartItem();
 			cartItem.setProduct(product);
 			cartItem.setCart(cart);
 			cartItem.setQuantity(quantity);
-			cartItem.setUnitPrice(product.getPrice());
-			cartItem.setTotalPrice(product.getPrice() * quantity);
+			
+			cartItem.setUnitPrice(product.getPrice());	
+			totalPrice = cartItem.getUnitPrice()
+	                .multiply(BigDecimal.valueOf(quantity));
+			
+			cartItem.setTotalPrice(totalPrice);
 
 			cart.getCartItems().add(cartItem);
 		}
@@ -84,7 +94,7 @@ public class CartService {
 		order.setDate(new Date());
 		order.setOrderStatus(OrderStatus.SOLICITADO);
 		
-		double totalValue = 0.0;
+		BigDecimal totalValue = BigDecimal.ZERO;
 		for (CartItem cartItem : cart.getCartItems()) {
 			OrderItem orderItem = new OrderItem();
 			orderItem.setProduct(cartItem.getProduct());
@@ -95,7 +105,7 @@ public class CartService {
 
 			order.getOrderItems().add(orderItem);
 
-			totalValue += cartItem.getTotalPrice();
+			totalValue = totalValue.add(cartItem.getTotalPrice());
 		}
 		
 		 order.setTotalValue(totalValue);

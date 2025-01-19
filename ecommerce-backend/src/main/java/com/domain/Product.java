@@ -1,5 +1,7 @@
 package com.domain;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +25,7 @@ public class Product {
 	
 	@NotNull
 	@Column(nullable = false)
-	private Double price;
+	private BigDecimal price;
 	
 	@NotNull
 	@Column(nullable = false)
@@ -56,11 +58,11 @@ public class Product {
 		this.description = description;
 	}
 
-	public Double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

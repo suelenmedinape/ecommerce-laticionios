@@ -1,5 +1,7 @@
 package com.domain;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,11 +19,12 @@ public class OrderItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Double unitPrice;
+	@Column(precision = 13, scale = 2 )
+	private BigDecimal unitPrice;
 	private Integer quantity;
 	
 	@Column(precision = 13, scale = 2 )
-	private Double totalPrice;
+	private BigDecimal totalPrice;
 	
 	@ManyToOne
     @JoinColumn(name = "product_id")
@@ -42,11 +45,11 @@ public class OrderItem {
 		this.id = id;
 	}
 
-	public Double getUnitPrice() {
+	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(Double unitPrice) {
+	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
@@ -58,11 +61,11 @@ public class OrderItem {
 		this.quantity = quantity;
 	}
 
-	public Double getTotalPrice() {
+	public BigDecimal getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(Double totalPrice) {
+	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
