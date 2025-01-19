@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.exceptions.CartNotFoundException;
 import com.exceptions.ClientNotFoundException;
 import com.exceptions.EmailAlreadyRegisteredException;
 import com.exceptions.InsufficientStockException;
@@ -43,6 +44,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ClientNotFoundException.class)
     public ResponseEntity<Map<String, String>> handlerClientNotFoundException(ClientNotFoundException ex){
     	Map<String, String> response = Map.of("message", ex.getMessage());
+    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+    
+    @ExceptionHandler(CartNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handlerCartNotFoundException(CartNotFoundException ex){
+    	Map<String, String> response = Map.of("message" , ex.getMessage());
     	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
     
