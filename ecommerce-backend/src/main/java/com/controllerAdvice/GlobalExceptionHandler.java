@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.exceptions.ClientNotFoundException;
 import com.exceptions.EmailAlreadyRegisteredException;
+import com.exceptions.InsufficientStockException;
 import com.exceptions.OrderNotFoundException;
 import com.exceptions.ProductNotFoundException;
 import com.responses.ValidationErrorResponse;
@@ -49,6 +50,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handlerOrderNotFoundExcepetion(OrderNotFoundException ex){
     	Map<String, String> response = Map.of("message", ex.getMessage());
     	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+    
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<Map<String, String>> handlerInsufficientStockException(InsufficientStockException ex){
+    	Map<String, String> response = Map.of("message", ex.getMessage());
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(Exception.class)
