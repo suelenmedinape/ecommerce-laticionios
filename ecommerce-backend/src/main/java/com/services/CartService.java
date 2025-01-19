@@ -13,6 +13,7 @@ import com.domain.OrderItem;
 import com.domain.Product;
 import com.enums.OrderStatus;
 import com.exceptions.CartNotFoundException;
+import com.exceptions.InsufficientStockException;
 import com.exceptions.ProductNotFoundException;
 import com.repositories.CartItemRepository;
 import com.repositories.CartRepository;
@@ -32,9 +33,9 @@ public class CartService {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
+
 	@Autowired
-    private OrderRepository orderRepository;
+	private OrderRepository orderRepository;
 
 	public void addItemToCart(Long clientId, Long productId, int quantity) {
 		Cart cart = cartRepository.findByClientId(clientId)
@@ -47,23 +48,30 @@ public class CartService {
 				.filter(item -> item.getProduct().getId().equals(productId)).findFirst().orElse(null);
 
 		BigDecimal totalPrice = BigDecimal.ZERO;
-		
+
 		if (existsItemToCart != null) {
-			existsItemToCart.setQuantity(quantity);
-			totalPrice = existsItemToCart.getUnitPrice()
-		                .multiply(BigDecimal.valueOf(quantity));
-			
+			if (quantity <= product.getQuantity()) {
+				existsItemToCart.setQuantity(quantity);
+			} else {
+				throw new InsufficientStockException("Quantidade não disponível em estoque");
+			}
+			totalPrice = existsItemToCart.getUnitPrice().multiply(BigDecimal.valueOf(quantity));
+
 			existsItemToCart.setTotalPrice(totalPrice);
 		} else {
 			CartItem cartItem = new CartItem();
 			cartItem.setProduct(product);
 			cartItem.setCart(cart);
-			cartItem.setQuantity(quantity);
-			
-			cartItem.setUnitPrice(product.getPrice());	
-			totalPrice = cartItem.getUnitPrice()
-	                .multiply(BigDecimal.valueOf(quantity));
-			
+
+			if (quantity <= product.getQuantity()) {
+				cartItem.setQuantity(quantity);
+			} else {
+				throw new InsufficientStockException("Quantidade não disponível em estoque");
+			}
+
+			cartItem.setUnitPrice(product.getPrice());
+			totalPrice = cartItem.getUnitPrice().multiply(BigDecimal.valueOf(quantity));
+
 			cartItem.setTotalPrice(totalPrice);
 
 			cart.getCartItems().add(cartItem);
@@ -93,12 +101,21 @@ public class CartService {
 		order.setClient(cart.getClient());
 		order.setDate(new Date());
 		order.setOrderStatus(OrderStatus.SOLICITADO);
-		
+
 		BigDecimal totalValue = BigDecimal.ZERO;
 		for (CartItem cartItem : cart.getCartItems()) {
 			OrderItem orderItem = new OrderItem();
 			orderItem.setProduct(cartItem.getProduct());
-			orderItem.setQuantity(cartItem.getQuantity());
+
+			Product product = productRepository.findById(cartItem.getProduct().getId())
+					.orElseThrow(() -> new ProductNotFoundException("Produto não encontrado"));
+
+			if (cartItem.getQuantity() <= product.getQuantity()) {
+				orderItem.setQuantity(cartItem.getQuantity());
+			} else {
+				throw new InsufficientStockException("Quantidade não disponível em estoque");
+			}
+
 			orderItem.setUnitPrice(cartItem.getUnitPrice());
 			orderItem.setTotalPrice(cartItem.getTotalPrice());
 			orderItem.setOrder(order);
@@ -107,18 +124,18 @@ public class CartService {
 
 			totalValue = totalValue.add(cartItem.getTotalPrice());
 		}
-		
-		 order.setTotalValue(totalValue);
 
-	     orderRepository.save(order);
-	     
-	     for(CartItem cartItem : cart.getCartItems()) {
-	    	 Product updateProduct = productRepository.findById(cartItem.getProduct().getId())
-	    			 .orElseThrow(() -> new ProductNotFoundException("Produto não encontrado"));
-	    	 updateProduct.setQuantity(updateProduct.getQuantity() - cartItem.getQuantity());
-	    	 productRepository.save(updateProduct);
-	     }
+		order.setTotalValue(totalValue);
 
-		 cartItemRepository.deleteAllByCartId(cart.getId());
+		orderRepository.save(order);
+
+		for (CartItem cartItem : cart.getCartItems()) {
+			Product updateProduct = productRepository.findById(cartItem.getProduct().getId())
+					.orElseThrow(() -> new ProductNotFoundException("Produto não encontrado"));
+			updateProduct.setQuantity(updateProduct.getQuantity() - cartItem.getQuantity());
+			productRepository.save(updateProduct);
+		}
+
+		cartItemRepository.deleteAllByCartId(cart.getId());
 	}
 }
