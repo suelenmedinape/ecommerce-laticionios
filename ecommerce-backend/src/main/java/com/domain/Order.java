@@ -7,6 +7,7 @@ import java.util.List;
 import com.enums.OrderStatus;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,6 +26,8 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Date date;
+	
+	@Column(precision = 13, scale = 2 )
 	private Double totalValue;
 	
 	@Enumerated(EnumType.STRING)

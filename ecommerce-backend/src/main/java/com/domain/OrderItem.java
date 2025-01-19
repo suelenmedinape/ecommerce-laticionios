@@ -1,5 +1,6 @@
 package com.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +19,8 @@ public class OrderItem {
 
 	private Double unitPrice;
 	private Integer quantity;
+	
+	@Column(precision = 13, scale = 2 )
 	private Double totalPrice;
 	
 	@ManyToOne

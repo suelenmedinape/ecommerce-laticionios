@@ -2,6 +2,7 @@ package com.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,8 @@ public class CartItem {
 	private Long id;
 	private Integer quantity;
     private Double unitPrice;
+    
+    @Column(precision = 13, scale = 2 )
     private Double totalPrice;
     
     @JsonIgnore
