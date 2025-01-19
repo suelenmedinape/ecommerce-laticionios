@@ -13,10 +13,12 @@ import com.domain.OrderItem;
 import com.domain.Product;
 import com.enums.OrderStatus;
 import com.exceptions.CartNotFoundException;
+import com.exceptions.ClientNotFoundException;
 import com.exceptions.InsufficientStockException;
 import com.exceptions.ProductNotFoundException;
 import com.repositories.CartItemRepository;
 import com.repositories.CartRepository;
+import com.repositories.ClientRepository;
 import com.repositories.OrderRepository;
 import com.repositories.ProductRepository;
 
@@ -24,6 +26,9 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class CartService {
+	
+	@Autowired
+	private ClientRepository clientRepository;
 
 	@Autowired
 	private CartRepository cartRepository;
@@ -38,6 +43,9 @@ public class CartService {
 	private OrderRepository orderRepository;
 
 	public void addItemToCart(Long clientId, Long productId, int quantity) {
+		clientRepository.findById(clientId)
+				.orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado"));
+		
 		Cart cart = cartRepository.findByClientId(clientId)
 				.orElseThrow(() -> new CartNotFoundException("Carrinho do cliente não encontrado"));
 
