@@ -102,6 +102,9 @@ public class CartService {
 
 	@Transactional
 	public void buyItemsFromCart(Long clientId) {
+		clientRepository.findById(clientId)
+		.orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado"));
+		
 		Cart cart = cartRepository.findByClientId(clientId)
 				.orElseThrow(() -> new CartNotFoundException("Carrinho não encontrado"));
 
