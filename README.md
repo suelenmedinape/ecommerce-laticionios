@@ -5,35 +5,50 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 
 ![Diagrama de Classes](CLASSE_UML.png)
 
-## Funcionalidades que o sistema possue ate agora:
-### Usuario comum / Cliente
-* Usuario comum se cadastrar no site;
-* Cliente visualizar os detalhes dos seus dados;
-* Cliente poder editar algum dado;
-* Cliente/usuario comum poder visualizar o catlogo de produtos;
-* Client/usuario comum poder pesquisar algum produto por nome;
-* Cliente poder adicionar algum produto ao seu carrinho;
-* Cliente poder visualizar o seu carrinho e os produtos que foram adicionados ao carrinho;
-* Cliente poder remover algum produto do seu carrinho;
-* Cliente poder finalizar o pedido dos items que estão no carrinho;
+# Funcionalidades Implementadas
 
-### ADM / Produtor
-* Registrar produtos;
-* Listar todos os produtos;
-* Atualizar algum produto pelo *ID*;
-* Deletar algum produto pelo *ID*;
-* Encontrar algum produto pelo *ID* caso seja necessario;
-* Listar todos os pedidos;
-* Encontrar algum pedido pelo *ID*;
-* Listar todos os pedios pelo status;
-* Atualizar o status de algum pedido;
+## Usuário Comum / Cliente
+- **Cadastro**: Usuário comum pode se registrar no site.
+- **Login**: Cliente que esteja previamente cadastrado no sitema pode realizar o login.
+- **Gerenciamento de Dados** - acesso apenas para *Clientes* logados:
+  - Visualizar os detalhes de seus dados.
+  - Editar seus dados pessoais.
+- **Catálogo de Produtos** - acesso para qualquer tipo de *USUÁRIO*:
+  - Visualizar o catálogo de produtos disponíveis.
+  - Pesquisar produtos por nome.
+- **Carrinho de Compras** - acesso apenas para *Clientes* logados:
+  - Adicionar produtos ao carrinho.
+  - Visualizar os itens do carrinho.
+  - Remover produtos do carrinho.
+  - Finalizar o pedido com os itens do carrinho.
 
+## Administrador / Produtor
+- **Gerenciamento de Produtos**:
+  - Registrar novos produtos.
+  - Listar todos os produtos.
+  - Atualizar informações de produtos pelo ID.
+  - Remover produtos pelo ID.
+  - Buscar produtos específicos pelo ID.
+- **Gerenciamento de Pedidos**:
+  - Listar todos os pedidos.
+  - Buscar pedidos específicos pelo ID.
+  - Listar pedidos filtrados por status.
+  - Atualizar o status de um pedido.
 
-## Funcionalidades para adicionar:
-###  Usuario comum / Cliente
-* Cliente poder realizar login(incluir validações);
-* Cliente poder saber o andamento do seu pedido;
+---
 
-### ADM / Produtor
-* Listar vendas que foram feitas em um determinado periodo, trazendo informações como, valor total, talvez os produtos mais vendidos... etc;
-* Uma verificação de rotina que possa informar o produtor sobre a quantidade de algum produto em estoque;
+# Funcionalidades Planejadas
+
+## Usuário Comum / Cliente
+- Implementar **login com validações**.
+- Acompanhar o andamento de seus pedidos (status em tempo real).
+
+## Administrador / Produtor
+- **Relatórios de Vendas**:
+  - Listar vendas realizadas em um determinado período, incluindo informações como valor total e produtos mais vendidos.
+- **Controle de Estoque**:
+  - Verificação automatizada que notifica o administrador sobre a quantidade disponível de produtos no estoque.
+
+---
+
+Este documento será atualizado conforme novas funcionalidades forem implementadas.
