@@ -5,12 +5,13 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.exceptions.CartNotFoundException;
-import com.exceptions.ClientNotFoundException;
+import com.exceptions.UserUnauthorizedException;
 import com.exceptions.EmailAlreadyRegisteredException;
 import com.exceptions.InsufficientStockException;
 import com.exceptions.OrderNotFoundException;
@@ -41,10 +42,10 @@ public class GlobalExceptionHandler {
     	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
     
-    @ExceptionHandler(ClientNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handlerClientNotFoundException(ClientNotFoundException ex){
+    @ExceptionHandler(UserUnauthorizedException.class)
+    public ResponseEntity<Map<String, String>> handlerClientNotFoundException(UserUnauthorizedException ex){
     	Map<String, String> response = Map.of("message", ex.getMessage());
-    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
     
     @ExceptionHandler(CartNotFoundException.class)
@@ -61,6 +62,12 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(InsufficientStockException.class)
     public ResponseEntity<Map<String, String>> handlerInsufficientStockException(InsufficientStockException ex){
+    	Map<String, String> response = Map.of("message", ex.getMessage());
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+    
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handlerBadCredentialsException(BadCredentialsException ex){
     	Map<String, String> response = Map.of("message", ex.getMessage());
     	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
