@@ -13,6 +13,8 @@ import jakarta.persistence.Table;
 @Table(name = "tb_client")
 public class Client extends Person{
 
+	private static final long serialVersionUID = 1L;
+
 	private String cpf;
 	
 	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)

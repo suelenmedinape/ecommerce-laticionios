@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 @Table(name = "tb_producer")
 public class Producer extends Person{
 
+	private static final long serialVersionUID = 1L;
 	private String cnpj;
 	
 	public Producer() {
