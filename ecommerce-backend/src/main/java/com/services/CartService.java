@@ -13,7 +13,7 @@ import com.domain.OrderItem;
 import com.domain.Product;
 import com.enums.OrderStatus;
 import com.exceptions.CartNotFoundException;
-import com.exceptions.ClientNotFoundException;
+import com.exceptions.UserUnauthorizedException;
 import com.exceptions.InsufficientStockException;
 import com.exceptions.ProductNotFoundException;
 import com.repositories.CartItemRepository;
@@ -44,7 +44,7 @@ public class CartService {
 
 	public void addItemToCart(Long clientId, Long productId, int quantity) {
 		clientRepository.findById(clientId)
-				.orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado"));
+				.orElseThrow(() -> new UserUnauthorizedException("Cliente não encontrado"));
 		
 		Cart cart = cartRepository.findByClientId(clientId)
 				.orElseThrow(() -> new CartNotFoundException("Carrinho do cliente não encontrado"));
@@ -103,7 +103,7 @@ public class CartService {
 	@Transactional
 	public void buyItemsFromCart(Long clientId) {
 		clientRepository.findById(clientId)
-		.orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado"));
+		.orElseThrow(() -> new UserUnauthorizedException("Cliente não encontrado"));
 		
 		Cart cart = cartRepository.findByClientId(clientId)
 				.orElseThrow(() -> new CartNotFoundException("Carrinho não encontrado"));

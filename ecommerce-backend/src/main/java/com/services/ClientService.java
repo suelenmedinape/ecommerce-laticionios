@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import com.domain.Cart;
 import com.domain.Client;
 import com.dtos.ClientUpdateDTO;
-import com.exceptions.ClientNotFoundException;
+import com.enums.Role;
+import com.exceptions.UserUnauthorizedException;
 import com.exceptions.EmailAlreadyRegisteredException;
 import com.repositories.ClientRepository;
 
@@ -28,17 +29,18 @@ public class ClientService {
 		Cart cart = new Cart();
 		cart.setClient(client);
 		client.setCart(cart);
+		client.setRole(Role.ROLE_CLIENT);
 
 		clientRepository.save(client);
 	}
 
 	public Client findById(Long id) {
-		return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado"));
+		return clientRepository.findById(id).orElseThrow(() -> new UserUnauthorizedException("Cliente não encontrado"));
 	}
 
 	public void updateClient(Long clientId, ClientUpdateDTO dto) {
 		Client client = clientRepository.findById(clientId)
-				.orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado"));
+				.orElseThrow(() -> new UserUnauthorizedException("Cliente não encontrado"));
 
 		if (dto.getName() != null) {
 			client.setName(dto.getName());
