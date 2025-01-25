@@ -59,6 +59,8 @@ Este documento será atualizado conforme novas funcionalidades forem implementad
 - **/products**  - um método GET que lista todos os produtos
 - **/products/{id}**  - método GET que irá listar o detalhe de um produto
 - **/products/search?name=** - método GET que lista produtos de acordo com o nome pesquisado
+- **/auth/register** - método POST para o usuário se registrar
+- **/auth/login** - método POST para o usuário logar
 
 ## Usuário logado(cliente) que fez o login no sistema e possui o token:
 - **/profile**  - método GET que lista as informações do cliente 
@@ -72,4 +74,8 @@ Este documento será atualizado conforme novas funcionalidades forem implementad
 - **/products**  - método POST que insere novos produtos
 - **/products/{productId}**  - método PUT que atualiza as informações de um produto
 - **/products/{productId}**  - método DELETE que deleta algum produto
+- **/orders** - método GET que lista todos os pedidos
+- **/orders/{orderId}** - método GET que lista os detalhes de um pedido
+- **/orders/search?status=** - método GET que lista todos os pedidos de acordo com o status
+- **/orders/{orderId}?status=** - método PUT para atualizar o status de um pedido
 
