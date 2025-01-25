@@ -2,8 +2,8 @@ package com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,17 +21,23 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 	
-	@GetMapping("/{clientId}")
-	public ResponseEntity<GetClientDetailsDTO> getClientDetails(@PathVariable Long clientId){
-		Client client = clientService.findById(clientId);
+	@GetMapping()
+	public ResponseEntity<GetClientDetailsDTO> getClientDetails(){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		Client client = clientService.findByEmail(email);
 		GetClientDetailsDTO dto = new GetClientDetailsDTO(client);
 		
 		return ResponseEntity.ok(dto);
 	}
 	
-	@PutMapping("/{clientId}")
-	public ResponseEntity<Void> updateDetailsClient(@PathVariable Long clientId, @RequestBody ClientUpdateDTO clientUpdateDTO) {		
-	    clientService.updateClient(clientId, clientUpdateDTO);	
+	@PutMapping
+	public ResponseEntity<Void> updateDetailsClient(@RequestBody ClientUpdateDTO clientUpdateDTO) {		
+	    String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		Client client = clientService.findByEmail(email);
+
+		
+		clientService.updateClient(client.getId(), clientUpdateDTO);	
 	    return ResponseEntity.ok().build();
 	}
 
