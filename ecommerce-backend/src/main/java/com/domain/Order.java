@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.dtos.DetailsOrderDTO;
 import com.enums.OrderStatus;
 
 import jakarta.persistence.CascadeType;
@@ -42,6 +43,10 @@ public class Order {
 	
 	public Order() {
 		super();
+	}
+	
+	public Order(DetailsOrderDTO dto) {
+		this.id = dto.getId();
 	}
 	
 	public Long getId() {

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.domain.Order;
+import com.dtos.DetailsOrderDTO;
 import com.dtos.OrderDTO;
 import com.services.OrderService;
 
@@ -29,7 +29,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("/{orderId}")
-	public ResponseEntity<Order> listOrderById(@PathVariable Long orderId){
+	public ResponseEntity<DetailsOrderDTO> listOrderById(@PathVariable Long orderId){
 					
 		return ResponseEntity.ok(orderService.findOrderById(orderId));
 	}
