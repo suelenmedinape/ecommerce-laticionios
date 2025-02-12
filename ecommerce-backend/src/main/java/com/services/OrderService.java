@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.domain.Order;
+import com.dtos.DetailsOrderDTO;
 import com.dtos.OrderDTO;
 import com.enums.OrderStatus;
 import com.exceptions.OrderNotFoundException;
@@ -26,13 +27,17 @@ public class OrderService {
 		return orderDTOs;
 	}
 	
-	public Order findOrderById(Long id) {
-		return orderRepository.findById(id)
+	public DetailsOrderDTO findOrderById(Long id) {	
+		Order order = orderRepository.findById(id)
 				.orElseThrow(() -> new OrderNotFoundException("Pedido com id: " + id + " não encontrado"));
+		
+		DetailsOrderDTO detailsOrderDTO = new DetailsOrderDTO(order);
+		
+		return detailsOrderDTO;
 	}
 
 	public void updateOrderStatus(Long id, String status) {
-		Order order = findOrderById(id);
+		Order order =  new Order(findOrderById(id));
 		
 		if(status.equalsIgnoreCase(OrderStatus.FINALIZADO.name())) {
 			order.setOrderStatus(OrderStatus.FINALIZADO);
