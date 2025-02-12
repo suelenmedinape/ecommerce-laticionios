@@ -32,7 +32,9 @@ public class CartItemController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<Void> addItemToCart(@RequestBody CartItemDTO cartItemDTO){
-		cartService.addItemToCart(cartItemDTO.getClientId(), cartItemDTO.getProductId(), cartItemDTO.getQuantity());
+		String email =  SecurityContextHolder.getContext().getAuthentication().getName();
+		Client client = clientService.findByEmail(email);
+		cartService.addItemToCart(client.getId(), cartItemDTO.getProductId(), cartItemDTO.getQuantity());		
 		
 		return ResponseEntity.ok().build();
 	}
