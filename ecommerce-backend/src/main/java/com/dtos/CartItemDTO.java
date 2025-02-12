@@ -2,21 +2,12 @@ package com.dtos;
 
 public class CartItemDTO {
 
-	private Long clientId;
 	private Long productId;
 	private int quantity;
 
 	public CartItemDTO() {
 			super();
 		}
-
-	public Long getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(Long clientId) {
-		this.clientId = clientId;
-	}
 
 	public Long getProductId() {
 		return productId;
