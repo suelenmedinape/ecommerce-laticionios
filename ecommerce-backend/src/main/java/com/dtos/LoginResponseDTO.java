@@ -13,8 +13,6 @@ public class LoginResponseDTO {
 		this.token = token;
 	}
 
-
-
 	public String getToken() {
 		return token;
 	}
@@ -22,6 +20,4 @@ public class LoginResponseDTO {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
-	
 }

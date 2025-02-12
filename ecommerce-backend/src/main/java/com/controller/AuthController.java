@@ -48,7 +48,7 @@ public class AuthController {
 
 		clientService.register(newClient);
 
-		Map<String, String> response = Map.of("message", "Cadastro realizado com sucesso!");
+		Map<String, String> response = Map.of("message", "Cadastro realizado com sucesso! Faça login para começar.");
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 

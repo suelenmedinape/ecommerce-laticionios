@@ -64,7 +64,7 @@ public class ProductController {
 		List<Product> products = productService.listProductsByName(name);
 		List<ProductSummaryDTO> dtos = products.stream()
 				.map(x -> new ProductSummaryDTO(x)).toList();
-		
+			
 		return ResponseEntity.ok(dtos);
 	}
 	
