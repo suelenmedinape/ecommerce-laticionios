@@ -1,0 +1,199 @@
+<nav class="bg-white dark:bg-gray-800 antialiased">
+    <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-4">
+        <div class="flex items-center justify-between">
+ 
+            <!-- INPUT SEARCH -->
+            <div class="flex items-center space-x-8">
+                <form class="max-w-md mx-auto" (ngSubmit)="buscarProdutos()">
+                    <label for="default-search"
+                      class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <div class="relative">
+                      <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                      </div>
+                      <input type="search" id="default-search"
+                        class="block w-full p-2 ps-10 text-sm text-gray-900 border border-transparent rounded-lg bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent dark:border-transparent dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        name="search" [(ngModel)]="searchTerm" (input)="buscarProdutos()" placeholder="Procure por produtos"
+                        required />
+                    </div>
+                  </form>
+            </div>
+
+            <!-- LOGO -->
+            <div class="justify-center text-center items-center">
+                <div class="shrink-0">
+                    <a href="#" title="" class="">
+                        <img class="w-10 h-10 dark:hidden" src="/cow.svg" alt="" />
+                        <img class="w-10 h-10 hidden dark:block" src="/cow-dark.svg" alt="" />
+                    </a>
+                </div>
+            </div>
+
+            <!-- DROPDOWNS -->
+            <div class="flex items-center lg:space-x-2">
+
+                <button type="button"
+                    class="mr-4 inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white">
+                    <span class="sr-only">
+                        Cart
+                    </span>
+                    <svg class="w-5 h-5 lg:me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
+                    </svg>
+                    <span class="hidden sm:flex"><a routerLink="/cart" routerLinkActive="active"> My Cart </a></span>
+                </button>
+
+                <div class="relative inline-block text-left">
+                    <!-- Botão do dropdown -->
+                    <button (click)="toggleDropdown()"
+                        class="mr-4 inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-width="2"
+                                d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                        <span>My Account</span>
+                        <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    <!-- Conteúdo do Dropdown -->
+                    @if(isOpen){
+                    <div class="absolute mt-2 w-56 bg-white border border-gray-200 rounded shadow-lg">
+                        <ul class="py-1 text-gray-700">
+                            <li class="flex justify-between px-4 py-2 hover:bg-gray-100">
+                                <a routerLink="/account" routerLinkActive="active">Account</a>
+                            </li>
+                            <li class="flex justify-between px-4 py-2 hover:bg-gray-100">
+                                <a href="" (click)="logout()"> Logout </a>
+                            </li>
+                        </ul>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <button type="button" data-collapse-toggle="ecommerce-navbar-menu-1" aria-controls="ecommerce-navbar-menu-1"
+                aria-expanded="false"
+                class="inline-flex lg:hidden items-center justify-center hover:bg-gray-100 rounded-md dark:hover:bg-gray-700 p-2 text-gray-900 dark:text-white">
+                <span class="sr-only">
+                    Open Menu
+                </span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <hr class="mt-3 ml-10 mr-10 text-gray-700 dark:text-white" />
+    <div>
+        <ul class="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center">
+            <li>
+                <a routerLink="/" routerLinkActive="active" title=""
+                    class="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                    Home
+                </a>
+            </li>
+            <li class="shrink-0">
+                <a routerLink="/shop" routerLinkActive="active" title=""
+                    class="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                    Loja
+                </a>
+            </li>
+            @switch (userRole) {
+            @case ('ROLE_ADMIN'){
+            <a href="http://localhost:4201"
+                class="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">Gerenciar
+                Produtos</a>
+            }
+            @default {
+            @if (!userRole) {
+            <a routerLink="/login"
+                class="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">Login</a>
+            }
+            @if (!userRole) {
+            <a routerLink="/register"
+                class="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">Registre-se</a>
+            }
+            }
+            }
+            <li class="shrink-0">
+                <button (click)="toggleDarkMode()" class="px-4 py-2 text-white rounded">
+                    <div class="hidden dark:block">
+                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                          width="24" height="24" fill="none" viewBox="0 0 24 24">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 5V3m0 18v-2M7.05 7.05 5.636 5.636m12.728 12.728L16.95 16.95M5 12H3m18 0h-2M7.05 16.95l-1.414 1.414M18.364 5.636 16.95 7.05M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+                        </svg>
+                      </div>
+                      <div class="dark:hidden"> 
+                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                          width="24" height="24" fill="none" viewBox="0 0 24 24">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 21a9 9 0 0 1-.5-17.986V3c-.354.966-.5 1.911-.5 3a9 9 0 0 0 9 9c.239 0 .254.018.488 0A9.004 9.004 0 0 1 12 21Z" />
+                        </svg>
+                      </div>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <div id="ecommerce-navbar-menu-1"
+        class="bg-gray-50 dark:bg-gray-700 dark:border-gray-600 border border-gray-200 rounded-lg py-3 hidden px-4 mt-4">
+        <ul class="text-gray-900 dark:text-white text-sm font-medium space-y-3">
+            <li>
+                <a href="#" class="hover:text-primary-700 dark:hover:text-primary-500">Home</a>
+            </li>
+            <li>
+                <a href="#" class="hover:text-primary-700 dark:hover:text-primary-500">Best Sellers</a>
+            </li>
+            <li>
+                <button (click)="toggleDarkMode()" class="px-4 py-2 text-white rounded">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path fill-rule="evenodd"
+                            d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Loading indicator -->
+@if (isSearching) {
+<div class="mt-2 text-center">
+    <p class="text-gray-500">Buscando produtos...</p>
+</div>
+}
+
+<!-- Lista de produtos encontrados -->
+<div class="flex justify-center items-center mr-8 ml-8">
+    @if (!isSearching && produtos.length > 0 && searchTerm.trim() !== '') {
+        <app-card-product [variavel]="produtos" [lista]="produtos">
+        </app-card-product>
+    }
+</div>
+
+<app-alert [message]="'Nenhum produto encontrado para ' + searchTerm" [showAlert]="showAlert" [categAlert]="4"
+    (close)="showAlert = false"></app-alert>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('myCartDropdownButton1').click();
+    });
+</script>

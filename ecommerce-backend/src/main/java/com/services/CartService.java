@@ -100,6 +100,34 @@ public class CartService {
 		return findByClientId(clientId);
 	}
 
+	/* ADICIONADO */	
+	@Transactional
+	public Cart updateItemFromCart(Long clientId, Long productId, int quantity) {
+		Cart cart = cartRepository.findByClientId(clientId)
+				.orElseThrow(() -> new CartNotFoundException("Carrinho não encontrado"));
+
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ProductNotFoundException("Produto não encontrado"));
+
+		CartItem cartItem = cart.getCartItems().stream()
+				.filter(item -> item.getProduct().getId().equals(productId)).findFirst()
+				.orElseThrow(() -> new ProductNotFoundException("Produto não encontrado"));
+
+		if (quantity <= product.getQuantity()) {
+			cartItem.setQuantity(quantity);
+		} else {
+			throw new InsufficientStockException("Quantidade não disponível em estoque");
+		}
+
+		BigDecimal totalPrice = cartItem.getUnitPrice().multiply(BigDecimal.valueOf(quantity));
+		cartItem.setTotalPrice(totalPrice);
+
+		cartRepository.save(cart);
+
+		return cart;
+
+	}
+
 	@Transactional
 	public void buyItemsFromCart(Long clientId) {
 		clientRepository.findById(clientId)
