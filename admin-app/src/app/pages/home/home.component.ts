@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { AlertComponent } from '../../shared/models/alert/alert.component';
 
-@Component({
+@Component({ 
   selector: 'app-home',
   standalone: true,
   imports: [PaginationComponent, AlertComponent, CurrencyPipe, RouterLink, RouterLinkActive, FormsModule],
