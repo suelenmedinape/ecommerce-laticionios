@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from './shared/_component/navbar/navbar.component';
+
 import { RouterOutlet } from '@angular/router';
 
 @Component({

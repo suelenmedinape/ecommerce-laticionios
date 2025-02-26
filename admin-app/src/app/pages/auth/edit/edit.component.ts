@@ -68,4 +68,39 @@ export class EditComponent implements OnInit{
       }
     });
   }
+
+  /*selectProducts(id: number): void {
+    const index = this.selectedProductsIds.indexOf(id);
+    if (index === -1) {
+      this.selectedProductsIds.push(id); 
+    } else {
+      this.selectedProductsIds.splice(index, 1); 
+    }
+  }
+
+  deleteProduct(): void {
+    if (this.selectedProductsIds.length > 0) {
+      this.selectedProductsIds.forEach(id => {
+        this.produtosService.deleteProduct(id).subscribe(
+          () => {
+            this.listProducts(); 
+            this.showAlert = true;
+            this.message = `Produto com ID ${id} deletado com sucesso.`;
+            this.categAlert = 3;
+            console.log('Deletando o produto com id:', id);
+          },
+          error => {
+            this.showAlert = true;
+            this.message = "Erro ao deletar produto.";
+            this.categAlert = 2;
+          }
+        );
+      });
+      this.selectedProductsIds = []; // Limpa a seleção após a exclusão
+    } else {
+      this.showAlert = true;
+      this.message = "Nenhum produto selecionado.";
+      this.categAlert = 2;
+    }
+  } */
 }

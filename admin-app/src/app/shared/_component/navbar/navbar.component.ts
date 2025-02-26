@@ -23,11 +23,11 @@ export class NavbarComponent {
 
   toggleDarkMode(): void {
     if (document.documentElement.classList.contains('dark')) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('color-theme', 'light');
+      document.documentElement.classList.remove('dark'); // Removendo a classe "dark"
+      localStorage.setItem('color-theme', 'light'); // Salvando a escolha no localStorage
     } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('color-theme', 'dark');
+      document.documentElement.classList.add('dark'); // Adicionando a classe "dark"
+      localStorage.setItem('color-theme', 'dark'); // Salvando a escolha no localStorage
     }
-  }
+  }  
 }
