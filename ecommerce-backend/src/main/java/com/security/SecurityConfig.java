@@ -39,7 +39,11 @@ public class SecurityConfig {
 	                    .requestMatchers(HttpMethod.POST, "/products").hasRole(Role.ROLE_ADMIN.getRoleName())
 	                    .requestMatchers(HttpMethod.PUT, "/products/{productId}").hasRole(Role.ROLE_ADMIN.getRoleName())
 	                    .requestMatchers(HttpMethod.DELETE, "/products/{productId}").hasRole(Role.ROLE_ADMIN.getRoleName())
-	                    .requestMatchers("/orders/**").hasRole(Role.ROLE_ADMIN.getRoleName())
+	                    .requestMatchers(HttpMethod.GET,"/orders/status").hasRole(Role.ROLE_ADMIN.getRoleName())
+	                    .requestMatchers(HttpMethod.GET,"/orders/{orderId}").hasRole(Role.ROLE_ADMIN.getRoleName())
+	                    .requestMatchers(HttpMethod.POST,"/orders/**").hasRole(Role.ROLE_ADMIN.getRoleName())
+	                    .requestMatchers(HttpMethod.PUT,"/orders/**").hasRole(Role.ROLE_ADMIN.getRoleName())
+	                    .requestMatchers(HttpMethod.DELETE,"/orders/**").hasRole(Role.ROLE_ADMIN.getRoleName())
 
 	                    .requestMatchers(HttpMethod.GET, "/profile").hasRole(Role.ROLE_CLIENT.getRoleName())
 	                    .requestMatchers(HttpMethod.POST, "/profile").hasRole(Role.ROLE_CLIENT.getRoleName())
