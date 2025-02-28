@@ -18,6 +18,7 @@ import com.domain.OrderItem;
 import com.dtos.ClientUpdateDTO;
 import com.dtos.GetClientDetailsDTO;
 import com.dtos.OrderDTO;
+import com.enums.OrderStatus;
 import com.services.ClientService;
 import com.services.OrderService;
 
@@ -64,9 +65,9 @@ public class ClientController {
 		return ResponseEntity.ok(clientService.listOrderDetailsByClient(orderId));
 	}
 	
-	@DeleteMapping("/orders/remove/{orderId}")
+	@PutMapping("/orders/remove/{orderId}")
 	public ResponseEntity<Void> cancelOrder(@PathVariable Long orderId){
-		orderService.cancelOrderById(orderId);
+		orderService.updateOrderStatus(orderId, OrderStatus.CANCELADO.name());
 		
 		return ResponseEntity.ok().build();
 	}
