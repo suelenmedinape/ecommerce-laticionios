@@ -58,6 +58,7 @@ public class OrderService {
 		if(status.equalsIgnoreCase(OrderStatus.FINALIZADO.name())) {
 			if (order.getOrderStatus() == OrderStatus.SOLICITADO) {		
 				order.setOrderStatus(OrderStatus.FINALIZADO);
+				order.setDate(new Date());
 			}
 		}
 		
@@ -71,11 +72,12 @@ public class OrderService {
 					product.setQuantity(product.getQuantity() + item.getQuantity());
 					
 					productRepository.save(product);
+					order.setDate(new Date());
 				}	
 			}
 		}
 		
-		order.setDate(new Date());
+		
 		
 		orderRepository.save(order);
 	}
