@@ -1,21 +1,33 @@
 package com.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.domain.Cart;
 import com.domain.Client;
+import com.domain.OrderItem;
 import com.dtos.ClientUpdateDTO;
+import com.dtos.OrderDTO;
 import com.enums.Role;
-import com.exceptions.UserUnauthorizedException;
+import com.exceptions.ClientNotFoundException;
 import com.exceptions.EmailAlreadyRegisteredException;
 import com.repositories.ClientRepository;
+import com.repositories.OrderItemRepository;
+import com.repositories.OrderRepository;
 
 @Service
 public class ClientService {
 
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	
+	@Autowired
+	private OrderItemRepository itemRepository;
 
 	public Client findByEmail(String email) {
 		return clientRepository.findByEmail(email);
@@ -35,12 +47,12 @@ public class ClientService {
 	}
 
 	public Client findById(Long id) {
-		return clientRepository.findById(id).orElseThrow(() -> new UserUnauthorizedException("Cliente não encontrado"));
+		return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado"));
 	}
 
 	public void updateClient(Long clientId, ClientUpdateDTO dto) {
 		Client client = clientRepository.findById(clientId)
-				.orElseThrow(() -> new UserUnauthorizedException("Cliente não encontrado"));
+				.orElseThrow(() -> new ClientNotFoundException("Cliente não encontrado"));
 
 		if (dto.getName() != null) {
 			client.setName(dto.getName());
@@ -59,5 +71,15 @@ public class ClientService {
 		}
 
 		clientRepository.save(client);
+	}
+	
+	public List<OrderDTO> listAllOrdersByClient(Long id) {
+		
+		return orderRepository.findAllByClientId(id);
+	}
+
+	public List<OrderItem> listOrderDetailsByClient(Long id) {
+		
+		return itemRepository.findByOrderId(id);
 	}
 }
