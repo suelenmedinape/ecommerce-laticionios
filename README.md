@@ -43,7 +43,7 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 # Funcionalidades Planejadas
 
 ## Usuário Comum / Cliente
-
+- 
 ## Administrador / Produtor
 - **Relatórios de Vendas**:
   - Listar vendas realizadas em um determinado período, incluindo informações como valor total e produtos mais vendidos.
@@ -63,7 +63,7 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 
 ## Usuário logado(cliente) que fez o login no sistema e possui o token:
 - **/my/profile**  - método GET que lista as informações do cliente 
-- **/details**  - método POST que atualiza as informações do cliente
+- **/my/details**  - método POST que atualiza as informações do cliente
 - **/cart/add**  - método POST onde o cliente adiciona o item ao seu carrinho
 - **/cart**  - método GET que exibe o carrinho do cliente com os itens que estão nele
 - **/cart/{productId}**  - método DELETE onde o cliente pode remover o item que está no carrinho 
