@@ -62,7 +62,6 @@ public class CartItemController {
 		return ResponseEntity.ok().build();
 	}
 
-	/* ADICIONADO PARA PODER MUDAR A QUANTIDADE DE PRODUTOS NO CARRINHO NA TELA MY CART*/
 	@PutMapping("/update")
 	public ResponseEntity<Void> updateItemFromCart(@RequestBody CartItemDTO cartItemDTO){
 		String email =  SecurityContextHolder.getContext().getAuthentication().getName();
