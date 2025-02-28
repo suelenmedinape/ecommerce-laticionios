@@ -21,6 +21,9 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
   - Visualizar os itens do carrinho.
   - Remover produtos do carrinho.
   - Finalizar o pedido com os itens do carrinho.
+  - **Pedidos** - acesso apenas para *Clientes* logados:
+  - Visualizar todos pedidos feitos.
+  - Cancelar um pedido realizado
 
 ## Administrador / Produtor
 - **Gerenciamento de Produtos**:
@@ -40,7 +43,6 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 # Funcionalidades Planejadas
 
 ## Usuário Comum / Cliente
-- Acompanhar o andamento de seus pedidos (status em tempo real).
 
 ## Administrador / Produtor
 - **Relatórios de Vendas**:
@@ -50,9 +52,6 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 
 ---
 
-Este documento será atualizado conforme novas funcionalidades forem implementadas.
-
----
 # Rotas
 
 ## Qualquer usuário que não precise estar logado
@@ -63,12 +62,15 @@ Este documento será atualizado conforme novas funcionalidades forem implementad
 - **/auth/login** - método POST para o usuário logar
 
 ## Usuário logado(cliente) que fez o login no sistema e possui o token:
-- **/profile**  - método GET que lista as informações do cliente 
-- **/profile**  - método POST que atualiza as informações do cliente
+- **/my/profile**  - método GET que lista as informações do cliente 
+- **/details**  - método POST que atualiza as informações do cliente
 - **/cart/add**  - método POST onde o cliente adiciona o item ao seu carrinho
 - **/cart**  - método GET que exibe o carrinho do cliente com os itens que estão nele
 - **/cart/{productId}**  - método DELETE onde o cliente pode remover o item que está no carrinho 
 - **/cart/buy**  - método POST que é responsável por fazer a compra dos itens que estão no carrinho
+- **/my/orders**  - método GET que lista as informações de pedidos do cliente
+- **/my/orders/details/{orderId}**  - método GET que lista as informações de um pedido
+- **/my/orders/remove/{orderId}**  - método DELETE que cancela um pedido que esteja com o status de *SOLICITADO*
 
 ## Usuário logado (ADM) que fez o login no sistema e possui o token:
 - **/products**  - método POST que insere novos produtos
@@ -79,3 +81,8 @@ Este documento será atualizado conforme novas funcionalidades forem implementad
 - **/orders/search?status=** - método GET que lista todos os pedidos de acordo com o status
 - **/orders/{orderId}?status=** - método PUT para atualizar o status de um pedido
 
+---
+
+Este documento será atualizado conforme novas funcionalidades forem implementadas.
+
+---
