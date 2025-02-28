@@ -1,6 +1,7 @@
 package com.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class OrderService {
 	}
 
 	public void updateOrderStatus(Long id, String status) {
-		Order order =  new Order(findOrderById(id));
+		Order order =  orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Pedido com id: " + id + " não encontrado"));
 		
 		if(status.equalsIgnoreCase(OrderStatus.FINALIZADO.name())) {
 			order.setOrderStatus(OrderStatus.FINALIZADO);
@@ -46,6 +47,8 @@ public class OrderService {
 		if(status.equalsIgnoreCase(OrderStatus.CANCELADO.name())) {
 			order.setOrderStatus(OrderStatus.CANCELADO);
 		}
+		
+		order.setDate(new Date());
 		
 		orderRepository.save(order);
 	}
@@ -66,5 +69,14 @@ public class OrderService {
 		}
 		
 		return orderDTOs;
+	}
+
+	public void cancelOrderById(Long orderId) {
+		Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Pedido com id: " + orderId + " não encontrado"));
+		
+		if(order.getOrderStatus().equals(OrderStatus.SOLICITADO)) {		
+			orderRepository.deleteById(orderId);
+		}
+		
 	}
 }
