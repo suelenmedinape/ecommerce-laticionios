@@ -5,6 +5,8 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 
 ![Diagrama de Classes](CLASSE_UML.png)
 
+# Funcionalidades Implementadas
+
 ## Usuário Comum / Cliente
 - **Cadastro**: Usuário comum pode se registrar no site.
 - **Login**: Cliente que esteja previamente cadastrado no sitema pode realizar o login.
@@ -78,3 +80,9 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 - **/orders/{orderId}** - método GET que lista os detalhes de um pedido
 - **/orders/search?status=** - método GET que lista todos os pedidos de acordo com o status
 - **/orders/{orderId}?status=** - método PUT para atualizar o status de um pedido
+
+---
+
+Este documento será atualizado conforme novas funcionalidades forem implementadas.
+
+---
