@@ -1,12 +1,12 @@
 package com.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.domain.Product;
 import com.dtos.ProductDTO;
 import com.dtos.ProductSummaryDTO;
+import com.enums.Categories;
 import com.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -32,8 +33,6 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
-	/* Só o admin */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping
 	@CrossOrigin(origins = "http://localhost:4201")
     public ResponseEntity<Map<String, String>> insert(@Valid @RequestBody ProductDTO productDTO) {
@@ -42,6 +41,7 @@ public class ProductController {
         product.setDescription(productDTO.getDescription());
         product.setPrice(productDTO.getPrice());
         product.setQuantity(productDTO.getQuantity());
+        product.setCategories(productDTO.getCategories());
     
         productService.insert(product);
         
@@ -64,6 +64,12 @@ public class ProductController {
 		List<Product> products = productService.listProducts();
 		
 		return ResponseEntity.ok(products);
+	}
+	
+	@GetMapping("/list-categories")
+	public ResponseEntity<List<String>> listAllCategories(){
+		List<String> categories = Arrays.stream(Categories.values()).map(category -> category.getDescricao()).toList();
+		return ResponseEntity.ok(categories);
 	}
 	
 	@GetMapping("/{id}")
