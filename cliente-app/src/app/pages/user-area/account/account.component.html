@@ -1,274 +1,261 @@
-@if (clientDetails$ | async; as clientDetails) {
-    <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-8">
-      <div class="mx-auto max-w-screen-lg px-4 2xl:px-0">
-        <div class="py-4 md:py-8">
-          <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
-            <div class="space-y-4">
-              <div class="flex space-x-4">
-                <img class="h-16 w-16 rounded-lg"
-                  src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
-                  alt="Helene avatar" />
-                <div>
-                  <span 
-                    class="mb-2 inline-block rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-                    CLIENTE Account </span>
-                  <h2 class="flex items-center text-xl font-bold leading-none text-gray-900 dark:text-white sm:text-2xl">{{
-                    clientDetails.name }}</h2>
-                </div>
-              </div>
-              <dl class="">
-                <dt class="font-semibold text-gray-900 dark:text-white">Email Address</dt>
-                <dd class="text-gray-500 dark:text-gray-400">{{ clientDetails.email }}</dd>
-              </dl>
-              <dl>
-                <dt class="font-semibold text-gray-900 dark:text-white">Home Address</dt>
-                <dd class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                  <svg class="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5" />
-                  </svg>
-                  {{ clientDetails.address }}
-                </dd>
-              </dl>
-              <dl>
-                <dt class="font-semibold text-gray-900 dark:text-white">Phone Number</dt>
-                <dd class="text-gray-500 dark:text-gray-400">{{ clientDetails.phone }}</dd>
-              </dl>
+<app-alert [message]="message" [showAlert]="showAlert" [categAlert]="categAlert" (close)="showAlert = false">
+</app-alert>
+@if (accountDetails) {
+<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-8">
+  <div class="mx-auto max-w-screen-lg px-4 2xl:px-0">
+    <div class="py-4 md:py-8">
+      <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
+        <div class="space-y-4">
+          <div class="flex space-x-4">
+            <img class="h-16 w-16 rounded-lg"
+              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
+              alt="Helene avatar" />
+            <div>
+              <span
+                class="mb-2 inline-block rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
+                Account </span>
+              <h2 class="flex items-center text-xl font-bold leading-none text-gray-900 dark:text-white sm:text-2xl">
+                {{ accountDetails.name }}</h2>
             </div>
           </div>
-          <button type="button"
-            class="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:w-auto">
-            <svg class="-ms-0.5 me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          <dl class="">
+            <dt class="font-semibold text-gray-900 dark:text-white">Email Address</dt>
+            <dd class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+              <svg class="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16v-5.5A3.5 3.5 0 0 0 7.5 7m3.5 9H4v-5.5A3.5 3.5 0 0 1 7.5 7m3.5 9v4M7.5 7H14m0 0V4h2.5M14 7v3m-3.5 6H20v-6a3 3 0 0 0-3-3m-2 9v4m-8-6.5h1"/>
+              </svg>
+              
+              {{ accountDetails.email }}
+            </dd>
+          </dl>
+          <dl>
+            <dt class="font-semibold text-gray-900 dark:text-white">Home Address</dt>
+            <dd class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+              <svg class="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5" />
+              </svg>
+              {{ accountDetails.address.street }}, {{ accountDetails.address.number }}, {{ accountDetails.address.neighborhood }}, {{ accountDetails.address.state }}
+            </dd>
+          </dl>
+        </div>
+        <div class="space-y-4">
+          <dl>
+            <dt class="font-semibold text-gray-900 dark:text-white">Phone Number</dt>
+            <dd class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+              <svg class="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z"/>
+              </svg>              
+              {{ accountDetails.phone }}
+            </dd>
+          </dl>
+          <dl>
+            <dt class="font-semibold text-gray-900 dark:text-white">Cpf</dt>
+            <dd class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+              <svg class="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 12c.263 0 .524-.06.767-.175a2 2 0 0 0 .65-.491c.186-.21.333-.46.433-.734.1-.274.15-.568.15-.864a2.4 2.4 0 0 0 .586 1.591c.375.422.884.659 1.414.659.53 0 1.04-.237 1.414-.659A2.4 2.4 0 0 0 12 9.736a2.4 2.4 0 0 0 .586 1.591c.375.422.884.659 1.414.659.53 0 1.04-.237 1.414-.659A2.4 2.4 0 0 0 16 9.736c0 .295.052.588.152.861s.248.521.434.73a2 2 0 0 0 .649.488 1.809 1.809 0 0 0 1.53 0 2.03 2.03 0 0 0 .65-.488c.185-.209.332-.457.433-.73.1-.273.152-.566.152-.861 0-.974-1.108-3.85-1.618-5.121A.983.983 0 0 0 17.466 4H6.456a.986.986 0 0 0-.93.645C5.045 5.962 4 8.905 4 9.736c.023.59.241 1.148.611 1.567.37.418.865.667 1.389.697Zm0 0c.328 0 .651-.091.94-.266A2.1 2.1 0 0 0 7.66 11h.681a2.1 2.1 0 0 0 .718.734c.29.175.613.266.942.266.328 0 .651-.091.94-.266.29-.174.537-.427.719-.734h.681a2.1 2.1 0 0 0 .719.734c.289.175.612.266.94.266.329 0 .652-.091.942-.266.29-.174.536-.427.718-.734h.681c.183.307.43.56.719.734.29.174.613.266.941.266a1.819 1.819 0 0 0 1.06-.351M6 12a1.766 1.766 0 0 1-1.163-.476M5 12v7a1 1 0 0 0 1 1h2v-5h3v5h7a1 1 0 0 0 1-1v-7m-5 3v2h2v-2h-2Z" />
+              </svg>
+              {{ accountDetails.cpf }}
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <button (click)="openEditModal(accountDetails)" type="button" data-modal-target="accountInformationModal2"
+        data-modal-toggle="accountInformationModal2"
+        class="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:w-auto">
+        <svg class="-ms-0.5 me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z">
+          </path>
+        </svg>
+        Edit your data
+      </button>
+      <div id="infoModal" [class.hidden]="!isInfoModalOpen"
+        class="fixed inset-0 z-50 flex items-center justify-center w-full h-full backdrop-blur-md bg-black/10">
+
+        <!-- Modal principal -->
+        <div id="defaultModal" tabindex="-1" [class.hidden]="!isInfoModalOpen"
+          class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full">
+          <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+            <!-- Conteúdo do Modal -->
+            <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+              <!-- Cabeçalho do Modal -->
+              <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                  Editar
+                </h3>
+                <button type="button" (click)="closeModal()"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                  <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span class="sr-only">Fechar modal</span>
+                </button>
+              </div>
+
+              <!-- Corpo do Modal -->
+              <form action="#" (ngSubmit)="addProduct($event)">
+                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                  <div>
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
+                    <input type="text" id="name" [(ngModel)]="name" name="name"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Nome do produto" required>
+                  </div>
+                  <div>
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
+                    <input type="text" [(ngModel)]="phone" name="phone" id="name"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Nome do produto" required>
+                  </div>
+                  <div>
+                    <label for="rua" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rua</label>
+                    <input type="text" [(ngModel)]="rua" name="rua" id="rua"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Rua" required>
+                  </div>
+
+                  <div>
+                    <label for="numero"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número</label>
+                    <input type="text" [(ngModel)]="numero" name="numero" id="numero"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Número" required>
+                  </div>
+
+                  <div>
+                    <label for="bairro"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
+                    <input type="text" [(ngModel)]="bairro" name="bairro" id="bairro"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Bairro" required>
+                  </div>
+
+                  <div>
+                    <label for="estado"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado</label>
+                    <input type="text" [(ngModel)]="estado" name="estado" id="estado"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Estado" required>
+                  </div>
+                  <div>
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">cpf</label>
+                    <input type="text" [(ngModel)]="cpf" name="cpf" id="name"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Nome do produto" required>
+                  </div>
+                </div>
+                <button type="submit" (click)="closeModal()"
+                  class="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                  Salvar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:p-8">
+      <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Latest orders</h3>
+      <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 dark:border-gray-700 md:pb-5">
+        <dl class="w-1/2 sm:w-48">
+          <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Order ID:</dt>
+          <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
+            <a href="#" class="hover:underline">#FWB12546798</a>
+          </dd>
+        </dl>
+
+        <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto">
+          <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Date:</dt>
+          <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">11.12.2023</dd>
+        </dl>
+
+        <dl class="w-1/2 sm:w-1/5 md:flex-1 lg:w-auto">
+          <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Price:</dt>
+          <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">$499</dd>
+        </dl>
+
+        <dl class="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
+          <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Status:</dt>
+          <dd
+            class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
+            <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
               fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z">
+                d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
               </path>
             </svg>
-                ISSO É UM MODAL ''''' TALVEZ'''''''
+            In transit
+          </dd>
+        </dl>
+
+        <div class="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4">
+          <button id="actionsMenuDropdownModal10" data-dropdown-toggle="dropdownOrderModal10" type="button"
+            class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 md:w-auto">
+            Actions
+            <svg class="-me-0.5 ms-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+              height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m19 9-7 7-7-7"></path>
+            </svg>
           </button>
-        </div>
-        <!-- PEDIDOS REALIZADOS  -->
-        <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:p-8">
-          <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Latest orders</h3>
-          <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 dark:border-gray-700 md:pb-5">
-            <dl class="w-1/2 sm:w-48">
-              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Order ID:</dt>
-              <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
-                <a href="#" class="hover:underline">#FWB12546798</a>
-              </dd>
-            </dl>
-    
-            <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto">
-              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Date:</dt>
-              <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">11.12.2023</dd>
-            </dl>
-    
-            <dl class="w-1/2 sm:w-1/5 md:flex-1 lg:w-auto">
-              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Price:</dt>
-              <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">$499</dd>
-            </dl>
-    
-            <dl class="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
-              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Status:</dt>
-              <dd
-                class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
-                <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                  fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
-                  </path>
-                </svg>
-                In transit
-              </dd>
-            </dl>
-    
-            <div class="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4">
-              <button id="actionsMenuDropdownModal10" data-dropdown-toggle="dropdownOrderModal10" type="button"
-                class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 md:w-auto">
-                Actions
-                <svg class="-me-0.5 ms-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                  height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m19 9-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div id="dropdownOrderModal10"
-                class="z-10 hidden w-40 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700"
-                data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
-                <ul class="p-2 text-left text-sm font-medium text-gray-500 dark:text-gray-400"
-                  aria-labelledby="actionsMenuDropdown10">
-                  <li>
-                    <a href="#"
-                      class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white">
-                      <svg
-                        class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4">
-                        </path>
-                      </svg>
-                      <span>Order again</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white">
-                      <svg
-                        class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-width="2"
-                          d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"></path>
-                        <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
-                      </svg>
-                      Order details
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" data-modal-target="deleteOrderModal" data-modal-toggle="deleteOrderModal"
-                      class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                      <svg class="me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z">
-                        </path>
-                      </svg>
-                      Cancel order
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 py-4 pb-4 dark:border-gray-700 md:py-5">
-            <dl class="w-1/2 sm:w-48">
-              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Order ID:</dt>
-              <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
-                <a href="#" class="hover:underline">#FWB12546777</a>
-              </dd>
-            </dl>
-    
-            <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto">
-              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Date:</dt>
-              <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">10.11.2024</dd>
-            </dl>
-    
-            <dl class="w-1/2 sm:w-1/5 md:flex-1 lg:w-auto">
-              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Price:</dt>
-              <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">$3,287</dd>
-            </dl>
-    
-            <dl class="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
-              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Status:</dt>
-              <dd
-                class="mt-1.5 inline-flex items-center rounded bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-300">
-                <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                  fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M6 18 17.94 6M18 18 6.06 6"></path>
-                </svg>
-                Cancelled
-              </dd>
-            </dl>
-    
-            <div class="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4">
-              <button id="actionsMenuDropdownModal11" data-dropdown-toggle="dropdownOrderModal11" type="button"
-                class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 md:w-auto">
-                Actions
-                <svg class="-me-0.5 ms-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                  height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m19 9-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div id="dropdownOrderModal11"
-                class="z-10 hidden w-40 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700"
-                data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
-                <ul class="p-2 text-left text-sm font-medium text-gray-500 dark:text-gray-400"
-                  aria-labelledby="actionsMenuDropdown11">
-                  <li>
-                    <a href="#"
-                      class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white">
-                      <svg
-                        class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4">
-                        </path>
-                      </svg>
-                      <span>Order again</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#"
-                      class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white">
-                      <svg
-                        class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-width="2"
-                          d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"></path>
-                        <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
-                      </svg>
-                      Order details
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <div id="dropdownOrderModal10"
+            class="z-10 hidden w-40 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700"
+            data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
+            <ul class="p-2 text-left text-sm font-medium text-gray-500 dark:text-gray-400"
+              aria-labelledby="actionsMenuDropdown10">
+              <li>
+                <a href="#"
+                  class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white">
+                  <svg
+                    class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4">
+                    </path>
+                  </svg>
+                  <span>Order again</span>
+                </a>
+              </li>
+              <li>
+                <a href="#"
+                  class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white">
+                  <svg
+                    class="me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="2"
+                      d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"></path>
+                    <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+                  </svg>
+                  Order details
+                </a>
+              </li>
+              <li>
+                <a href="#" data-modal-target="deleteOrderModal" data-modal-toggle="deleteOrderModal"
+                  class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                  <svg class="me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z">
+                    </path>
+                  </svg>
+                  Cancel order
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <!-- Account Information Modal -->
-      <!-- Modal ------------------------------------------------------------------------------------------------->
-        <!-- AQUI -->
-      <!-- Modal ------------------------------------------------------------------------------------------------->
-      <div id="deleteOrderModal" tabindex="-1" aria-hidden="true"
-        class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
-        <div class="relative h-full w-full max-w-md p-4 md:h-auto">
-          <!-- Modal content -->
-          <div class="relative rounded-lg bg-white p-4 text-center shadow dark:bg-gray-800 sm:p-5">
-            <button type="button"
-              class="absolute right-2.5 top-2.5 ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
-              data-modal-toggle="deleteOrderModal">
-              <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clip-rule="evenodd"></path>
-              </svg>
-              <span class="sr-only">Close modal</span>
-            </button>
-            <div
-              class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 p-2 dark:bg-gray-700">
-              <svg class="h-8 w-8 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
-              </svg>
-              <span class="sr-only">Danger icon</span>
-            </div>
-            <p class="mb-3.5 text-gray-900 dark:text-white"><a href="#"
-                class="font-medium text-primary-700 hover:underline dark:text-primary-500">heleneeng</a>, are you sure you
-              want to delete this order from your account?</p>
-            <p class="mb-4 text-gray-500 dark:text-gray-300">This action cannot be undone.</p>
-            <div class="flex items-center justify-center space-x-4">
-              <button data-modal-toggle="deleteOrderModal" type="button"
-                class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600">No,
-                cancel</button>
-              <button type="submit"
-                class="rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Yes,
-                delete</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    } @else if (error) {
-    <p>Error: {{ error }}</p>
-    } @else {
-    <p>Loading client details...</p>
-    }
+    </div>
+  </div>
+</section>
+}

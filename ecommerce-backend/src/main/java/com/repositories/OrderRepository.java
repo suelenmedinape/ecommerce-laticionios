@@ -11,4 +11,6 @@ import com.enums.OrderStatus;
 public interface OrderRepository extends JpaRepository<Order, Long>{
 
 	List<OrderDTO> findAllByOrderStatus(OrderStatus status);
+	
+	List<OrderDTO> findAllByClientId(Long id);
 }

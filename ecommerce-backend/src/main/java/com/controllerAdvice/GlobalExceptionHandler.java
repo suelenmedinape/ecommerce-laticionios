@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.exceptions.CartNotFoundException;
-import com.exceptions.UserUnauthorizedException;
+import com.exceptions.ClientNotFoundException;
 import com.exceptions.EmailAlreadyRegisteredException;
 import com.exceptions.InsufficientStockException;
 import com.exceptions.OrderNotFoundException;
 import com.exceptions.ProductNotFoundException;
+import com.exceptions.UserUnauthorizedException;
 import com.responses.ValidationErrorResponse;
 
 @RestControllerAdvice
@@ -68,6 +69,12 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String, String>> handlerBadCredentialsException(BadCredentialsException ex){
+    	Map<String, String> response = Map.of("message", ex.getMessage());
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+    
+    @ExceptionHandler(ClientNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handlerClientNotFoundException(ClientNotFoundException ex){
     	Map<String, String> response = Map.of("message", ex.getMessage());
     	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }

@@ -16,7 +16,7 @@
                         </svg>
                       </div>
                       <input type="search" id="default-search"
-                        class="block w-full p-2 ps-10 text-sm text-gray-900 border border-transparent rounded-lg bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent dark:border-transparent dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="block w-full mr-14 p-2 ps-10 text-sm text-gray-900 border border-transparent rounded-lg bg-transparent focus:ring-blue-500 focus:border-blue-500 dark:bg-transparent dark:border-transparent dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         name="search" [(ngModel)]="searchTerm" (input)="buscarProdutos()" placeholder="Procure por produtos"
                         required />
                     </div>
@@ -24,9 +24,9 @@
             </div>
 
             <!-- LOGO -->
-            <div class="justify-center text-center items-center">
+            <div class="mx-auto max-w-screen-xl text-center">
                 <div class="shrink-0">
-                    <a href="#" title="" class="">
+                    <a href="#" title="" class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white">
                         <img class="w-10 h-10 dark:hidden" src="/cow.svg" alt="" />
                         <img class="w-10 h-10 hidden dark:block" src="/cow-dark.svg" alt="" />
                     </a>
