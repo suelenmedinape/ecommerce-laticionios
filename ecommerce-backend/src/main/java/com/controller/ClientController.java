@@ -31,7 +31,7 @@ public class ClientController {
 	@Autowired 
 	private OrderService orderService;
 	
-	@GetMapping("/profile") //ok
+	@GetMapping("/profile") 
 	public ResponseEntity<GetClientDetailsDTO> getClientDetails(){
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
