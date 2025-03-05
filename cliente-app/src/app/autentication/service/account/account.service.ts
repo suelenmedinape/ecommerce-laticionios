@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { HeadersService } from '../token/headers.service';
 import { Observable } from 'rxjs';
 import { Client } from '../../interface/account/user';
+import { Orders } from '../../interface/account/orders';
+import { Cart } from '../../interface/cart/cart';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +35,10 @@ export class AccountService {
   listAllOrders(): Observable<any[]> {
     const headers = this.headersService.getAuthHeaders()
     return this.http.get<any[]>(`${this.url}/orders`, { headers })
+  }
+
+  getOrderDetails(orderId: number): Observable<Cart[]> {
+    const headers = this.headersService.getAuthHeaders()
+    return this.http.get<Cart[]>(`${this.url}/orders/details/${orderId}`, { headers })
   }
 }

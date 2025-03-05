@@ -5,6 +5,7 @@ import { AccountService } from '../../../../autentication/service/account/accoun
 import { NgClass, NgIf } from '@angular/common';
 import { Orders } from '../../../../autentication/interface/account/orders';
 import { OrdersComponent } from '../../../../shared/models/orders/orders.component';
+import { Cart } from '../../../../autentication/interface/cart/cart';
 
 @Component({
   selector: 'app-account',
@@ -18,6 +19,12 @@ export class AccountComponent implements OnInit {
   orders: Orders[] = []
   clientForm: FormGroup
   isEditing = false
+  isInfo = false
+  prod: Cart[] = []
+
+  selectedOrderItems: Cart[] = []
+  selectedOrderId: number | null = null
+  showOrderDetails = false
 
   constructor(
     private accountService: AccountService,
@@ -78,6 +85,10 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  toggleInfo(): void {
+    this.isInfo = !this.isInfo
+  }
+
   updateDetails(): void {
     if (this.clientForm.valid) {
       const updatedClient = this.clientForm.value
@@ -86,7 +97,7 @@ export class AccountComponent implements OnInit {
         next: (response) => {
           this.cliente = response
           this.isEditing = false
-          this.clientDetails();
+          this.clientDetails()
           console.log("Cliente atualizado com sucesso!")
         },
         error: (err) => {
@@ -107,20 +118,20 @@ export class AccountComponent implements OnInit {
 
   listAllOrders(): void {
     this.accountService.listAllOrders().subscribe(
-      (data: any[]) => { 
-          this.orders = data.map(order => {
-              const date = new Date(order.date);
-              return {
-                  ...order,
-                  date: isNaN(date.getTime()) ? "Data Inválida" : date.toISOString().split('T')[0]
-              };
-          });
+      (data: any[]) => {
+        this.orders = data.map((order) => {
+          const date = new Date(order.date)
+          return {
+            ...order,
+            date: isNaN(date.getTime()) ? "Data Inválida" : date.toISOString().split("T")[0],
+          }
+        })
       },
       (error: any) => {
-          console.error("Erro ao listar pedidos:", error);
-          this.orders = []; 
-      }
-  );
+        console.error("Erro ao listar pedidos:", error)
+        this.orders = []
+      },
+    )
   }
 
   cancelOrder(id: number): void {
@@ -134,5 +145,28 @@ export class AccountComponent implements OnInit {
         console.error("Erro ao cancelar pedido:", err)
       },
     })
+  }
+
+  viewOrderDetails(orderId: number): void {
+    this.selectedOrderId = orderId
+    this.accountService.getOrderDetails(orderId).subscribe({
+      next: (items) => {
+        this.selectedOrderItems = items as unknown as Cart[]
+        this.showOrderDetails = true
+      },
+      error: (err) => {
+        console.error("Erro ao carregar detalhes do pedido:", err)
+      },
+    })
+  }
+
+  closeOrderDetails(): void {
+    this.showOrderDetails = false
+    this.selectedOrderItems = []
+    this.selectedOrderId = null
+  }
+
+  calculateTotal(): number {
+    return this.selectedOrderItems.reduce((total, item) => total + item.totalPrice, 0)
   }
 }
