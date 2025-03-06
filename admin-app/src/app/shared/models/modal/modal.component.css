@@ -1,0 +1,10 @@
+:host { 
+    border: 0px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #727272;
+    background-color: #e7ffb6;
+  
+    &::backdrop {
+      backdrop-filter: blur(2px);
+    }
+  }

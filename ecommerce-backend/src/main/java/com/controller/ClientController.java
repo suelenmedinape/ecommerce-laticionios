@@ -31,7 +31,7 @@ public class ClientController {
 	@Autowired 
 	private OrderService orderService;
 	
-	@GetMapping("/profile")
+	@GetMapping("/profile") 
 	public ResponseEntity<GetClientDetailsDTO> getClientDetails(){
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -41,7 +41,7 @@ public class ClientController {
 		return ResponseEntity.ok(dto);
 	}
 	
-	@PutMapping("/details")
+	@PutMapping("/details") 
 	public ResponseEntity<Void> updateDetailsClient(@RequestBody ClientUpdateDTO clientUpdateDTO) {		
 	    String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		Client client = clientService.findByEmail(email);
@@ -50,7 +50,7 @@ public class ClientController {
 	    return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping("/orders")
+	@GetMapping("/orders") 
 	public ResponseEntity<List<OrderDTO>> listAllOrders(){
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		Client client = clientService.findByEmail(email);	

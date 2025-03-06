@@ -1,8 +1,11 @@
+import { Address } from "./address";
+
 export interface AccountDetails {
-    id: number;
-    name: string;
-    email: string;
-    phone: string;
-    address: string;
-    cpf: string;
+  name: string;
+  email: string;
+  phone: string;
+  id: number;
+  address: Address;  
+  cpf: string;
 }
+  

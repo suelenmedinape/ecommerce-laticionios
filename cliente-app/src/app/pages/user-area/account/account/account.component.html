@@ -1,0 +1,292 @@
+<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-8">
+  @if (cliente && !isEditing) {
+  <div class="mx-auto max-w-screen-lg px-4 2xl:px-0">
+    <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6">General overview</h2>
+    <div class="py-4 md:py-8">
+      <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
+        <div class="space-y-4">
+          <div class="flex space-x-4">
+            <img class="h-16 w-16 rounded-lg"
+              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
+              alt="Helene avatar" />
+            <div>
+              <span
+                class="mb-2 inline-block rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
+                Account </span>
+              <h2 class="flex items-center text-xl font-bold leading-none text-gray-900 dark:text-white sm:text-2xl">{{
+                cliente.name }}</h2>
+            </div>
+          </div>
+          <dl class="">
+            <dt class="font-semibold text-gray-900 dark:text-white">Email Address</dt>
+            <dd class="text-gray-500 dark:text-gray-400">{{ cliente.email }}</dd>
+          </dl>
+          <dl>
+            <dt class="font-semibold text-gray-900 dark:text-white">Home Address</dt>
+            @if (cliente.address) {
+            <dd class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+              <svg class="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5" />
+              </svg>
+              {{ cliente.address.street }}, {{ cliente.address.number }}, {{ cliente.address.neighborhood }}, {{
+              cliente.address.state }}
+            </dd>
+            } @else {
+            <p>Nenhum endereço cadastrado</p>
+            }
+          </dl>
+        </div>
+        <div class="space-y-4">
+          <dl>
+            <dt class="font-semibold text-gray-900 dark:text-white">Phone Number</dt>
+            @if (cliente.phone) {
+            <dd class="text-gray-500 dark:text-gray-400">{{ cliente.phone }}</dd>
+            }
+          </dl>
+          <dl>
+            <dt class="font-semibold text-gray-900 dark:text-white"> CPF </dt>
+            @if (cliente.cpf) {
+            <dd class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
+              {{ cliente.cpf }}
+            </dd>
+            }
+          </dl>
+        </div>
+      </div>
+      <!-- ORDERS -->
+      <button (click)="toggleEdit()" type="button" data-modal-target="accountInformationModal2"
+        data-modal-toggle="accountInformationModal2"
+        class="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:w-auto">
+        <svg class="-ms-0.5 me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z">
+          </path>
+        </svg>
+        Edit your data
+      </button>
+    </div>
+    <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:p-8">
+      <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Latest orders</h3>
+      @for(order of orders; track order.id){
+      <div class="flex mb-4 flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 dark:border-gray-700 md:pb-5">
+        <dl class="w-1/2 sm:w-48">
+          <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Order ID:</dt>
+          <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
+            <a href="#" class="hover:underline">{{ order.id }}</a>
+          </dd>
+        </dl>
+
+        <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto">
+          <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Date:</dt>
+          <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">{{ order.date }}</dd>
+        </dl>
+
+        <dl class="w-1/2 sm:w-1/5 md:flex-1 lg:w-auto">
+          <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Price:</dt>
+          <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">R$ {{ order.totalValue }}</dd>
+        </dl>
+
+        <dl class="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
+          <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Status:</dt>
+          <app-orders [levelSatatus]="order.orderStatus"></app-orders>
+        </dl>
+
+        <div class="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4">
+          <button (click)="cancelOrder(order.id)" type="button"
+            class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-red-200 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 md:w-auto">
+            <svg class="w-4 h-4 text-gray-900 mr-1 dark:text-gray-400" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M6 18 17.94 6M18 18 6.06 6" />
+            </svg>
+            Cancelar
+          </button>
+          <button (click)="viewOrderDetails(order.id)" type="button"
+            class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 md:w-auto">
+            <svg class="w-4 h-4 text-gray-900 mr-1 dark:text-gray-400" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            Info
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+  <!-- Main modal -->
+  @if (isEditing) {
+  <div id="updateProductModal"
+    class="fixed top-0 right-0 left-0 z-50 flex h-modal w-full items-center justify-center overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
+    <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
+      <!-- Modal content -->
+      <div class="relative rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-5">
+        <!-- Modal header -->
+        <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5 dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Atualizar
+          </h3>
+          <button (click)="toggleEdit()" type="button"
+            class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="updateProductModal">
+            <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form [formGroup]="clientForm" (ngSubmit)="updateDetails()">
+          <div class="mb-4 grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Name</label>
+              <input type="text" formControlName="name" id="name"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+              @if (clientForm.get('name')?.invalid && clientForm.get('name')?.touched) {
+              <div class="text-red-500 text-sm mt-1">Nome é obrigatório</div>
+              }
+            </div>
+            <div>
+              <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Email</label>
+              <input type="text" formControlName="email" id="email"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                placeholder="Ex. email@example.com">
+              @if (clientForm.get('email')?.invalid && clientForm.get('email')?.touched) {
+              <div class="text-red-500 text-sm mt-1">Email válido é obrigatório</div>
+              }
+            </div>
+            <div>
+              <label for="phone" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Telefone</label>
+              <input type="tel" formControlName="phone" id="phone"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+            </div>
+            <div>
+              <label for="cpf" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">CPF</label>
+              <input type="text" formControlName="cpf" id="cpf"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+            </div>
+
+            <!-- Address section -->
+
+            <div formGroupName="address">
+              <label for="street" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Rua</label>
+              <input type="text" id="street" formControlName="street"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+            </div>
+
+            <div formGroupName="address">
+              <label for="number" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Número</label>
+              <input type="text" id="number" formControlName="number"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+            </div>
+
+            <div formGroupName="address">
+              <label for="neighborhood"
+                class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
+              <input type="text" id="neighborhood" formControlName="neighborhood"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+            </div>
+
+            <div formGroupName="address">
+              <label for="state" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Estado</label>
+              <input type="text" id="state" formControlName="state"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button [disabled]="clientForm.invalid" type="submit"
+              class="rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+              Atualizar
+            </button>
+            <button (click)="toggleEdit()" type="button"
+              class="inline-flex items-center rounded-lg border border-red-600 px-5 py-2.5 text-center text-sm font-medium text-red-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  }
+  @if (showOrderDetails) {
+    <div id="orderDetailsModal" class="fixed top-0 right-0 left-0 z-50 flex h-modal w-full items-center justify-center overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
+      <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
+        <!-- Modal content -->
+        <div class="relative rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-5">
+          <!-- Modal header -->
+          <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5 dark:border-gray-600">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+              Detalhes do Pedido #{{ selectedOrderId }}
+            </h3>
+            <button (click)="closeOrderDetails()" type="button" class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="orderDetailsModal">
+              <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="space-y-4">
+            <div class="relative overflow-x-auto">
+              <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" class="px-6 py-3">
+                      Produto
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                      Quantidade
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                      Preço Unitário
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                      Total
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of selectedOrderItems; track item.id) {
+                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {{ item.product.productName }}
+                    </th>
+                    <td class="px-6 py-4">
+                      {{ item.quantity }}
+                    </td>
+                    <td class="px-6 py-4">
+                      R$ {{ item.unitPrice.toFixed(2) }}
+                    </td>
+                    <td class="px-6 py-4">
+                      R$ {{ item.totalPrice.toFixed(2) }}
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+                <tfoot>
+                  <tr class="font-semibold text-gray-900 dark:text-white">
+                    <th scope="row" colspan="3" class="px-6 py-4 text-right">Total</th>
+                    <td class="px-6 py-4">R$ {{ calculateTotal().toFixed(2) }}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            
+            <div class="flex justify-end">
+              <button (click)="closeOrderDetails()" type="button" class="rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+</section>

@@ -1,31 +1,27 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable } from 'rxjs';
-import { AccountDetails } from '../../interface/account-details';
+import { catchError, Observable, throwError } from 'rxjs';
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AccountService {
+  private url = "/profile"
 
-  private apiUrl = "/profile";
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
-  constructor(
-    private http: HttpClient,
-    private cookieService: CookieService
-  ) { }
-
-  getAccountDetails(params?: { [key: string]: string }): Observable<AccountDetails> {
+  getAccountDetails(): Observable<any> {
     const token = this.cookieService.get("auth_token");
     const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    console.log('Token no getAccountDetails:', token); 
-    let httpParams = new HttpParams();
-    if (params) {
-      Object.keys(params).forEach(key => {
-        httpParams = httpParams.set(key, params[key]);
-      });
-    }
-    return this.http.get<AccountDetails>(this.apiUrl, { headers, params: httpParams });
+    return this.http.get(this.url, {headers});
+  }
+
+  updateAccountDetails(clientUpdateDTO: any): Observable<any> {
+    const token = this.cookieService.get("auth_token"); // Obtém o token do cookie
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+  
+    return this.http.put(this.url, clientUpdateDTO, { headers });
   }
 }
