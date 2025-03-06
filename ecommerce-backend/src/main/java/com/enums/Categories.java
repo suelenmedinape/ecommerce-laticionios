@@ -13,4 +13,13 @@ public enum Categories {
 	public String getDescricao() {
 		return descricao;
 	}
+	
+	public static Categories fromDescricao(String descricao) {
+	    for (Categories categoria : Categories.values()) {
+	        if (categoria.getDescricao().equalsIgnoreCase(descricao.trim())) {
+	            return categoria;
+	        }
+	    }
+	    throw new IllegalArgumentException("Categoria inválida: " + descricao);
+	}
 }

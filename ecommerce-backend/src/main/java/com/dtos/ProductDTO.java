@@ -2,8 +2,8 @@ package com.dtos;
 
 import java.math.BigDecimal;
 
+import com.domain.Product;
 import com.enums.Categories;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,12 +21,19 @@ public class ProductDTO{
 	
 	private Integer quantity;
 	
-	@JsonProperty("category")
 	private Categories category;
 
 	public ProductDTO(){	
 	}
 	
+	public ProductDTO(Product product) {
+		this.productName = product.getProductName();
+		this.description = product.getDescription();
+		this.price = product.getPrice();
+		this.quantity = product.getQuantity();
+		this.category = product.getCategories();
+	}
+
 	public String getProductName() {
 		return productName;
 	}
@@ -59,12 +66,12 @@ public class ProductDTO{
 		this.quantity = quantity;
 	}
 
-	public Categories getCategories() {
-		return category;
+	public String getCategories() {
+		return category.getDescricao();
 	}
 
 	public void setCategory(String category) {
-	    this.category = Categories.valueOf(category.toUpperCase());
+	    this.category = Categories.fromDescricao(category);
 	}
 
 }
