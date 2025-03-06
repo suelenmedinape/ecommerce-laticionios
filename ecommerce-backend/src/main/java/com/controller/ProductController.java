@@ -41,7 +41,13 @@ public class ProductController {
         product.setDescription(productDTO.getDescription());
         product.setPrice(productDTO.getPrice());
         product.setQuantity(productDTO.getQuantity());
-        product.setCategories(productDTO.getCategories());
+        try {
+            Categories category = Categories.fromDescricao(productDTO.getCategories().toUpperCase());
+            product.setCategories(category);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Categoria inválida: " + productDTO.getCategories()));
+        }
     
         productService.insert(product);
         
@@ -61,10 +67,10 @@ public class ProductController {
 	@CrossOrigin(origins = "http://localhost:4201")
 	@GetMapping("/info-product-admin")
 	public ResponseEntity<List<Product>> listProductsAdmin(){
-		List<Product> products = productService.listProducts();
-		
+		List<Product> products = productService.listProducts();	
 		return ResponseEntity.ok(products);
 	}
+	
 	
 	@GetMapping("/list-categories")
 	public ResponseEntity<List<String>> listAllCategories(){
@@ -72,14 +78,32 @@ public class ProductController {
 		return ResponseEntity.ok(categories);
 	}
 	
+	@GetMapping("/list")
+	public ResponseEntity<?> listAllProductByCategory(@RequestParam String category) {
+	    try {
+	        Categories categoryEnum = Categories.fromDescricao(category);
+	        
+	        List<Product> listProducts = productService.findByCategory(categoryEnum);
+	        
+	        List<ProductDTO> dtos = listProducts.stream().map(ProductDTO::new).toList();
+
+	        return ResponseEntity.ok(dtos);
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                .body(Map.of("error", "Categoria inválida: " + category));
+	    }
+	}
+
+	
 	@GetMapping("/{id}")
-	public ResponseEntity<Product> detailProduct(@PathVariable Long id){
+	public ResponseEntity<ProductDTO> detailProduct(@PathVariable Long id){
 		Product product = productService.findById(id);
-		return ResponseEntity.ok(product);
+		ProductDTO dto = new ProductDTO(product);
+		return ResponseEntity.ok(dto);
 	}
 	
 	@GetMapping("/search")
-	public ResponseEntity<List<ProductSummaryDTO>> listProductsByName(@RequestParam String name){
+	public ResponseEntity<List<ProductSummaryDTO>> listAllProductsByName(@RequestParam String name){
 		List<Product> products = productService.listProductsByName(name);
 		List<ProductSummaryDTO> dtos = products.stream()
 				.map(x -> new ProductSummaryDTO(x)).toList();
