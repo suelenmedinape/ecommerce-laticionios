@@ -3,7 +3,7 @@ package com.dtos;
 import java.math.BigDecimal;
 
 import com.domain.Product;
-import com.enums.Categories;
+import com.enums.Category;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public class ProductDTO{
 	
 	private Integer quantity;
 	
-	private Categories category;
+	private Category category;
 
 	public ProductDTO(){	
 	}
@@ -71,7 +71,7 @@ public class ProductDTO{
 	}
 
 	public void setCategory(String category) {
-	    this.category = Categories.fromDescricao(category);
+	    this.category = Category.fromDescricao(category);
 	}
 
 }

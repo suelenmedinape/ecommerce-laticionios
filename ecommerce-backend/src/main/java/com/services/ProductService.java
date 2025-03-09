@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.domain.Product;
 import com.dtos.ProductDTO;
-import com.enums.Categories;
+import com.enums.Category;
 import com.exceptions.ProductNotFoundException;
 import com.repositories.ProductRepository;
 
@@ -20,7 +20,7 @@ public class ProductService {
 
 	public void insert(Product product) {
 		
-		if (EnumSet.allOf(Categories.class).contains(product.getCategories())) {
+		if (EnumSet.allOf(Category.class).contains(product.getCategories())) {
 		    productRepository.save(product);
 		}
 	}
@@ -66,7 +66,7 @@ public class ProductService {
 		productRepository.deleteById(productId);
 	}
 
-	public List<Product> findByCategory(Categories category) {	
+	public List<Product> findByCategory(Category category) {	
 		return productRepository.findByCategory(category);
 	}
 }

@@ -1,12 +1,12 @@
 package com.enums;
 
-public enum Categories {
+public enum Category {
 	LEITE("Leite"), QUEIJO("Queijo"), IOGURTE("Iogurte"), MANTEIGA("Manteiga"), CREME_DE_LEITE("Creme de Leite"),
 	REQUEIJÃO("Requeijão"), LEITE_CONDENSADO("Leite Condensado"), DOCE_DE_LEITE("Doce de Leite");
 
 	private final String descricao;
 
-	Categories(String descricao) {
+	Category(String descricao) {
 		this.descricao = descricao;
 	}
 
@@ -14,8 +14,8 @@ public enum Categories {
 		return descricao;
 	}
 	
-	public static Categories fromDescricao(String descricao) {
-	    for (Categories categoria : Categories.values()) {
+	public static Category fromDescricao(String descricao) {
+	    for (Category categoria : Category.values()) {
 	        if (categoria.getDescricao().equalsIgnoreCase(descricao.trim())) {
 	            return categoria;
 	        }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.domain.Product;
 import com.dtos.ProductDTO;
 import com.dtos.ProductSummaryDTO;
-import com.enums.Categories;
+import com.enums.Category;
 import com.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -42,7 +42,7 @@ public class ProductController {
         product.setPrice(productDTO.getPrice());
         product.setQuantity(productDTO.getQuantity());
         try {
-            Categories category = Categories.fromDescricao(productDTO.getCategories().toUpperCase());
+            Category category = Category.fromDescricao(productDTO.getCategories().toUpperCase());
             product.setCategories(category);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -74,14 +74,14 @@ public class ProductController {
 	
 	@GetMapping("/list-categories")
 	public ResponseEntity<List<String>> listAllCategories(){
-		List<String> categories = Arrays.stream(Categories.values()).map(category -> category.getDescricao()).toList();
+		List<String> categories = Arrays.stream(Category.values()).map(category -> category.getDescricao()).toList();
 		return ResponseEntity.ok(categories);
 	}
 	
 	@GetMapping("/list")
 	public ResponseEntity<?> listAllProductByCategory(@RequestParam String category) {
 	    try {
-	        Categories categoryEnum = Categories.fromDescricao(category);
+	        Category categoryEnum = Category.fromDescricao(category);
 	        
 	        List<Product> listProducts = productService.findByCategory(categoryEnum);
 	        
@@ -90,11 +90,10 @@ public class ProductController {
 	        return ResponseEntity.ok(dtos);
 	    } catch (IllegalArgumentException e) {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-	                .body(Map.of("error", "Categoria inválida: " + category));
+	                .body(Map.of("message", "Categoria inválida: " + category));
 	    }
 	}
 
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductDTO> detailProduct(@PathVariable Long id){
 		Product product = productService.findById(id);

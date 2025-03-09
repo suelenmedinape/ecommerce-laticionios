@@ -2,7 +2,7 @@ package com.domain;
 
 import java.math.BigDecimal;
 
-import com.enums.Categories;
+import com.enums.Category;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +36,7 @@ public class Product {
 	private Integer quantity;
 	
 	@Enumerated(EnumType.STRING)
-	private Categories category;
+	private Category category;
 	
 	
 	public Product() {
@@ -83,11 +83,11 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public Categories getCategories() {
+	public Category getCategories() {
 		return category;
 	}
 
-	public void setCategories(Categories category) {
+	public void setCategories(Category category) {
 		this.category = category;
 	}
 }
