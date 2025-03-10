@@ -41,9 +41,8 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 ---
 
 # Funcionalidades Planejadas
+-
 
-## Usuário Comum / Cliente
-- 
 ## Administrador / Produtor
 - **Relatórios de Vendas**:
   - Listar vendas realizadas em um determinado período, incluindo informações como valor total e produtos mais vendidos.
@@ -58,6 +57,7 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 - **/products**  - um método GET que lista todos os produtos
 - **/products/{id}**  - método GET que irá listar o detalhe de um produto
 - **/products/search?name=** - método GET que lista produtos de acordo com o nome pesquisado
+- **/products/list?category=** - método GET que lista produtos de acordo com a categoria pesquisado
 - **/auth/register** - método POST para o usuário se registrar
 - **/auth/login** - método POST para o usuário logar
 
@@ -76,6 +76,7 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 - **/products**  - método POST que insere novos produtos
 - **/products/{productId}**  - método PUT que atualiza as informações de um produto
 - **/products/{productId}**  - método DELETE que deleta algum produto
+- **/products/list-categories**  - método GET que lista todas as categorias existentes, `método auxiliar para ajudar o produtor a escolher a categoria certa definida no sitema ao inserir um produto novo`
 - **/orders** - método GET que lista todos os pedidos
 - **/orders/{orderId}** - método GET que lista os detalhes de um pedido
 - **/orders/search?status=** - método GET que lista todos os pedidos de acordo com o status

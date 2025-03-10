@@ -2,8 +2,12 @@ package com.domain;
 
 import java.math.BigDecimal;
 
+import com.enums.Category;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,6 +34,10 @@ public class Product {
 	@NotNull
 	@Column(nullable = false)
 	private Integer quantity;
+	
+	@Enumerated(EnumType.STRING)
+	private Category category;
+	
 	
 	public Product() {
 		super();
@@ -73,5 +81,13 @@ public class Product {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Category getCategories() {
+		return category;
+	}
+
+	public void setCategories(Category category) {
+		this.category = category;
 	}
 }

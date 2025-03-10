@@ -15,6 +15,7 @@ public class Address {
 	private Long id;
 	private String street;
 	private String number;
+	private String city;
 	private String neighborhood;
 	private String state;
 	
@@ -44,6 +45,14 @@ public class Address {
 
 	public void setNumber(String number) {
 		this.number = number;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public String getNeighborhood() {

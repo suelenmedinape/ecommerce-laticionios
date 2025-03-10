@@ -2,6 +2,9 @@ package com.dtos;
 
 import java.math.BigDecimal;
 
+import com.domain.Product;
+import com.enums.Category;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,10 +20,20 @@ public class ProductDTO{
 	private BigDecimal price;
 	
 	private Integer quantity;
+	
+	private Category category;
 
 	public ProductDTO(){	
 	}
 	
+	public ProductDTO(Product product) {
+		this.productName = product.getProductName();
+		this.description = product.getDescription();
+		this.price = product.getPrice();
+		this.quantity = product.getQuantity();
+		this.category = product.getCategories();
+	}
+
 	public String getProductName() {
 		return productName;
 	}
@@ -52,4 +65,13 @@ public class ProductDTO{
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+
+	public String getCategories() {
+		return category.getDescricao();
+	}
+
+	public void setCategory(String category) {
+	    this.category = Category.fromDescricao(category);
+	}
+
 }
