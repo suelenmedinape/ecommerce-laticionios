@@ -40,6 +40,7 @@ export class AccountComponent implements OnInit {
         number: [""],
         neighborhood: [""],
         state: [""],
+        city: [""],
       }),
     })
   }
@@ -73,6 +74,7 @@ export class AccountComponent implements OnInit {
           number: "",
           neighborhood: "",
           state: "",
+          city: "",
         },
       })
     }
@@ -156,7 +158,7 @@ export class AccountComponent implements OnInit {
       },
       error: (err) => {
         console.error("Erro ao carregar detalhes do pedido:", err)
-      },
+      }, 
     })
   }
 

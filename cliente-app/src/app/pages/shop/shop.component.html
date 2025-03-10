@@ -4,8 +4,7 @@
       <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
         
       </div>
-      <app-card-product [variavel]="produtos" [lista]="produtos">
-    </app-card-product>
+      <app-card-product [lista]="produtos"></app-card-product>
       <!-- PAGINATION -->
       <div class="w-full text-center mt-8">
         <app-pagination [totalPages]="totalPages" [currentPage]="currentPage" (pageChange)="onPageChange($event)">

@@ -4,6 +4,7 @@ export interface Address {
     number: string | null;
     neighborhood: string | null;
     state: string | null;
+    city: string | null;
   }
   
   export interface Client {

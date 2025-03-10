@@ -9,7 +9,7 @@ import { map, Observable, take } from 'rxjs';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CurrencyPipe, RouterLink, RouterLinkActive, CardProductComponent],
+  imports: [RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

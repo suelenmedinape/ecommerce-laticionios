@@ -112,6 +112,22 @@
                     Loja
                 </a>
             </li>
+            <li>
+                <div class="dropdown">
+                  <a title="" class="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                    Categorias
+                  </a>
+                  <div class="dropdown-content">
+                    @if (category && category.length > 0) {
+                      @for (item of category; track item) {
+                        <a (click)="categSelected(item)">{{ item }}</a>
+                      }
+                    } @else {
+                      <a href="#">Carregando categorias...</a>
+                    }
+                  </div>
+                </div>
+              </li>
             @switch (userRole) {
             @case ('ROLE_ADMIN'){
             <a href="http://localhost:4201"
@@ -184,7 +200,7 @@
 <!-- Lista de produtos encontrados -->
 <div class="flex justify-center items-center mr-8 ml-8">
     @if (!isSearching && produtos.length > 0 && searchTerm.trim() !== '') {
-        <app-card-product [variavel]="produtos" [lista]="produtos">
+        <app-card-product [lista]="produtos">
         </app-card-product>
     }
 </div>
