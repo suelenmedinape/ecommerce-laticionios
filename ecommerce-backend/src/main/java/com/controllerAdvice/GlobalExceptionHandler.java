@@ -14,6 +14,7 @@ import com.exceptions.CartNotFoundException;
 import com.exceptions.ClientNotFoundException;
 import com.exceptions.EmailAlreadyRegisteredException;
 import com.exceptions.InsufficientStockException;
+import com.exceptions.InvalidCategoryException;
 import com.exceptions.OrderNotFoundException;
 import com.exceptions.ProductNotFoundException;
 import com.exceptions.UserUnauthorizedException;
@@ -75,6 +76,12 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(ClientNotFoundException.class)
     public ResponseEntity<Map<String, String>> handlerClientNotFoundException(ClientNotFoundException ex){
+    	Map<String, String> response = Map.of("message", ex.getMessage());
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+    
+    @ExceptionHandler(InvalidCategoryException.class)
+    public ResponseEntity<Map<String, String>> handlerInvalidCategoryException(InvalidCategoryException ex){
     	Map<String, String> response = Map.of("message", ex.getMessage());
     	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
