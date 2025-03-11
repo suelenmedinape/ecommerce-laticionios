@@ -50,9 +50,12 @@ public class ProductService {
 		if(dto.getDescription() != null) {
 			product.setDescription(dto.getDescription());
 		}
+		
 		if(dto.getPrice() != null) {
 			product.setPrice(dto.getPrice());
 		}
+		
+		product.setCategories(Category.fromDescricao(dto.getCategories()));
 		
 		product.setQuantity(dto.getQuantity());
 
