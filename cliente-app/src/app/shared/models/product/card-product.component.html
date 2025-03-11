@@ -18,7 +18,7 @@
             <div class="mb-4 flex items-center justify-between gap-4">
                 <span
                     class="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-                    Categoria do Produto </span>
+                    {{ prod.categories }} </span>
             </div>
             <a [routerLink]="['/produto', prod.id]" routerLinkActive="active"
                 class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">{{

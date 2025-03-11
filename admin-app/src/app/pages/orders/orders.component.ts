@@ -4,72 +4,106 @@ import { CurrencyPipe } from '@angular/common';
 import { OrderStatusComponent } from '../../shared/models/order-status/order-status.component';
 import { PaginationComponent } from '../../shared/_component/pagination/pagination.component';
 import { FormsModule } from '@angular/forms';
-
-export interface Order {
-  id: number;
-  date: string; // Apenas a data no formato YYYY-MM-DD
-  totalValue: number;
-  orderStatus: string;
-}
+import { Order } from '../../autentication/interface/order';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
-  imports: [CurrencyPipe, OrderStatusComponent, PaginationComponent, FormsModule]
+  imports: [OrderStatusComponent, PaginationComponent]
 })
 export class OrdersComponent implements OnInit {
-  orders: Order[] = [];
-  selectedStatus: string = 'SOLICITADO';
+  orders: Order[] = []
+  selectedOrderItems: any[] = [] // Propriedade para armazenar os itens do pedido selecionado
+  orderTotal = 0 // Propriedade para armazenar o valor total do pedido
 
-  isDeleteModalOpen: boolean = false;
-  isInfoModalOpen: boolean = false;
+  itemsPerPage = 10 // Quantos produtos por página
+  currentPage = 1 // Página inicial
 
-  constructor(private orderService: OrdersService) { }
+  showOrderDetails = false
+  selectedOrderId: number | null = null
+  orderStatusSelected: string | null = null
+  selectedStatus = "TODOS"
 
-  ngOnInit() {
-    this.listOrders();
+  isOpen = false
+
+  constructor(private ordersService: OrdersService) {}
+
+  ngOnInit(): void {
+    this.listOrders()
   }
 
-  /* ARRUMAR A DATA */
   listOrders() {
-    this.orderService.listOrders().subscribe(
-        (data: any[]) => { 
-            this.orders = data.map(order => {
-                const date = new Date(order.date);
-                return {
-                    ...order,
-                    date: isNaN(date.getTime()) ? "Data Inválida" : date.toISOString().split('T')[0]
-                };
-            });
-        },
-        (error: any) => {
-            console.error("Erro ao listar pedidos:", error);
-            this.orders = []; 
-        }
-    );
-}
-
-
-
-  updateStatus(id: number, status: string) {
-    this.orderService.updateStatus(id, this.selectedStatus).subscribe(() => {
-      this.listOrders();
-    });
+    this.ordersService.listOrders().subscribe((response: any) => {
+      this.orders = response
+    })
   }
 
-  showDeleteModal() {
-    this.isDeleteModalOpen = true;
-    this.isInfoModalOpen = false;
+  dateFormated(date: string) {
+    return new Date(date).toLocaleDateString("pt-BR")
   }
 
-  showInfoModal() {
-    this.isInfoModalOpen = true;
-    this.isDeleteModalOpen = false;
+  cancelOrder(id: number) {
+    this.ordersService.updateStatus(id, "cancelado").subscribe(() => {
+      this.listOrders()
+    })
   }
 
-  closeModal() {
-    this.isDeleteModalOpen = false;
-    this.isInfoModalOpen = false;
+  finalizarOrder(id: number) {
+    this.ordersService.updateStatus(id, "finalizado").subscribe(() => {
+      this.listOrders()
+      this.showOrderDetails = false
+      this.selectedOrderId = null
+    })
+  }
+
+  get totalPages() {
+    return Math.ceil(this.orders.length / this.itemsPerPage)
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page
+  }
+
+  viewOrderDetails(orderId: number, orderStatus: string): void {
+    this.selectedOrderId = orderId
+    this.orderStatusSelected = orderStatus
+
+    // Buscar os detalhes do pedido quando o modal é aberto
+    this.ordersService.findOrderById(orderId).subscribe((response: any) => {
+      this.selectedOrderItems = response.items
+      this.orderTotal = response.totalValue
+      this.showOrderDetails = true
+    })
+  }
+
+  closeOrderDetails(): void {
+    this.showOrderDetails = false
+    this.selectedOrderId = null
+    this.selectedOrderItems = []
+    this.orderTotal = 0
+  }
+
+  toggleDropdown() {
+    this.isOpen = !this.isOpen
+  }
+
+  applyFilter(status: string): void {
+    this.selectedStatus = status
+    this.isOpen = false
+
+    if (status === "TODOS") {
+      this.listOrders()
+    } else {
+      this.ordersService.filterByStatus(status).subscribe((response: any) => {
+        this.orders = response
+      })
+    }
+  }
+
+  findOrderById(id: number): void {
+    this.ordersService.findOrderById(id).subscribe((response: any) => {
+      this.orders = [response] // Coloca o pedido encontrado em um array
+    })
   }
 }

@@ -1,12 +1,14 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../../autentication/service/auth/user.service';
 import { Subscription } from 'rxjs';
 import { AlertComponent } from '../../models/alert/alert.component';
 import { CardProductComponent } from '../../models/product/card-product.component';
 import { ProdutoService } from '../../../autentication/service/products/produto.service';
+import { CategoryService } from '../../../autentication/service/categ/category.service';
+import { ShopByCategoryComponent } from '../../../pages/byCategory/shop-by-category.component';
 
 
 @Component({
@@ -17,21 +19,40 @@ import { ProdutoService } from '../../../autentication/service/products/produto.
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
-  isOpen = false;
-  showAlert: boolean = false;
-  userRole: string | null = null;
+  isOpen = false
+  showAlert = false
+  userRole: string | null = null
   private subscription: Subscription | null = null
 
-  /* Busca produtos */
-  searchTerm: string = '';
-  produtos: any[] = [];
-  isSearching: boolean = false;
+  category: string[] = []
+  searchTerm = ""
+  produtos: any[] = []
+  isSearching = false
 
-  private userService = inject(UserService);
-  private produtoService = inject(ProdutoService);
+  private userService = inject(UserService)
+  private produtoService = inject(ProdutoService)
+  private categoryService = inject(CategoryService)
+  private router = inject(Router)
 
   ngOnInit(): void {
-    this.typeNavbarWithBaseInRole();
+    this.typeNavbarWithBaseInRole()
+    this.listCategories()
+  }
+
+  listCategories(): void {
+    this.categoryService.listCategories().subscribe(
+      (data) => {
+        console.log("Categorias carregadas:", data)
+        this.category = data
+      },
+      (error) => {
+        console.error("Erro ao carregar categorias:", error)
+      },
+    )
+  }
+
+  categSelected(categ: string): void {
+    this.router.navigate(["/by-category/", categ])
   }
 
   toggleDarkMode(): void {

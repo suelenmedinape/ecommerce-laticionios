@@ -1,27 +1,68 @@
 <app-alert [message]="message" [showAlert]="showAlert" [categAlert]="categAlert" (close)="showAlert = false">
 </app-alert>
-
 <section class="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
     <div class="px-4 mx-auto max-w-screen-2xl lg:px-12">
+        @if (produto.length > 0) {
         <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
             <div
                 class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-                <div class="flex items-center flex-1 space-x-4">
-                    <form class="flex items-center" (ngSubmit)="buscarProdutos()">
-                        <label for="simple-search" class="sr-only">Search</label>
-                        <div class="relative w-85">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                        clip-rule="evenodd" />
+                <div class="flex-1 space-x-4">
+                    <form class=" mr-50">
+                        <div class="flex">
+                            <label for="search-dropdown"
+                                class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                            <button id="dropdown-button" (click)="toggleDropdown()"
+                                class="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                                type="button">
+                                {{ selectedCategory }}
+                                <svg class="ml-1 w-4 h-4 text-gray-900 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 9-7 7-7-7" />
                                 </svg>
+                            </button>
+                            <!-- Dropdown Content -->
+                            @if (isOpen) {
+                            <div
+                                class="absolute left-4 mt-10 w-48 bg-gray-100 border border-gray-200 rounded shadow-lg z-20">
+                                <ul class="py-1 text-gray-700">
+                                    <!-- Add option to clear selection -->
+                                    @if (isCategorySelected()) {
+                                    <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer text-gray-500 border-b border-gray-200"
+                                        (click)="clearCategorySelection()">
+                                        <span class="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                            Limpar seleção
+                                        </span> 
+                                    </li>
+                                    }
+                                    <!-- Categories list -->
+                                    @for (category of categories; track category) {
+                                    <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                                        (click)="selectCategory(category)">
+                                        {{ category }}
+                                    </li>
+                                    }
+                                    <!-- Show message if no categories are available -->
+                                    @if (categories.length === 0) {
+                                    <li class="px-4 py-2 text-gray-500 italic">
+                                        Carregando categorias...
+                                    </li>
+                                    }
+                                </ul>
                             </div>
-                            <input type="text" id="simple-search" [(ngModel)]="searchTerm" name="searchTerm"
-                                (input)="buscarProdutos()"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Search" required>
+                            }
+                            <div class="relative w-full">
+                                <input type="search" id="search-dropdown" (ngModelChange)="searchProduct($event)"
+                                    [(ngModel)]="search" name="search" autocomplete="off"
+                                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                    placeholder="Search name..." required />
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -29,25 +70,23 @@
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <button type="button"
                         class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                        <svg class="w-4 h-4 mr-0.5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        <svg class="w-4 h-4 mr-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                d="M5 12h14m-7 7V5" />
                         </svg>
-
                         <a routerLink="/insert">Add new product</a>
                     </button>
-                    @if(selectedProductId !== null) {
-                    <button type="button"
-                        class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true"
+                    <button type="button" [disabled]="idProduct === 0"
+                        class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                        [ngClass]="{'opacity-50 cursor-not-allowed': idProduct === 0}">
+                        <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-gray-400" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                         </svg>
-                        <a routerLink="/edit/{{selectedProductId}}">Edit</a>
+                        <a [routerLink]="idProduct !== 0 ? ['/edit', idProduct] : null">Edit</a>
                     </button>
-                    } 
                     <button type="button" (click)="showDeleteModal()"
                         class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-red-700 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                         <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true"
@@ -81,7 +120,6 @@
                                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-
                                 <p class="mb-4 text-gray-500 dark:text-gray-300">Tem certeza que deseja excluir esses
                                     items</p>
 
@@ -90,12 +128,10 @@
                                         class="py-2 px-3 text-sm font-medium text-gray-500 bg-white border rounded-lg hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-600">
                                         No, cancel
                                     </button>
-                                    @if(selectedProductsIds.length > 0){
                                     <button type="submit" (click)="deleteProduct()"
                                         class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
                                         Yes, I'm sure
                                     </button>
-                                    }
                                 </div>
                             </div>
                         </div>
@@ -108,7 +144,8 @@
                         <tr>
                             <th scope="col" class="p-4">
                                 <div class="flex items-center">
-                                    <input id="checkbox-all" type="checkbox"
+                                    <input id="checkbox-all" type="checkbox" (click)="toggleSelectAll()"
+                                        [checked]="allSelected"
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     <label for="checkbox-all" class="sr-only">checkbox</label>
                                 </div>
@@ -117,46 +154,48 @@
                             <th scope="col" class="px-4 py-3">Category</th>
                             <th scope="col" class="px-4 py-3">Quantity</th>
                             <th scope="col" class="px-4 py-3">Price</th>
-                            <th scope="col" class="px-4 py-3">Actions</th>
+                            <th scope="col" class="px-4 py-3">Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @for (prod of produtos; track prod.id) {
-                        <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        @for (product of produto; track product.id) {
+                        <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                            [ngClass]="{'bg-blue-50 dark:bg-blue-900/20': isProductSelected(product.id)}">
                             <td class="w-4 px-4 py-3">
                                 <div class="flex items-center">
-                                    <input id="checkbox-table-search-1" type="checkbox"
-                                        (input)="selectProducts(prod.id)" onclick="event.stopPropagation()"
+                                    <input id="checkbox-table-search-{{product.id}}" type="checkbox"
+                                        [checked]="isProductSelected(product.id)" (click)="selectProduct(product.id)"
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    <label for="checkbox-table-search-{{product.id}}" class="sr-only">checkbox</label>
                                 </div>
                             </td>
                             <th scope="row"
-                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{
-                                prod.productName }}</th>
+                                class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ product.productName }}
+                            </th>
                             <td class="px-4 py-2">
                                 <span
-                                    class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">Phone</span>
+                                    class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                                    {{ product.categories }}</span>
                             </td>
                             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex items-center">
-                                    <div class="inline-block w-4 h-4 mr-2 bg-green-400 rounded-full"></div>
-
-                                    {{ prod.quantity}}
+                                    <app-quantity-status [quantity]="product.quantity"></app-quantity-status>
+                                    {{ product.quantity }}
                                 </div>
                             </td>
-                            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{
-                                prod.price | currency:'BRL':'symbol':'1.2-2' }}</td>
+                            <td class="px-4 py-2">R$ {{ product.price }}</td>
                             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <button type="button" (click)="showInfoModal()"
-                                    class="inline-flex items-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-1.5 me-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                                    <svg class="w-3 h-3 mr-1 text-white" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                    <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2"
-                                            d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-5-4v4h4V3h-4Z" />
                                     </svg>
-                                    Info
+                                    Description
                                 </button>
                                 <div id="infoModal" [class.hidden]="!isInfoModalOpen"
                                     class="fixed inset-0 z-50 flex items-center justify-center w-full h-full backdrop-blur-md bg-black/10">
@@ -173,7 +212,8 @@
                                         </button>
                                         <div class="p-5 text-center">
                                             <h5 class="text-lg font-bold">Descrição do Produto</h5>
-                                            <p class="mb-4 text-gray-500 dark:text-gray-300">{{ prod.description }}</p>
+                                            <p class="mb-4 text-gray-500 dark:text-gray-300">{{ product.description }}
+                                            </p>
                                             <div class="flex justify-center space-x-4">
                                                 <button (click)="closeModal()"
                                                     class="inline-flex items-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-1.5 me-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
@@ -189,18 +229,7 @@
                     </tbody>
                 </table>
             </div>
-            <nav class="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0"
-                aria-label="Table navigation">
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    Showing
-                    <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
-                    of
-                    <span class="font-semibold text-gray-900 dark:text-white">1000</span>
-                </span>
-                <ul class="inline-flex items-stretch -space-x-px">
-                    <app-pagination></app-pagination>
-                </ul>
-            </nav>
         </div>
+        }
     </div>
 </section>

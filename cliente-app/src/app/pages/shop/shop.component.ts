@@ -8,7 +8,7 @@ import { ProdutoService } from '../../autentication/service/products/produto.ser
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [PaginationComponent, CurrencyPipe, RouterLink, RouterLinkActive, CardProductComponent],
+  imports: [PaginationComponent, CardProductComponent],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css'
 })

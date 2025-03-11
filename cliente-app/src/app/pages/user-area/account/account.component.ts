@@ -1,122 +1,174 @@
-import { AsyncPipe } from "@angular/common"
-import { Component, OnInit, OnDestroy } from "@angular/core"
-import { FormsModule } from "@angular/forms"
-import { AccountService } from "../../../autentication/service/profile/account.service"
-import { AccountDetails } from "../../../autentication/interface/account-details"
-import { AlertComponent } from "../../../shared/models/alert/alert.component"
-
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Client } from '../../../autentication/interface/account/user';
+import { AccountService } from '../../../autentication/service/account/account.service';
+import { NgClass, NgIf } from '@angular/common';
+import { Orders } from '../../../autentication/interface/account/orders';
+import { OrdersComponent } from '../../../shared/models/orders/orders.component';
+import { Cart } from '../../../autentication/interface/cart/cart';
 
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [AsyncPipe, FormsModule, AlertComponent],
-  providers: [AccountService],
+  imports: [FormsModule, ReactiveFormsModule, OrdersComponent],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css'
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit {
+  cliente: Client | null = null
+  orders: Orders[] = []
+  clientForm: FormGroup
+  isEditing = false
+  isInfo = false
+  prod: Cart[] = []
 
-  name: string = "";
-  email: string = "";
-  phone: string = "";
-  id: number = 0;
-  rua: string = "";
-  numero: string = "";
-  bairro: string = "";
-  estado: string = "";
-  cpf: string = "";
+  selectedOrderItems: Cart[] = []
+  selectedOrderId: number | null = null
+  showOrderDetails = false
 
-  showAlert: boolean = false;
-  message: string = "";
-  categAlert: number = 0;
-
-  constructor(private accountService: AccountService) { }
-
-  accountDetails: AccountDetails | undefined = undefined;
-
-  ngOnInit() {
-    this.listAccountDetails();
+  constructor(
+    private accountService: AccountService,
+    private fb: FormBuilder,
+  ) {
+    this.clientForm = this.fb.group({
+      name: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
+      phone: [""],
+      cpf: [""],
+      address: this.fb.group({
+        street: [""],
+        number: [""],
+        neighborhood: [""],
+        state: [""],
+        city: [""],
+      }),
+    })
   }
 
-  listAccountDetails() {
-    this.accountService.getAccountDetails().subscribe(
-      (response) => {
-        console.log(response); // Veja o que está vindo da API
-        this.accountDetails = response; // Atribuindo a resposta ao array/objeto correto
+  ngOnInit(): void {
+    this.clientDetails()
+    this.listAllOrders()
+  }
+
+  clientDetails(): void {
+    this.accountService.clientDetails().subscribe({
+      next: (client) => {
+        this.cliente = client
+        this.resetForm()
       },
-      (error) => {
-        console.error('Erro ao buscar detalhes da conta:', error);
-      }
-    );
-  }
-
-  selectedAccount: AccountDetails | undefined; // Variável para armazenar os dados do usuário selecionado
-
-  // Função para abrir o modal e preencher os campos
-  openEditModal(account: AccountDetails) {
-    this.selectedAccount = account;
-  
-    // Preenche os campos com os dados da conta selecionada
-    this.name = this.selectedAccount.name;
-    this.phone = this.selectedAccount.phone;
-    this.rua = this.selectedAccount.address.street; 
-    this.numero = this.selectedAccount.address.number;
-    this.bairro = this.selectedAccount.address.neighborhood;
-    this.estado = this.selectedAccount.address.state;
-    this.cpf = this.selectedAccount.cpf;
-  
-    // Abre o modal
-    this.isInfoModalOpen = true;
-  }
-  
-  
-
-  addProduct(event: Event) {
-    event.preventDefault();
-  
-    const clientUpdateDTO = {
-      name: this.name,
-      phone: this.phone,
-      address: {
-        id: this.selectedAccount?.address.id,  // Envia o id do endereço
-        street: this.rua,
-        number: this.numero,
-        neighborhood: this.bairro,
-        state: this.estado
+      error: (err) => {
+        console.error("Erro ao carregar detalhes do cliente:", err)
       },
-      cpf: this.cpf
-    };
-  
-    this.accountService.updateAccountDetails(clientUpdateDTO).subscribe({
-      next: () => {
-        this.showAlert = true;
-        this.message = "Edição concluída com sucesso!";
-        this.categAlert = 3;
-  
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+    })
+  }
+
+  resetForm(): void {
+    if (this.cliente) {
+      this.clientForm.patchValue({
+        name: this.cliente.name,
+        email: this.cliente.email,
+        phone: this.cliente.phone || "",
+        cpf: this.cliente.cpf || "",
+        address: this.cliente.address || {
+          street: "",
+          number: "",
+          neighborhood: "",
+          state: "",
+          city: "",
+        },
+      })
+    }
+  }
+
+  toggleEdit(): void {
+    this.isEditing = !this.isEditing
+    if (!this.isEditing) {
+      this.resetForm()
+    }
+  }
+
+  toggleInfo(): void {
+    this.isInfo = !this.isInfo
+  }
+
+  updateDetails(): void {
+    if (this.clientForm.valid) {
+      const updatedClient = this.clientForm.value
+
+      this.accountService.updateDetails(updatedClient).subscribe({
+        next: (response) => {
+          this.cliente = response
+          this.isEditing = false
+          this.clientDetails()
+          console.log("Cliente atualizado com sucesso!")
+        },
+        error: (err) => {
+          console.error("Erro ao atualizar cliente:", err)
+        },
+      })
+    } else {
+      Object.keys(this.clientForm.controls).forEach((key) => {
+        const control = this.clientForm.get(key)
+        control?.markAsTouched()
+      })
+    }
+  }
+
+  get addressForm() {
+    return this.clientForm.get("address") as FormGroup
+  }
+
+  listAllOrders(): void {
+    this.accountService.listAllOrders().subscribe(
+      (data: any[]) => {
+        this.orders = data.map((order) => {
+          const date = new Date(order.date)
+          return {
+            ...order,
+            date: isNaN(date.getTime()) ? "Data Inválida" : date.toISOString().split("T")[0],
+          }
+        })
       },
-      error: (error) => {
-        console.error('Error:', error);
-        this.showAlert = true;
-        this.message = "Falha na edição.";
-        this.categAlert = 2;
-      }
-    });
-  }
-  
-
-  isDeleteModalOpen: boolean = false;
-  isInfoModalOpen: boolean = false;
-
-  showDeleteModal() {
-    this.isDeleteModalOpen = true;
-    this.isInfoModalOpen = false;
+      (error: any) => {
+        console.error("Erro ao listar pedidos:", error)
+        this.orders = []
+      },
+    )
   }
 
-  closeModal() {
-    this.isDeleteModalOpen = false;
-    this.isInfoModalOpen = false;
+  cancelOrder(id: number): void {
+    this.accountService.cancelOrder(id).subscribe({
+      next: (response) => {
+        this.listAllOrders()
+        console.log("Pedido cancelado com sucesso!")
+      },
+      error: (err) => {
+        console.log(id)
+        console.error("Erro ao cancelar pedido:", err)
+      },
+    })
+  }
+
+  viewOrderDetails(orderId: number): void {
+    this.selectedOrderId = orderId
+    this.accountService.getOrderDetails(orderId).subscribe({
+      next: (items) => {
+        this.selectedOrderItems = items as unknown as Cart[]
+        this.showOrderDetails = true
+      },
+      error: (err) => {
+        console.error("Erro ao carregar detalhes do pedido:", err)
+      }, 
+    })
+  }
+
+  closeOrderDetails(): void {
+    this.showOrderDetails = false
+    this.selectedOrderItems = []
+    this.selectedOrderId = null
+  }
+
+  calculateTotal(): number {
+    return this.selectedOrderItems.reduce((total, item) => total + item.totalPrice, 0)
   }
 }

@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserService } from '../../../autentication/service/auth/user.service';
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from '../../../shared/models/alert/alert.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,31 +12,57 @@ import { AlertComponent } from '../../../shared/models/alert/alert.component';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   email = ""
   password = ""
-  showAlert: boolean = false;
-  message: string = "";
-  categAlert: number = 0;
+  showAlert = false
+  message = ""
+  categAlert = 0
+  userRole: string | null = null
+  private subscription: Subscription | null = null
 
   private userService = inject(UserService)
   private router = inject(Router)
 
-  // login.component.ts
+  ngOnInit() {
+    this.subscribeToUserRole()
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
+  }
+
   onSubmit() {
-    console.log("Tentando login com:", this.email, this.password); 
+    console.log("Tentando login com:", this.email, this.password)
     this.userService.login(this.email, this.password).subscribe({
-      next: (response) => {
-        this.router.navigate(["/"]);
-        this.showAlert = true;
-        this.message = "Login bem-sucedido!";
-        this.categAlert = 3;
+      next: () => {
+        // The userRole will be updated via the subscription to userRole$
+        console.log("Login bem-sucedido!")
+        this.showAlert = true
+        this.message = "Login bem-sucedido!"
+        this.categAlert = 3
       },
       error: (error) => {
-        this.showAlert = true;
-        this.message = "Falha no login. Por favor, tente novamente.";
-        this.categAlert = 2;
+        console.error("Erro no login:", error)
+        this.showAlert = true
+        this.message = "Falha no login. Por favor, tente novamente."
+        this.categAlert = 2
       },
-    });
+    })
   }
-} 
+
+  private subscribeToUserRole(): void {
+    this.subscription = this.userService.userRole$.subscribe((role: string | null) => {
+      console.log("User role updated in LoginComponent:", role)
+      this.userRole = role
+
+      if (role === "ROLE_ADMIN") {
+        this.router.navigate(["/admin"])
+      } else if (role) {
+        this.router.navigate(["/"])
+      }
+    })
+  }
+}
