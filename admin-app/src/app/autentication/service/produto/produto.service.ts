@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
+import { HeadersService } from '../token/headers.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +11,21 @@ export class ProdutoService {
 
   private apiUrl = '/products'; 
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient, private headerService: HeadersService) {}
  
   getProdutos(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/info-product-admin`); 
+    const headers = this.headerService.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/info-product-admin`, {headers}); 
+  }
+
+  deleteProduct(id: number): Observable<any> {
+    const headers = this.headerService.getAuthHeaders();
+    console.log('id', id);
+    return this.http.delete(`${this.apiUrl}/${id}`, {headers});
   }
 
   addProduct(product: any): Observable<any> {
-    const token = this.cookieService.get('auth_token');
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    console.log("Token no addProduct:", token);
+    const headers = this.headerService.getAuthHeaders();
     return this.http.post(this.apiUrl, product, {headers});
   }
 
@@ -27,21 +33,13 @@ export class ProdutoService {
     return this.http.get(`${this.apiUrl}/search?name=${name}`);
   }
 
-  deleteProduct(id: number): Observable<any> {
-    const token = this.cookieService.get('auth_token');
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    console.log("Token no addProduct:", token);
-    return this.http.delete(`${this.apiUrl}/${id}`, {headers});
-  }
-
   editProduct(product: any): Observable<any> {
-    const token = this.cookieService.get('auth_token');
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    console.log("Token no addProduct:", token);
+    const headers = this.headerService.getAuthHeaders();
     return this.http.put(`${this.apiUrl}/${product.id}`, product, {headers});
   }
 
   getProductById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
+    const headers = this.headerService.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/${id}`, {headers});
   }
 }
