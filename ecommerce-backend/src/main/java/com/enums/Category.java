@@ -1,5 +1,7 @@
 package com.enums;
 
+import com.exceptions.InvalidCategoryException;
+
 public enum Category {
 	LEITE("Leite"), QUEIJO("Queijo"), IOGURTE("Iogurte"), MANTEIGA("Manteiga"), CREME_DE_LEITE("Creme de Leite"),
 	REQUEIJÃO("Requeijão"), LEITE_CONDENSADO("Leite Condensado"), DOCE_DE_LEITE("Doce de Leite");
@@ -20,6 +22,6 @@ public enum Category {
 	            return categoria;
 	        }
 	    }
-	    throw new IllegalArgumentException("Categoria inválida: " + descricao);
+	    throw new InvalidCategoryException("Categoria inválida: " + descricao);
 	}
 }
