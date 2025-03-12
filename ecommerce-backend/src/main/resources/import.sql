@@ -17,6 +17,7 @@ INSERT INTO tb_product (product_name, price, description, quantity, category) VA
 INSERT INTO tb_product (product_name, price, description, quantity, category) VALUES ('Leite Condensado Dois', 9.1, 'Descrição do Leite Condensado Dois', 13, 'LEITE_CONDENSADO');
 INSERT INTO tb_product (product_name, price, description, quantity, category) VALUES ('Doce de Leite Um', 6.3, 'Descrição do Doce de Leite Um', 10, 'DOCE_DE_LEITE');
 INSERT INTO tb_product (product_name, price, description, quantity, category) VALUES ('Doce de Leite Dois', 8.4, 'Descrição do Doce de Leite Dois', 12, 'DOCE_DE_LEITE');
+INSERT INTO tb_product (product_name, price, description, quantity, category) VALUES ('Doce de Leite Tres', 9.4, 'Descrição do Doce de Leite tres', 12, 'DOCE_DE_LEITE');
 
 
 INSERT INTO tb_client (name, email, password, role) VALUES ('User Um', 'userum@gmail.com', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', 'ROLE_CLIENT');
@@ -90,17 +91,95 @@ INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (3, '20
 INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (4, '2025-03-11 10:45:00', 95.00, 'CANCELADO');
 
 
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (1, 2, 1, 19.67, 19.67);
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (1, 4, 3, 34.8, 104.4);
+-- Inserir itens nos pedidos
 
+-- Pedido 1
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (1, 1, 2, 10.0, 20.0), (1, 3, 1, 5.5, 5.5);
 
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (2, 3, 2, 5.5, 11.0);  
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (2, 5, 4, 8.9, 35.6); 
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (2, 8, 3, 13.5, 40.5);  
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (2, 10, 2, 8.25, 16.5);
+-- Pedido 2
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (2, 2, 1, 19.67, 19.67), (2, 5, 2, 8.9, 17.8);
 
+-- Pedido 3
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (3, 4, 3, 4.8, 14.4), (3, 6, 1, 11.45, 11.45);
 
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (3, 7, 1, 7.8, 7.8);
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (3, 9, 2, 5.9, 11.8);  
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (3, 12, 3, 12.2, 36.6); 
-INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (3, 14, 2, 9.1, 18.2);
+-- Pedido 4
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (4, 7, 1, 7.8, 7.8),(4, 8, 2, 13.5, 27.0);
+
+-- Pedido 5
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (5, 9, 1, 5.9, 5.9), (5, 10, 3, 8.25, 24.75);
+
+-- Pedido 6
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (6, 11, 2, 8.6, 17.2), (6, 12, 1, 12.2, 12.2);
+
+-- Pedido 7
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (7, 13, 1, 7.7, 7.7), (7, 14, 2, 9.1, 18.2);
+
+-- Pedido 8
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (8, 15, 1, 6.3, 6.3), (8, 16, 2, 8.4, 16.8);
+
+-- Pedido 9
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (9, 1, 3, 10.0, 30.0), (9, 2, 1, 19.67, 19.67);
+
+-- Pedido 10
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (10, 3, 2, 5.5, 11.0), (10, 4, 1, 4.8, 4.8);
+
+-- Pedido 11
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (11, 5, 1, 8.9, 8.9), (11, 6, 2, 11.45, 22.9);
+
+-- Pedido 12
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (12, 7, 1, 7.8, 7.8), (12, 8, 1, 13.5, 13.5);
+
+-- Pedido 13
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (13, 9, 2, 5.9, 11.8), (13, 10, 1, 8.25, 8.25);
+
+-- Pedido 14
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (14, 11, 1, 8.6, 8.6), (14, 12, 3, 12.2, 36.6);
+
+-- Pedido 15
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (15, 13, 1, 7.7, 7.7), (15, 14, 2, 9.1, 18.2);
+
+-- Pedido 16
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (16, 15, 1, 6.3, 6.3), (16, 16, 1, 8.4, 8.4);
+
+-- Pedido 17
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (17, 1, 2, 10.0, 20.0), (17, 2, 1, 19.67, 19.67);
+
+-- Pedido 18
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (18, 3, 1, 5.5, 5.5), (18, 4, 2, 4.8, 9.6);
+
+-- Pedido 19
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (19, 5, 1, 8.9, 8.9), (19, 6, 1, 11.45, 11.45);
+
+-- Pedido 20
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (20, 7, 2, 7.8, 15.6), (20, 8, 1, 13.5, 13.5);
+
+-- Pedido 21
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (21, 9, 1, 5.9, 5.9), (21, 10, 2, 8.25, 16.5);
+
+-- Pedido 22
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (22, 11, 1, 8.6, 8.6), (22, 12, 1, 12.2, 12.2);
+
+-- Pedido 23
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (23, 13, 2, 7.7, 15.4), (23, 14, 1, 9.1, 9.1);
+
+-- Pedido 24
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (24, 15, 1, 6.3, 6.3), (24, 16, 2, 8.4, 16.8);
+
+-- Pedido 25
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (25, 1, 1, 10.0, 10.0), (25, 2, 1, 19.67, 19.67);
+
+-- Pedido 26
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (26, 3, 2, 5.5, 11.0), (26, 4, 1, 4.8, 4.8);
+
+-- Pedido 27
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (27, 5, 1, 8.9, 8.9), (27, 6, 1, 11.45, 11.45);
+
+-- Pedido 28
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (28, 7, 1, 7.8, 7.8), (28, 8, 2, 13.5, 27.0);
+
+-- Pedido 29
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (29, 9, 1, 5.9, 5.9), (29, 10, 1, 8.25, 8.25);
+
+-- Pedido 30
+INSERT INTO tb_order_item (order_id, product_id, quantity, unit_price, total_price) VALUES (30, 11, 2, 8.6, 17.2), (30, 12, 1, 12.2, 12.2);
+
