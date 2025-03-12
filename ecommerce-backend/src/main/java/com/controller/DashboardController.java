@@ -68,7 +68,6 @@ public class DashboardController {
 		return ResponseEntity.ok().body(dashboardService.findTop5BestSellingProducts());
 	}
 
-	// Top 5 produtos menos vendidos/ acesso apenas ao produtor
 	@GetMapping("/products/worst-sellers")
 	public ResponseEntity<List<ProductRankingDTO>> getTopLeastSellingProducts() {
 		return ResponseEntity.ok().body(dashboardService.findBottom5LeastSellingProducts());
