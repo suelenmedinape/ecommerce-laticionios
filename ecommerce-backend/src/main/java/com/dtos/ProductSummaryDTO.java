@@ -15,6 +15,16 @@ public class ProductSummaryDTO {
 	public ProductSummaryDTO() {
 	}
 	
+	public ProductSummaryDTO(Long id, String productName, BigDecimal price, Category category) {
+		super();
+		this.id = id;
+		this.productName = productName;
+		this.price = price;
+		this.category = category;
+	}
+
+
+
 	public ProductSummaryDTO(Product product) {
 		this.id = product.getId();
 		this.productName = product.getProductName();
