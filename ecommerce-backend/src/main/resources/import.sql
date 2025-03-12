@@ -38,6 +38,15 @@ INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (1, CUR
 INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (3, CURRENT_TIMESTAMP, 145.90, 'FINALIZADO'); 
 INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (4, CURRENT_TIMESTAMP, 85.30, 'CANCELADO');
 
+-- Pedidos para o mês de Agosto (2024)
+INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (2, '2024-08-02 08:20:00', 160.80, 'CANCELADO');
+
+-- Pedidos para o mês de Setembro (2024)
+INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (2, '2024-09-02 08:20:00', 160.80, 'FINALIZADO');
+INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (2, '2024-09-02 08:20:00', 160.80, 'FINALIZADO');
+INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (2, '2024-09-02 08:20:00', 160.80, 'FINALIZADO');
+
+
 -- Pedidos para o mês de Outubro (2024)
 INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (2, '2024-10-02 08:20:00', 160.80, 'FINALIZADO');
 INSERT INTO tb_order (client_id, date, total_value, order_status) VALUES (3, '2024-10-07 12:10:00', 140.25, 'FINALIZADO');
