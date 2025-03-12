@@ -2,7 +2,6 @@ package com.controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +15,7 @@ import com.domain.Product;
 import com.dtos.OrderComparisonDTO;
 import com.dtos.OrderStatusSummaryDTO;
 import com.dtos.OrderSummaryDTO;
-import com.dtos.ProductSummaryDTO;
+import com.dtos.ProductRankingDTO;
 import com.services.DashboardService;
 
 @RestController
@@ -48,8 +47,6 @@ public class DashboardController {
 		return ResponseEntity.ok(summary);
 	}
 
-	// Comparação entre pedidos finalizados e o valor total ganho de um mês em
-	// relação ao outro
 	@GetMapping("/orders/comparison")
 	public ResponseEntity<List<OrderComparisonDTO>> compareOrderByMonth(
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate monthOne,
@@ -66,16 +63,15 @@ public class DashboardController {
 		return ResponseEntity.ok(summary);
 	}
 
-	// Top 5 produtos mais vendidos/acesso a todos
 	@GetMapping("/products/best-sellers")
-	public ResponseEntity<List<ProductSummaryDTO>> getTopBestSellingProducts() {
-		return null;
+	public ResponseEntity<List<ProductRankingDTO>> getTopBestSellingProducts() {
+		return ResponseEntity.ok().body(dashboardService.findTop5BestSellingProducts());
 	}
 
 	// Top 5 produtos menos vendidos/ acesso apenas ao produtor
 	@GetMapping("/products/worst-sellers")
-	public ResponseEntity<List<ProductSummaryDTO>> getTopLeastSellingProducts() {
-		return null;
+	public ResponseEntity<List<ProductRankingDTO>> getTopLeastSellingProducts() {
+		return ResponseEntity.ok().body(dashboardService.findBottom5LeastSellingProducts());
 	}
 
 	@GetMapping("/products/low-stock")

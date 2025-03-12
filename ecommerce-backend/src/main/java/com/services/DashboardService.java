@@ -20,7 +20,7 @@ import com.dtos.OrderComparisonDTO;
 import com.dtos.OrderStatusSummaryDTO;
 import com.dtos.OrderStatusSummaryProjectionDTO;
 import com.dtos.OrderSummaryDTO;
-import com.repositories.OrderItemRepository;
+import com.dtos.ProductRankingDTO;
 import com.repositories.OrderRepository;
 import com.repositories.ProductRepository;
 
@@ -32,9 +32,6 @@ public class DashboardService {
 
 	@Autowired
 	private OrderRepository orderRepository;
-
-	@Autowired
-	private OrderItemRepository itemRepository;
 
 	public OrderSummaryDTO getTotalRevenueByPeriod(LocalDate start, LocalDate end) {
 		Date startDate = convertToDate(start);
@@ -124,5 +121,15 @@ public class DashboardService {
 		List<OrderComparisonDTO> list = orderRepository.compareOrderCompletion(monthOne, monthTwo);
 		
 		return list;
+	}
+	
+	public List<ProductRankingDTO> findTop5BestSellingProducts(){
+		
+		return orderRepository.findTop5BestSellingProducts();
+	}
+	
+public List<ProductRankingDTO> findBottom5LeastSellingProducts(){
+		
+		return orderRepository.findBottom5LeastSellingProducts();
 	}
 }
