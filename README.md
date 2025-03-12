@@ -46,7 +46,7 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
       <a href="https://github.com/suelenmedinape" title="defina o título do link">
         <img src="https://avatars.githubusercontent.com/u/164355192?v=4" width="100px;" alt="Foto de Suelen no GitHub"/><br>
         <sub>
-          <b>Jhonata Castro</b>
+          <b>Suelen Medina</b>
         </sub>
       </a>
     </td>
