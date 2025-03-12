@@ -16,14 +16,15 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 - **Catálogo de Produtos** - acesso para qualquer tipo de *USUÁRIO*:
   - Visualizar o catálogo de produtos disponíveis.
   - Pesquisar produtos por nome.
+  - Visualizar produtos mais vendidos
 - **Carrinho de Compras** - acesso apenas para *Clientes* logados:
   - Adicionar produtos ao carrinho.
   - Visualizar os itens do carrinho.
   - Remover produtos do carrinho.
   - Finalizar o pedido com os itens do carrinho.
-  - **Pedidos** - acesso apenas para *Clientes* logados:
+- **Pedidos** - acesso apenas para *Clientes* logados:
   - Visualizar todos pedidos feitos.
-  - Cancelar um pedido realizado
+  - Cancelar um pedido realizado.
 
 ## Administrador / Produtor
 - **Gerenciamento de Produtos**:
@@ -32,22 +33,24 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
   - Atualizar informações de produtos pelo ID.
   - Remover produtos pelo ID.
   - Buscar produtos específicos pelo ID.
+  - Listar produtos com o estoque baixo
 - **Gerenciamento de Pedidos**:
   - Listar todos os pedidos.
   - Buscar pedidos específicos pelo ID.
   - Listar pedidos filtrados por status.
   - Atualizar o status de um pedido.
+- **Dashboard**:
+  - Listar pedidos *FINALIZADO* realizados no mês atual, mostrando informaçôes da quantidade e valor ganho.
+  - Listar pedidos *FINALIZADO* totais que foram realizados, mostrando informaçôes da quantidade e valor ganho.
+  - Lista quantos pedidos *FINALIZADO* foram realizados em um período e quantos no outro.
+  - Listar produtos mais vendidos.
+  - Listar produtos menos vendidos.
+  - Listar todos a quantidade de pedidos finalizados e cancelados por meses em um perìodo de 11 meses mais o mes atual.
 
 ---
 
 # Funcionalidades Planejadas
--
-
-## Administrador / Produtor
-- **Relatórios de Vendas**:
-  - Listar vendas realizadas em um determinado período, incluindo informações como valor total e produtos mais vendidos.
-- **Controle de Estoque**:
-  - Verificação automatizada que notifica o administrador sobre a quantidade disponível de produtos no estoque.
+- ...
 
 ---
 
@@ -58,6 +61,7 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 - **/products/{id}**  - método GET que irá listar o detalhe de um produto
 - **/products/search?name=** - método GET que lista produtos de acordo com o nome pesquisado
 - **/products/list?category=** - método GET que lista produtos de acordo com a categoria pesquisado
+- **/dashboard/products/best-sellers** - método GET que lista os produtos mais vendidos
 - **/auth/register** - método POST para o usuário se registrar
 - **/auth/login** - método POST para o usuário logar
 
@@ -81,6 +85,13 @@ Este projeto é uma plataforma de e-commerce para a venda de laticínios por enc
 - **/orders/{orderId}** - método GET que lista os detalhes de um pedido
 - **/orders/search?status=** - método GET que lista todos os pedidos de acordo com o status
 - **/orders/{orderId}?status=** - método PUT para atualizar o status de um pedido
+- **/dashboard/orders/total-revenue/count?startDate=???-??-??&endDate=??-??-??**  - método GET que mostra quantos pedidos *FINALIZADO* foram concluidos em um período e quantos no outro e quanto foi ganho
+- **/dashboard/products/low-stock**  - método GET que lista os produtos que estão abaixo do estoque, ele possui um valor default = 10 tendo a opçao de informar o valor pretendido - **/dashboard/products/low-stock?quantity=15**
+- **/dashboard/orders/current-month** - método GET que lista a quantidade de pedidos *FINALIZADO* e o valor total ganho no mês atual
+- **/dashboard/orders/total-revenue** - método GET que lista a quantidade de pedidos **FINALIZADO** totais que foram feito e o valor total ganho
+- **/dashboard/orders/status-summary** - método GET que traz a quantidade de pedidos *FINALIZADO* e *CANCELADO* em um período de 11 meses mais o mês atual, separando os pedidos por meses e *FINALIZDO* e *CANCELADO*
+- **/dashboard/orders/comparison?monthOne=????-??-??&monthTwo=????-??-??** - método GET que lista quantos pedidos *FINALIZADO* foram realizados em um período e quantos no outro
+- **/dashboard/products/worst-sellers** - método GET que listar os produtos menos pedidos
 
 ---
 
