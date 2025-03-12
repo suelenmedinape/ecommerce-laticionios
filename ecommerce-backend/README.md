@@ -43,7 +43,8 @@
 ---
 
 # Funcionalidades Planejadas
-- ...
+- Integração com Pagamento: Adicionar suporte para pagamentos online.
+- Notificações: Enviar notificações por email ou SMS para clientes sobre status de pedidos.
 
 ---
 
