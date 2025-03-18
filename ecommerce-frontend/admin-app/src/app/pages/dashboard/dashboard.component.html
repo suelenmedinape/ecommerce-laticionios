@@ -1,0 +1,16 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+        <div class="border-2 border-dashed border-transparent rounded-lg dark:border-transparent h-32 md:h-35"> <app-card-dashboard [config]="cardConfigs['finish']"></app-card-dashboard> </div>
+        <div class="border-2 border-dashed rounded-lg border-transparent dark:border-transparent h-32 md:h-35"> <app-card-dashboard [config]="cardConfigs['sales']"></app-card-dashboard> </div>
+        <div class="border-2 border-dashed rounded-lg border-transparent dark:border-transparent h-32 md:h-35"> <app-card-dashboard [config]="cardConfigs['day']"></app-card-dashboard> </div>
+    <div class="border-2 border-dashed rounded-lg border-transparent dark:border-transparent h-32 md:h-35"></div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-4">
+    <div class="border-2 border-dashed rounded-lg border-transparent dark:border-transparent h-96 md:h-[400px]">
+        <app-graphic-bar></app-graphic-bar> 
+      </div>
+    <div class="border-2 border-dashed rounded-lg border-transparent dark:border-transparent h-48 md:h-100">
+
+    </div>
+    <div class="border-2 border-dashed rounded-lg border-transparent dark:border-transparent h-48 md:h-72"></div>
+    <div class="border-2 border-dashed rounded-lg border-transparent dark:border-transparent h-48 md:h-72"></div>
+</div>
