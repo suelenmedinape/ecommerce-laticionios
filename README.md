@@ -16,8 +16,8 @@ O projeto foi desenvolvido para atender às necessidades de um vendedor autônom
 O repositório está dividido em três pastas principais, cada uma com seu próprio README detalhado. Clique nos links abaixo para saber mais sobre cada parte do projeto:
 
 * [Backend](/ecommerce-backend): Detalhes sobre a API, endpoints, tecnologias utilizadas e como executar o backend.
-* [Frontend do Administrador](admin-app): Informações sobre a interface do administrador, funcionalidades e como configurar o ambiente.
-* [Frontend do Cliente](cliente-app): Detalhes sobre a interface do cliente, funcionalidades e como rodar o projeto localmente.
+* [Frontend do Administrador](/ecommerce-frontend/admin-app): Informações sobre a interface do administrador, funcionalidades e como configurar o ambiente.
+* [Frontend do Cliente](/ecommerce-frontend/cliente-app): Detalhes sobre a interface do cliente, funcionalidades e como rodar o projeto localmente.
 
 ## Tecnologias Utilizadas
 - **Backend**: Java, Spring Boot
