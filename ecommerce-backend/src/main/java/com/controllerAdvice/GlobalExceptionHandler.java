@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.exceptions.CartNotFoundException;
 import com.exceptions.ClientNotFoundException;
 import com.exceptions.EmailAlreadyRegisteredException;
+import com.exceptions.IncompleteDataException;
 import com.exceptions.InsufficientStockException;
 import com.exceptions.InvalidCategoryException;
 import com.exceptions.OrderNotFoundException;
@@ -82,6 +83,12 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(InvalidCategoryException.class)
     public ResponseEntity<Map<String, String>> handlerInvalidCategoryException(InvalidCategoryException ex){
+    	Map<String, String> response = Map.of("message", ex.getMessage());
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+    
+    @ExceptionHandler(IncompleteDataException.class)
+    public ResponseEntity<Map<String, String>> handlerIncompleteDataException(IncompleteDataException ex){
     	Map<String, String> response = Map.of("message", ex.getMessage());
     	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
