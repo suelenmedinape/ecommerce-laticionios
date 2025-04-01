@@ -6,13 +6,16 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.domain.Address;
 import com.domain.Cart;
 import com.domain.CartItem;
+import com.domain.Client;
 import com.domain.Order;
 import com.domain.OrderItem;
 import com.domain.Product;
 import com.enums.OrderStatus;
 import com.exceptions.CartNotFoundException;
+import com.exceptions.IncompleteDataException;
 import com.exceptions.UserUnauthorizedException;
 import com.exceptions.InsufficientStockException;
 import com.exceptions.ProductNotFoundException;
@@ -102,8 +105,22 @@ public class CartService {
 
 	@Transactional
 	public void buyItemsFromCart(Long clientId) {
-		clientRepository.findById(clientId)
+		Client client = clientRepository.findById(clientId)
 		.orElseThrow(() -> new UserUnauthorizedException("Cliente não encontrado"));
+		
+		Address address = client.getAddress();
+	    if (address == null || 
+	        address.getCity() == null || 
+	        address.getNeighborhood() == null || 
+	        address.getNumber() == null || 
+	        address.getState() == null || 
+	        address.getStreet() == null) {
+	        throw new IncompleteDataException("Dados do endereço incompletos.");
+	    }
+	    
+	    if (client.getCpf() == null) {
+	        throw new IncompleteDataException("CPF não cadastrado.");
+	    }
 		
 		Cart cart = cartRepository.findByClientId(clientId)
 				.orElseThrow(() -> new CartNotFoundException("Carrinho não encontrado"));
@@ -111,9 +128,10 @@ public class CartService {
 		Order order = new Order();
 		order.setClient(cart.getClient());
 		order.setDate(new Date());
-		order.setOrderStatus(OrderStatus.SOLICITADO);
+		order.setOrderStatus(OrderStatus.SOLICITADO);	
 
 		BigDecimal totalValue = BigDecimal.ZERO;
+		
 		for (CartItem cartItem : cart.getCartItems()) {
 			OrderItem orderItem = new OrderItem();
 			orderItem.setProduct(cartItem.getProduct());
@@ -124,7 +142,8 @@ public class CartService {
 			if (cartItem.getQuantity() <= product.getQuantity()) {
 				orderItem.setQuantity(cartItem.getQuantity());
 			} else {
-				throw new InsufficientStockException("Quantidade não disponível em estoque");
+				throw new InsufficientStockException("Quantidade não disponível em estoque" +
+						 product.getProductName());
 			}
 
 			orderItem.setUnitPrice(cartItem.getUnitPrice());
@@ -141,8 +160,7 @@ public class CartService {
 		orderRepository.save(order);
 
 		for (CartItem cartItem : cart.getCartItems()) {
-			Product updateProduct = productRepository.findById(cartItem.getProduct().getId())
-					.orElseThrow(() -> new ProductNotFoundException("Produto não encontrado"));
+			Product updateProduct = cartItem.getProduct();
 			updateProduct.setQuantity(updateProduct.getQuantity() - cartItem.getQuantity());
 			productRepository.save(updateProduct);
 		}
