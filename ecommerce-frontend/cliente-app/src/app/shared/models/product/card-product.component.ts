@@ -17,7 +17,13 @@ export class CardProductComponent {
   categAlert = 0
   message = ""
 
+  productsInCart = new Map<number, boolean>();
+
   constructor(private cartService: CartService) {}
+
+  isProductInCart(productId: number): boolean {
+    return this.productsInCart.get(productId) === true;
+  }
 
   addToCart(productId: number, quantity: number): void {
     if (quantity <= 0) {
@@ -30,6 +36,11 @@ export class CardProductComponent {
         this.showAlert = true
         this.categAlert = 3
         this.message = "Produto adicionado ao carrinho!"
+
+        setTimeout(() => {
+          // Atualiza apenas o produto específico
+          this.productsInCart.set(productId, true);
+        }, 500);
       },
       error: (error) => {
         if (error.status === 401) {

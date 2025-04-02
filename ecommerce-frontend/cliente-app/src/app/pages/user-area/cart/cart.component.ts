@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CartService } from '../../../autentication/service/cart/cart.service';
 import { AlertComponent } from '../../../shared/models/alert/alert.component';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Cart } from '../../../autentication/interface/cart/cart-product';
 
 @Component({
@@ -10,7 +10,7 @@ import { Cart } from '../../../autentication/interface/cart/cart-product';
   imports: [FormsModule, AlertComponent, RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
-})
+}) 
 export class CartComponent implements OnInit {
   cartItems: Cart[] = []
   cartTotal = 0
@@ -22,6 +22,7 @@ export class CartComponent implements OnInit {
   message: string = "";
 
   private cartService = inject(CartService)
+  private router = inject(Router)
 
   ngOnInit(): void {
     this.loadCartItems()
@@ -138,12 +139,18 @@ export class CartComponent implements OnInit {
         this.message = "Compra realizada com sucesso";
       },
       error: (err) => {
-        console.error("Error purchasing items:", err)
-        this.errorMessage = "Failed to complete purchase. Please try again."
-        this.isLoading = false
+        console.error("Error purchasing items:", err.message)
+        this.errorMessage = err.message
+        this.isLoading = false;
         this.showAlert = true;
         this.categAlert = 2;
-        this.message = "Ocorreu um erro ao realizar a compra";
+        this.message = err.message;
+        setTimeout(() => {
+          if (err.message === "Dados do endereço incompletos.") {
+            this.router.navigate(['/account'], { queryParams: { edit: true } });
+          }
+        }, 2000);
+        
       },
     })
   }

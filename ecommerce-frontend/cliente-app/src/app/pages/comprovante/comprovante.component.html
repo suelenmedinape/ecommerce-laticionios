@@ -1,0 +1,59 @@
+<div class="container mx-auto py-8">
+  <div class="max-w-2xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <!-- Título -->
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+      Nota Fiscal de Venda a Consumidor
+    </h2>
+
+    @if (loading()) {
+      <div class="mt-4 space-y-2">
+        <div class="h-4 bg-gray-200 rounded animate-pulse w-48"></div>
+        <div class="h-4 bg-gray-200 rounded animate-pulse w-64"></div>
+        <div class="h-4 bg-gray-200 rounded animate-pulse w-56"></div>
+      </div>
+    } @else {
+      @if (client()) {
+        <div class="mt-4 text-gray-700 dark:text-gray-300">
+          <p><strong>Data da Emissão:</strong> {{ currentDate | date:'dd/MM/yyyy' }}</p>
+          <p><strong>Nome:</strong> {{ client()?.name }}</p>
+          <p><strong>Telefone:</strong> {{ client()?.phone }}</p>
+          @if (client()?.address) {
+            <p><strong>Endereço:</strong> {{ client()?.address?.street }}, {{ client()?.address?.number }} - {{ client()?.address?.neighborhood }}, {{ client()?.address?.city }}/{{ client()?.address?.state }}</p>
+          }
+        </div>
+      }
+
+      @if (cartItems().length > 0) {
+        <div class="mt-6 overflow-x-auto">
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-white uppercase bg-orange-600 dark:bg-orange-700">
+            <tr>
+              <th scope="col" class="px-4 py-3">Qtd.</th>
+              <th scope="col" class="px-4 py-3">Nome do Produto</th>
+              <th scope="col" class="px-4 py-3">Preço Unitário</th>
+              <th scope="col" class="px-4 py-3">Preço Total</th>
+            </tr>
+            </thead>
+            <tbody>
+              @for (item of cartItems(); track item.id) {
+                <tr class="border-b dark:border-gray-700">
+                  <td class="px-4 py-3">{{ item.quantity }}</td>
+                  <td class="px-4 py-3">{{ item.product.productName }}</td>
+                  <td class="px-4 py-3">R$ {{ item.unitPrice.toFixed(2).replace('.', ',') }}</td>
+                  <td class="px-4 py-3 font-semibold text-gray-900 dark:text-white">
+                    R$ {{ item.totalPrice.toFixed(2).replace('.', ',') }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Total -->
+        <div class="mt-4 text-lg font-semibold text-gray-900 dark:text-white">
+          TOTAL: R$ {{ calculateTotal().toFixed(2).replace('.', ',') }}
+        </div>
+      }
+    }
+  </div>
+</div>

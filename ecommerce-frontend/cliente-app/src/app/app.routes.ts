@@ -8,6 +8,7 @@ import { CartComponent } from './pages/user-area/cart/cart.component';
 import { AccountComponent } from './pages/user-area/account/account.component';
 import { ShopByCategoryComponent } from './pages/byCategory/shop-by-category.component';
 import { AdminRedirectedComponent } from './shared/redirected/admin-redirected/admin-redirected.component';
+import {ComprovanteComponent} from './pages/comprovante/comprovante.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -18,5 +19,6 @@ export const routes: Routes = [
     {path: 'cart', component: CartComponent},
     {path: 'account', component: AccountComponent},
     {path: 'by-category/:category', component: ShopByCategoryComponent},
-    {path: 'admin', component: AdminRedirectedComponent}
+    {path: 'admin', component: AdminRedirectedComponent},
+    {path: 'comprovante/:id', component: ComprovanteComponent},
 ];
