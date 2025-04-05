@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  email = ""
+  email = "" 
   password = ""
   showAlert = false
   message = ""

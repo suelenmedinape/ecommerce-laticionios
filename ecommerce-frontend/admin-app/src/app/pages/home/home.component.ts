@@ -1,18 +1,19 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
-import { ProdutoService } from '../../autentication/service/produto/produto.service';
-import { Product } from '../../autentication/interface/product';
-import { RouterLink } from '@angular/router';
-import { AlertComponent } from "../../shared/models/alert/alert.component";
-import { QuantityStatusComponent } from "../../shared/models/quantity-status/quantity-status.component";
+import { Component, type OnInit } from "@angular/core"
+import { FormsModule } from "@angular/forms"
+import { NgClass } from "@angular/common"
+import type { Product } from "../../autentication/interface/product"
+import { RouterLink } from "@angular/router"
+import { AlertComponent } from "../../shared/models/alert/alert.component"
+import { QuantityStatusComponent } from "../../shared/models/quantity-status/quantity-status.component"
+import { PaginationComponent } from "../../shared/_component/pagination/pagination.component"
+import { ProdutoService } from "../../autentication/service/produto/produto.service"
 
 @Component({
-  selector: 'app-home',
+  selector: "app-home",
   standalone: true,
-  imports: [FormsModule, RouterLink, NgClass, AlertComponent, QuantityStatusComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  imports: [FormsModule, RouterLink, NgClass, AlertComponent, QuantityStatusComponent, PaginationComponent],
+  templateUrl: "./home.component.html",
+  styleUrl: "./home.component.css",
 })
 export class HomeComponent implements OnInit {
   produto: Product[] = []
@@ -32,9 +33,10 @@ export class HomeComponent implements OnInit {
   message = ""
   categAlert = 0
 
-  constructor(
-    private produtoService: ProdutoService,
-  ) {}
+  itemsPerPage = 10 // Quantos produtos por página
+  currentPage = 1
+
+  constructor(private produtoService: ProdutoService) {}
 
   ngOnInit() {
     this.listProducts()
@@ -53,6 +55,7 @@ export class HomeComponent implements OnInit {
         this.produto = data
         this.selectedProducts = []
         this.allSelected = false
+        this.currentPage = 1 // Reset to first page when filtering
       },
       error: (error) => {
         console.error("Error listing products by category:", error)
@@ -66,10 +69,50 @@ export class HomeComponent implements OnInit {
       this.listProducts()
       return
     }
-    this.produtoService.getProdutoByName(name).subscribe((data: any) => {
-      this.produto = data
-      this.selectedProducts = []
-      this.allSelected = false
+
+    this.produtoService.getProdutoByName(name).subscribe({
+      next: (data: any) => {
+        console.log("Raw search response:", data) // Log the raw response
+
+        // Check if data is an array
+        if (Array.isArray(data)) {
+          this.produto = data.map((product) => {
+            // Ensure quantity exists and is a number
+            return {
+              ...product,
+              quantity:
+                product.quantity !== undefined && product.quantity !== null
+                  ? Number(product.quantity) // Convert to number to ensure it's numeric
+                  : 0,
+            }
+          })
+        } else if (data && typeof data === "object") {
+          // If it's a single object, convert to array with quantity check
+          this.produto = [
+            {
+              ...data,
+              quantity:
+                data.quantity !== undefined && data.quantity !== null
+                  ? Number(data.quantity) // Convert to number to ensure it's numeric
+                  : 0,
+            },
+          ]
+        } else {
+          // Empty array if no data
+          this.produto = []
+        }
+
+        this.selectedProducts = []
+        this.allSelected = false
+        this.currentPage = 1 // Reset to first page when searching
+
+        console.log("Processed search results:", this.produto)
+      },
+      error: (error) => {
+        console.error("Error searching for product:", error)
+        this.alertError("Erro ao buscar produto. Por favor, tente novamente.")
+        this.produto = []
+      },
     })
   }
 
@@ -78,6 +121,7 @@ export class HomeComponent implements OnInit {
       this.produto = data
       this.selectedProducts = []
       this.allSelected = false
+      this.currentPage = 1 // Reset to first page when loading new data
     })
   }
 
@@ -109,7 +153,14 @@ export class HomeComponent implements OnInit {
 
   toggleSelectAll() {
     this.allSelected = !this.allSelected
-    this.selectedProducts = this.allSelected ? this.produto.map((p) => p.id || 0).filter((id) => id !== 0) : []
+
+    // Only select products on the current page
+    if (this.allSelected) {
+      this.selectedProducts = this.paginatedProducts.map((p) => p.id || 0).filter((id) => id !== 0)
+    } else {
+      this.selectedProducts = []
+    }
+
     this.idProduct = this.selectedProducts.length > 0 ? this.selectedProducts[0] : 0
     console.log("Produtos selecionados:", this.selectedProducts)
   }
@@ -127,7 +178,12 @@ export class HomeComponent implements OnInit {
       this.selectedProducts.splice(index, 1)
       this.idProduct = this.selectedProducts.length > 0 ? this.selectedProducts[this.selectedProducts.length - 1] : 0
     }
-    this.allSelected = this.produto.length > 0 && this.selectedProducts.length === this.produto.length
+
+    // Check if all products on the current page are selected
+    this.allSelected =
+      this.paginatedProducts.length > 0 &&
+      this.paginatedProducts.every((p) => this.selectedProducts.includes(p.id || 0))
+
     console.log("Produtos selecionados:", this.selectedProducts)
   }
 
@@ -147,6 +203,26 @@ export class HomeComponent implements OnInit {
       })
     } else {
       this.deleteMultipleProducts()
+    }
+  }
+
+  get totalPages() {
+    return Math.ceil(this.produto.length / this.itemsPerPage)
+  }
+
+  get paginatedProducts() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage
+    return this.produto.slice(startIndex, startIndex + this.itemsPerPage)
+  }
+
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page
+
+      // Update allSelected state for the new page
+      this.allSelected =
+        this.paginatedProducts.length > 0 &&
+        this.paginatedProducts.every((p) => this.selectedProducts.includes(p.id || 0))
     }
   }
 
@@ -205,13 +281,19 @@ export class HomeComponent implements OnInit {
     this.isDeleteModalOpen = true
     this.isInfoModalOpen = false
   }
-  showInfoModal() {
+
+  showInfoModal(productId?: number) {
+    if (productId) {
+      this.selectedProductId = productId
+    }
     this.isInfoModalOpen = true
     this.isDeleteModalOpen = false
   }
-  closeModal() { 
+
+  closeModal() {
     this.isDeleteModalOpen = false
     this.isInfoModalOpen = false
+    this.selectedProductId = null
   }
 
   toggleDropdown() {
@@ -244,4 +326,10 @@ export class HomeComponent implements OnInit {
   clearCategorySelection() {
     this.selectCategory(null)
   }
+
+  Number(value: any): number {
+    const num = Number(value)
+    return isNaN(num) ? 0 : num
+  }
 }
+

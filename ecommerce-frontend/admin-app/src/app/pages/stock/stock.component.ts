@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-stock',
-  imports: [PaginationComponent, AlertComponent, RouterLink, FormsModule],
+  imports: [PaginationComponent, RouterLink, FormsModule],
   templateUrl: './stock.component.html'
 })
 export class StockComponent implements OnInit {

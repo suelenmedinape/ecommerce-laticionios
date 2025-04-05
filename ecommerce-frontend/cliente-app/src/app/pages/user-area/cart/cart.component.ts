@@ -143,7 +143,11 @@ export class CartComponent implements OnInit {
         this.errorMessage = err.message
         this.isLoading = false;
         this.showAlert = true;
-        this.categAlert = 2;
+        if (err.message === "Dados do endereço incompletos.") {
+        this.categAlert = 4;
+        } else {
+          this.categAlert = 2;
+        }
         this.message = err.message;
         setTimeout(() => {
           if (err.message === "Dados do endereço incompletos.") {

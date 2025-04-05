@@ -1,56 +1,52 @@
 <app-alert [message]="message" [showAlert]="showAlert" [categAlert]="categAlert" (close)="showAlert = false">
 </app-alert>
 @if (produto) {
-<section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
-  <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
-    <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+  <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
+    <div class="max-w-screen-xl mx-auto px-4 lg:flex lg:space-x-12">
+      <!-- Gallery -->
       <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
-        <img class="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
-          alt="" />
-        <img class="w-full hidden dark:block"
-          src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" />
+        <img class="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
+        <img class="w-full hidden dark:block" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" />
       </div>
-
-      <div class="mt-6 sm:mt-8 lg:mt-0">
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-          {{ produto.productName}}
-        </h1>
-        <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
-          <p class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
-            {{ produto.price | currency: 'BRL' }}
-          </p>
-
+  
+      <!-- Product Info -->
+      <div class="lg:w-1/2 mt-8 lg:mt-0">
+        @if (produto.quantity > 5) {
+        <span class="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">In stock</span>
+        } @else if (produto.quantity <= 3) {
+        <span class="me-2 rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"> {{produto.quantity}} Restantes </span>
+        }
+        <span class="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300"> {{ produto.categories }}</span>
+        <h1 class="text-3xl font-bold text-gray-900 mt-2 dark:text-white"> {{ produto.productName }} </h1>
+        <p class="mt-2 text-gray-700 dark:text-white">Descrição</p>
+  
+        <!-- Price -->
+        <p class="mt-4 text-3xl font-bold text-gray-900 dark:text-white"> {{ produto.price | currency:'BRL':'symbol':'1.2-2' }} </p>
+  
+        <!-- CTA -->
+        <div class="mt-6 flex items-center space-x-4">
+          <button (click)="addToCart(produto.id, quantity)" type="button" class="text-white bg-primary-700 hover:bg-primary-800 font-medium rounded-lg text-sm px-5 py-2.5"> Add to cart </button>
+          <div class="flex items-center space-x-2">
+            <label for="quantity" class="text-sm font-medium text-gray-700 dark:text-white">Quantity: </label>
+            <input type="number" id="quantity" name="quantity" min="1" [(ngModel)]="quantity" class="w-15 border border-gray-300 rounded-lg px-2 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" />
+          </div>          
         </div>
-
-        <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-          <a href="#" title=""
-            class="text-primary-900 mt-4 sm:mt-0 bg-primary-100 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
-            role="button">
-            {{ produto.categories }}
-          </a>
-
-          <a title="" (click)="addToCart(produto.id, 1)"
-            class="text-white mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
-            role="button">
-            <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-              fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
-            </svg>
-
-            Add to cart
-          </a>
-        </div>
-
-        <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
-
-        <p class="mb-6 text-gray-500 dark:text-gray-400">
-          {{ produto.description }}
-        </p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 } @else {
 <p>Produto não encontrado</p>
+}
+
+<hr class="my-8 border-gray-500 dark:border-gray-700 mr-8 ml-8" />
+
+@if (relatedProducts.length > 0) {
+<section class="bg-white dark:bg-gray-900 mt-10">
+  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <h2 class="text-2xl text-gray-900 dark:text-white font-bold mb-6">
+      Talves você também goste
+    </h2>
+    <app-card-product [lista]="relatedProducts"></app-card-product>
+  </div>
+</section>
 }

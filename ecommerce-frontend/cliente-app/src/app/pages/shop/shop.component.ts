@@ -10,7 +10,7 @@ import { ProdutoService } from '../../autentication/service/products/produto.ser
   standalone: true,
   imports: [PaginationComponent, CardProductComponent],
   templateUrl: './shop.component.html'
-})
+}) 
 export class ShopComponent implements OnInit {
   produtos: { id: number; productName: string; price: number }[] = [];
 

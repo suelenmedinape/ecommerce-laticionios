@@ -16,6 +16,8 @@ interface StatusDataResponse {
 }
 
 interface StatusData {
+  data: number[];
+  name: string;
   status: Array<{
     name: string;
     data: number[];
@@ -47,7 +49,9 @@ export class DashboardService {
     return this.http.get<StatusDataResponse>(`${this.apiUrl}/orders/status-summary`, { headers }).pipe(
       map(response => ({
         status: response.status,
-        mes: response.months 
+        mes: response.months,
+        data: [], 
+        name: '' 
       })),
       delay(500) 
     );

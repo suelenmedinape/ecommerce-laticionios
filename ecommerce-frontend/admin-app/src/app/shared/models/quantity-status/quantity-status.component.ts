@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-quantity-status',
+  standalone: true,
   imports: [NgClass],
   templateUrl: './quantity-status.component.html',
   styleUrl: './quantity-status.component.css'

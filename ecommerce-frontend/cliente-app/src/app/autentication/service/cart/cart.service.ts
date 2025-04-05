@@ -30,12 +30,9 @@ export class CartService {
     const headers = this.headersService.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/buy`, {}, { headers }).pipe(
       catchError((error) => {
-        // Verifica se o erro tem uma resposta e uma mensagem
         if (error.error && error.error.message) {
-          // Retorna a mensagem de erro específica do backend
           return throwError(() => new Error(error.error.message));
         } else {
-          // Retorna uma mensagem genérica se não houver mensagem específica
           return throwError(() => new Error('Ocorreu um erro ao processar a compra'));
         }
       })

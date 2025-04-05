@@ -33,7 +33,7 @@
                   <input type="number" id="counter-input" min="1" 
                   [max]="item.product.quantity" 
                   [(ngModel)]="item.quantity" 
-                  (change)="updateItemQuantity(item.product.id, item.quantity)" class="w-20 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" placeholder="" value="2" required />
+                  (change)="updateItemQuantity(item.product.id, item.quantity)" class="w-28 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" placeholder="" value="2" required />
                 </div>
                 <div class="text-end md:order-4 md:w-32">
                   <p class="text-base text-gray-900 dark:text-white">R$ {{ item.unitPrice.toFixed(2) }}</p>

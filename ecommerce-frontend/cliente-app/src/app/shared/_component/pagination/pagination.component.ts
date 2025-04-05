@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-pagination',
   standalone: true,
-  imports: [],
+  imports: [], 
   template: `
   <nav aria-label="Page navigation">
     <ul class="inline-flex -space-x-px text-base h-10">

@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { OrdersService } from '../../autentication/service/order/orders.service';
-import { CurrencyPipe } from '@angular/common';
-import { OrderStatusComponent } from '../../shared/models/order-status/order-status.component';
-import { PaginationComponent } from '../../shared/_component/pagination/pagination.component';
-import { FormsModule } from '@angular/forms';
-import { Order } from '../../autentication/interface/order';
+import { Component, type OnInit } from "@angular/core"
+import { CurrencyPipe } from "@angular/common"
+import { FormsModule } from "@angular/forms"
+import type { Order } from "../../autentication/interface/order"
+import { OrdersService } from "../../autentication/service/order/orders.service"
+import { PaginationComponent } from "../../shared/_component/pagination/pagination.component"
+import { OrderStatusComponent } from "../../shared/models/order-status/order-status.component"
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  imports: [OrderStatusComponent, PaginationComponent]
+  selector: "app-orders",
+  templateUrl: "./orders.component.html",
+  imports: [OrderStatusComponent, PaginationComponent, CurrencyPipe, FormsModule],
+  standalone: true,
 })
 export class OrdersComponent implements OnInit {
   orders: Order[] = []
@@ -35,6 +36,8 @@ export class OrdersComponent implements OnInit {
   listOrders() {
     this.ordersService.listOrders().subscribe((response: any) => {
       this.orders = response
+      // Reset to first page when loading new data
+      this.currentPage = 1
     })
   }
 
@@ -60,8 +63,15 @@ export class OrdersComponent implements OnInit {
     return Math.ceil(this.orders.length / this.itemsPerPage)
   }
 
+  get paginatedOrders() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage
+    return this.orders.slice(startIndex, startIndex + this.itemsPerPage)
+  }
+
   onPageChange(page: number): void {
-    this.currentPage = page
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page
+    }
   }
 
   viewOrderDetails(orderId: number, orderStatus: string): void {
@@ -90,6 +100,7 @@ export class OrdersComponent implements OnInit {
   applyFilter(status: string): void {
     this.selectedStatus = status
     this.isOpen = false
+    this.currentPage = 1 // Reset to first page when filtering
 
     if (status === "TODOS") {
       this.listOrders()
@@ -103,6 +114,8 @@ export class OrdersComponent implements OnInit {
   findOrderById(id: number): void {
     this.ordersService.findOrderById(id).subscribe((response: any) => {
       this.orders = [response] // Coloca o pedido encontrado em um array
+      this.currentPage = 1 // Reset to first page when searching
     })
   }
 }
+

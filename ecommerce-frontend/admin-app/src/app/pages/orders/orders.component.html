@@ -1,215 +1,211 @@
 <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
-    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-      <div class="mx-auto max-w-5xl">
-        <!-- Header com título e filtro -->
-        <div class="gap-4 sm:flex sm:items-center sm:justify-between mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">My orders</h2>
-          
-          <!-- Dropdown de filtro -->
-          <div class="relative mt-4 sm:mt-0">
-            <button id="dropdown-button" (click)="toggleDropdown()"
-              class="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-              type="button">
-              {{ selectedStatus ? 'Status: ' + selectedStatus : 'Filter by status' }}
-              <svg class="ml-1 w-4 h-4 text-gray-900 dark:text-white" aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m19 9-7 7-7-7" />
-              </svg>
-            </button>
-          
-            <!-- Dropdown Content -->
-            @if (isOpen) {
-            <div
-              class="absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-lg z-20 dark:bg-gray-800 dark:border-gray-700">
-              <ul class="py-2">
-                <li (click)="applyFilter('TODOS')"
-                  class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer {{ selectedStatus === 'TODOS' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
-                  TODOS
-                </li>
-                <li (click)="applyFilter('SOLICITADO')"
-                  class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer {{ selectedStatus === 'SOLICITADO' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
-                  SOLICITADO
-                </li>
-                <li (click)="applyFilter('FINALIZADO')"
-                  class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer {{ selectedStatus === 'FINALIZADO' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
-                  FINALIZADO
-                </li>
-                <li (click)="applyFilter('CANCELADO')"
-                  class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer {{ selectedStatus === 'CANCELADO' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
-                  CANCELADO
-                </li>
-              </ul>
-            </div>
-            }
+  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <div class="mx-auto max-w-5xl">
+      <!-- Header com título e filtro -->
+      <div class="gap-4 sm:flex sm:items-center sm:justify-between mb-6">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">My orders</h2>
+
+        <!-- Dropdown de filtro -->
+        <div class="relative mt-4 sm:mt-0">
+          <button id="dropdown-button" (click)="toggleDropdown()"
+            class="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+            type="button">
+            {{ selectedStatus ? 'Status: ' + selectedStatus : 'Filter by status' }}
+            <svg class="ml-1 w-4 h-4 text-gray-900 dark:text-white" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m19 9-7 7-7-7" />
+            </svg>
+          </button>
+
+          <!-- Dropdown Content -->
+          @if (isOpen) {
+          <div
+            class="absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-lg z-20 dark:bg-gray-800 dark:border-gray-700">
+            <ul class="py-2">
+              <li (click)="applyFilter('TODOS')"
+                class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer {{ selectedStatus === 'TODOS' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                TODOS
+              </li>
+              <li (click)="applyFilter('SOLICITADO')"
+                class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer {{ selectedStatus === 'SOLICITADO' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                SOLICITADO
+              </li>
+              <li (click)="applyFilter('FINALIZADO')"
+                class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer {{ selectedStatus === 'FINALIZADO' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                FINALIZADO
+              </li>
+              <li (click)="applyFilter('CANCELADO')"
+                class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer {{ selectedStatus === 'CANCELADO' ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                CANCELADO
+              </li>
+            </ul>
           </div>
+          }
         </div>
-  
-        <!-- Lista de pedidos -->
-        <div class="flow-root">
-          <div class="divide-y divide-gray-200 dark:divide-gray-700">
-            @if (orders && orders.length > 0) {
-                @for (order of orders; track order.id) {
-                <div class="flex flex-wrap items-center gap-y-4 py-6">
-                  <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                    <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Order ID:</dt>
-                    <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
-                      <a href="#" class="hover:underline">#{{ order.id }}</a>
-                    </dd>
-                  </dl>
-  
-                  <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                    <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Date:</dt>
-                    <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
-                      {{ dateFormated(order.date) }}
-                    </dd>
-                  </dl>
-  
-                  <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                    <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Price:</dt>
-                    <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
-                      R${{ order.totalValue }}
-                    </dd>
-                  </dl>
-  
-                  <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                    <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Status:</dt>
-                    <app-order-status [levelSatatus]="order.orderStatus"></app-order-status>
-                  </dl>
-  
-                  <div class="w-full mt-4 sm:mt-0 grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
-                    @if (order.orderStatus === "SOLICITADO") {
-                      <button type="button" (click)="cancelOrder(order.id)"
-                        class="w-full rounded-lg border border-red-700 px-3 py-2 text-center text-sm font-medium text-red-700 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900 lg:w-auto">
-                        Cancel order
-                      </button>
-                    } @else {
-                      <button type="button"
-                        class="w-full rounded-lg bg-primary-700 px-3 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 lg:w-auto">
-                        Order again
-                      </button>
-                    }
-                    <button (click)="viewOrderDetails(order.id, order.orderStatus)"
-                      class="w-full inline-flex justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto">
-                      Ver detalhes
-                    </button>
-                  </div>
-                </div>
-              }
-            } @else {
-                <div class="py-8 text-center">
-                  <p class="text-gray-500 dark:text-gray-400">Nenhum pedido encontrado.</p>
-                </div>
-              }
-          </div>
-        </div>
-  
-        <!-- Paginação -->
-        @if (orders && orders.length > 0) {
-          <nav class="mt-6 flex items-center justify-center sm:mt-8" aria-label="Page navigation">
-            <app-pagination 
-              [totalPages]="totalPages" 
-              [currentPage]="currentPage"
-              (pageChange)="onPageChange($event)">
-            </app-pagination>
-          </nav>
-        }
       </div>
-    </div>
-  
-    <!-- Modal de detalhes do pedido -->
-    @if (showOrderDetails) {
-      <div id="orderDetailsModal"
-        class="fixed top-0 right-0 left-0 z-50 flex h-modal w-full items-center justify-center overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
-        <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
-          <!-- Modal content -->
-          <div class="relative rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-5">
-            <!-- Modal header -->
-            <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5 dark:border-gray-600">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                Detalhes do Pedido #{{ selectedOrderId }}
-              </h3>
-              <button (click)="closeOrderDetails()" type="button"
-                class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-toggle="orderDetailsModal">
-                <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                <span class="sr-only">Fechar modal</span>
+
+      <!-- Lista de pedidos -->
+      <div class="flow-root">
+        <div class="divide-y divide-gray-200 dark:divide-gray-700">
+          @if (paginatedOrders && paginatedOrders.length > 0) {
+          @for (order of paginatedOrders; track order.id) {
+          <div class="flex flex-wrap items-center gap-y-4 py-6">
+            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Order ID:</dt>
+              <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
+                <a href="#" class="hover:underline">#{{ order.id }}</a>
+              </dd>
+            </dl>
+
+            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Date:</dt>
+              <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
+                {{ dateFormated(order.date) }}
+              </dd>
+            </dl>
+
+            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Price:</dt>
+              <dd class="mt-1.5 text-base font-semibold text-gray-900 dark:text-white">
+                R${{ order.totalValue }}
+              </dd>
+            </dl>
+
+            <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+              <dt class="text-base font-medium text-gray-500 dark:text-gray-400">Status:</dt>
+              <app-order-status [levelSatatus]="order.orderStatus"></app-order-status>
+            </dl>
+
+            <div class="w-full mt-4 sm:mt-0 grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
+              @if (order.orderStatus === "SOLICITADO") {
+              <button type="button" (click)="cancelOrder(order.id)"
+                class="w-full rounded-lg border border-red-700 px-3 py-2 text-center text-sm font-medium text-red-700 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900 lg:w-auto">
+                Cancel order
+              </button>
+              } @else {
+              <button type="button"
+                class="w-full rounded-lg bg-primary-700 px-3 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 lg:w-auto">
+                Order again
+              </button>
+              }
+              <button (click)="viewOrderDetails(order.id, order.orderStatus)"
+                class="w-full inline-flex justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto">
+                Ver detalhes
               </button>
             </div>
-    
-            <!-- Modal body -->
-            <div class="space-y-4">
-              <p class="text-base font-medium text-gray-900 dark:text-white">Produtos</p>
-              
-              <!-- Aqui você pode adicionar a lista de produtos do pedido -->
-              <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" class="px-6 py-3">
-                        Produto
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                        Quantidade
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                        Preço Unitário
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                        Total
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @for (item of selectedOrderItems; track item.id) {
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ item.product.productName }}
-                      </th>
-                      <td class="px-6 py-4">
-                        {{ item.quantity }}
-                      </td>
-                      <td class="px-6 py-4">
-                        R$ {{ item.unitPrice.toFixed(2) }}
-                      </td>
-                      <td class="px-6 py-4">
-                        R$ {{ item.totalPrice.toFixed(2) }}
-                      </td>
-                    </tr>
-                    }
-                  </tbody>
-                  <tfoot>
-                    <tr class="font-semibold text-gray-900 dark:text-white">
-                      <th scope="row" colspan="3" class="px-6 py-4 text-right">Total</th>
-                      <td class="px-6 py-4">R$ {{ orderTotal.toFixed(2) }}</td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-              
-              <!-- Botões do modal -->
-              <div class="flex justify-end gap-3 mt-6 pt-4 border-t dark:border-gray-700">
-                @if (selectedOrderId && orderStatusSelected === "SOLICITADO") {
-                  <button (click)="finalizarOrder(selectedOrderId)" type="button"
-                    class="rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700">
-                    Finalizar Pedido
-                  </button>
+          </div>
+          }
+          } @else {
+          <div class="py-8 text-center">
+            <p class="text-gray-500 dark:text-gray-400">Nenhum pedido encontrado.</p>
+          </div>
+          }
+        </div>
+      </div>
+      
+      <!-- Pagination -->
+      @if (orders && orders.length > 0) {
+      <nav class="mt-6 flex items-center justify-center sm:mt-8" aria-label="Page navigation">
+        <app-pagination [totalPages]="totalPages" [currentPage]="currentPage" (pageChange)="onPageChange($event)">
+        </app-pagination>
+      </nav>
+      }
+    </div>
+  </div>
+
+  <!-- Modal de detalhes do pedido -->
+  @if (showOrderDetails) {
+  <div id="orderDetailsModal"
+    class="fixed top-0 right-0 left-0 z-50 flex h-modal w-full items-center justify-center overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
+    <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
+      <!-- Modal content -->
+      <div class="relative rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-5">
+        <!-- Modal header -->
+        <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5 dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Detalhes do Pedido #{{ selectedOrderId }}
+          </h3>
+          <button (click)="closeOrderDetails()" type="button"
+            class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="orderDetailsModal">
+            <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Fechar modal</span>
+          </button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="space-y-4">
+          <p class="text-base font-medium text-gray-900 dark:text-white">Produtos</p>
+
+          <!-- Aqui você pode adicionar a lista de produtos do pedido -->
+          <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" class="px-6 py-3">
+                    Produto
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Quantidade
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Preço Unitário
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of selectedOrderItems; track item.id) {
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ item.product.productName }}
+                  </th>
+                  <td class="px-6 py-4">
+                    {{ item.quantity }}
+                  </td>
+                  <td class="px-6 py-4">
+                    R$ {{ item.unitPrice.toFixed(2) }}
+                  </td>
+                  <td class="px-6 py-4">
+                    R$ {{ item.totalPrice.toFixed(2) }}
+                  </td>
+                </tr>
                 }
-                <button (click)="closeOrderDetails()" type="button"
-                  class="rounded-lg bg-gray-200 px-5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                  Fechar
-                </button>
-              </div>
-            </div>
+              </tbody>
+              <tfoot>
+                <tr class="font-semibold text-gray-900 dark:text-white">
+                  <th scope="row" colspan="3" class="px-6 py-4 text-right">Total</th>
+                  <td class="px-6 py-4">R$ {{ orderTotal.toFixed(2) }}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- Botões do modal -->
+          <div class="flex justify-end gap-3 mt-6 pt-4 border-t dark:border-gray-700">
+            @if (selectedOrderId && orderStatusSelected === "SOLICITADO") {
+            <button (click)="finalizarOrder(selectedOrderId)" type="button"
+              class="rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700">
+              Finalizar Pedido
+            </button>
+            }
+            <button (click)="closeOrderDetails()" type="button"
+              class="rounded-lg bg-gray-200 px-5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+              Fechar
+            </button>
           </div>
         </div>
       </div>
-    }
-  </section>
-  
-  
+    </div>
+  </div>
+  }
+</section>
+

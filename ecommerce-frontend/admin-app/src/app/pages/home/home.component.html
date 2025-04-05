@@ -158,7 +158,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (product of produto; track product.id) {
+                        @for (product of paginatedProducts; track product.id) {
                         <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
                             [ngClass]="{'bg-blue-50 dark:bg-blue-900/20': isProductSelected(product.id)}">
                             <td class="w-4 px-4 py-3">
@@ -178,15 +178,17 @@
                                     class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                                     {{ product.categories }}</span>
                             </td>
+                            <!-- Only modifying the quantity cell in the table -->
                             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex items-center">
-                                    <app-quantity-status [quantity]="product.quantity"></app-quantity-status>
-                                    {{ product.quantity }}
+                                    <!-- Force the quantity to be a number -->
+                                    <app-quantity-status [quantity]="Number(product.quantity) || 0"></app-quantity-status>
+                                    {{ product.quantity !== undefined && product.quantity !== null ? product.quantity : 'N/A' }}
                                 </div>
                             </td>
                             <td class="px-4 py-2">R$ {{ product.price }}</td>
                             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <button type="button" (click)="showInfoModal()"
+                                <button type="button" (click)="showInfoModal(product.id)"
                                     class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                     <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -228,8 +230,15 @@
                         }
                     </tbody>
                 </table>
+                @if (produto && produto.length > 0) {
+                    <nav class="mt-6 mb-6 flex items-center justify-center sm:mt-8" aria-label="Page navigation">
+                      <app-pagination [totalPages]="totalPages" [currentPage]="currentPage" (pageChange)="onPageChange($event)">
+                      </app-pagination>
+                    </nav>
+                }
             </div>
         </div>
         }
     </div>
 </section>
+
