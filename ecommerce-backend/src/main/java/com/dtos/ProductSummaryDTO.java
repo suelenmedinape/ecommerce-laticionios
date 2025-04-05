@@ -10,16 +10,18 @@ public class ProductSummaryDTO {
 	private Long id;
 	private String productName;
 	private BigDecimal price;
+	private Integer quantity;
 	private Category category;
 
 	public ProductSummaryDTO() {
 	}
 	
-	public ProductSummaryDTO(Long id, String productName, BigDecimal price, Category category) {
+	public ProductSummaryDTO(Long id, String productName, BigDecimal price, Integer quantity, Category category) {
 		super();
 		this.id = id;
 		this.productName = productName;
 		this.price = price;
+		this.quantity = quantity;
 		this.category = category;
 	}
 
@@ -29,6 +31,7 @@ public class ProductSummaryDTO {
 		this.id = product.getId();
 		this.productName = product.getProductName();
 		this.price = product.getPrice();
+		this.quantity = product.getQuantity();
 		this.category = product.getCategories();
 	}
 
@@ -50,5 +53,9 @@ public class ProductSummaryDTO {
 
 	public void setCategory(String category) {
 	    this.category = Category.fromDescricao(category);
+	}
+	
+	public Integer getQuantity() {
+		return quantity;
 	}
 }
