@@ -1,7 +1,7 @@
 <app-alert [message]="message" [showAlert]="showAlert" [categAlert]="categAlert" (close)="showAlert = false">
 </app-alert>
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-6">
-    @for (prod of lista; track prod.id) {
+    @for (prod of lista; track prod.id || $index) {
     <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <div class="h-56 w-full">
             <a [routerLink]="['/produto', prod.id]" routerLinkActive="active">
@@ -53,15 +53,24 @@
                 <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">{{ prod.price |
                     currency:'BRL':'symbol':'1.2-2' }}</p>
                 <!---->
-                <button type="button" (click)="addToCart(prod.id, 1)"
-                    class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white">
-                    <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
-                    </svg>
-                    Add to cart
-                </button>
+                @if (!isProductInCart(prod.id)) {
+                    <button type="button" (click)="addToCart(prod.id, 1)"
+                      class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white">
+                      <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                          height="24" fill="none" viewBox="0 0 24 24">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                      </svg>
+                      Add to cart
+                    </button>
+                  } @else {
+                    <button type="button" (click)="addToCart(prod.id, 1)"
+                      class="inline-flex items-center rounded-lg bg-green-700 px-5 py-2 text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 dark:text-white">
+                      <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+                      </svg>                      
+                    </button>
+                  }
             </div>
         </div>
     </div>
