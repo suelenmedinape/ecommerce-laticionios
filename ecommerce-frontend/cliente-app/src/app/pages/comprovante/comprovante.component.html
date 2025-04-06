@@ -1,10 +1,22 @@
-<div class="container mx-auto py-8">
-  <div class="max-w-2xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-    <!-- Título -->
-    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-      Nota Fiscal de Venda a Consumidor
-    </h2>
+<div class="container mx-auto py-8 font-sans" #content>
+  <div class="max-w-4xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-md">
+    <!-- Header Section -->
+    <div class="flex flex-col items-center justify-center text-center w-full mb-10">
+      <div class="h-10 w-10 mb-2">
+        <span>
+          <img src="cow-auth.svg" alt="logo" class="mx-auto">
+        </span>
+      </div>
+      <p class="font-bold text-lg">NF-e da Compra</p>
+      <p class="text-sm text-gray-600">
+        Data da Emissão: {{ currentDate | date:'dd/MM/yyyy' }}
+      </p>
+    </div>
+    
 
+    <!-- Client Information Section -->
+    <h3 class="text-center font-semibold mb-5">Informações do Cliente</h3>
+    
     @if (loading()) {
       <div class="mt-4 space-y-2">
         <div class="h-4 bg-gray-200 rounded animate-pulse w-48"></div>
@@ -13,47 +25,79 @@
       </div>
     } @else {
       @if (client()) {
-        <div class="mt-4 text-gray-700 dark:text-gray-300">
-          <p><strong>Data da Emissão:</strong> {{ currentDate | date:'dd/MM/yyyy' }}</p>
-          <p><strong>Nome:</strong> {{ client()?.name }}</p>
-          <p><strong>Telefone:</strong> {{ client()?.phone }}</p>
-          @if (client()?.address) {
-            <p><strong>Endereço:</strong> {{ client()?.address?.street }}, {{ client()?.address?.number }} - {{ client()?.address?.neighborhood }}, {{ client()?.address?.city }}/{{ client()?.address?.state }}</p>
-          }
-        </div>
+        <table class="w-full mb-6">
+          <colgroup>
+            <col style="width:33.33%;">
+            <col style="width:33.33%;">
+            <col style="width:33.34%;">
+          </colgroup>
+          <tbody>
+            <tr>
+              <td class="align-top">
+                <p><strong>Nome:</strong> {{ client()?.name }}</p>
+                <p><strong>Email:</strong> {{ client()?.email || '-' }}</p>
+                <p><strong>Telefone:</strong> {{ client()?.phone }}</p>
+              </td>
+              <td class="align-top">
+                <p><strong>Endereço:</strong> {{ client()?.address?.street || '-' }}, {{ client()?.address?.number || '-' }}</p>
+                <p><strong>Cidade:</strong> {{ client()?.address?.city || '-' }}</p>
+                <p><strong>Estado:</strong> {{ client()?.address?.state || '-' }}</p>
+              </td>
+              <td class="align-top">
+                <p><strong>CPF:</strong> {{ client()?.cpf || '-' }}</p>
+                <p><strong>Bairro:</strong> {{ client()?.address?.neighborhood || '-' }}</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       }
 
+      <!-- Purchase Information Section -->
+      <h3 class="text-center font-semibold mb-5">Informações da Compra</h3>
+      
       @if (cartItems().length > 0) {
-        <div class="mt-6 overflow-x-auto">
-          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-white uppercase bg-orange-600 dark:bg-orange-700">
+        <table class="w-full border-collapse">
+          <colgroup>
+            <col style="width:7.44%;">
+            <col style="width:40.05%;">
+            <col style="width:8.41%;">
+            <col style="width:22.05%;">
+            <col style="width:22.05%;">
+          </colgroup>
+          <thead>
             <tr>
-              <th scope="col" class="px-4 py-3">Qtd.</th>
-              <th scope="col" class="px-4 py-3">Nome do Produto</th>
-              <th scope="col" class="px-4 py-3">Preço Unitário</th>
-              <th scope="col" class="px-4 py-3">Preço Total</th>
+              <th class="px-2 py-2 bg-orange-500 text-white text-left">Cod.</th>
+              <th class="px-2 py-2 bg-orange-500 text-white text-left">Produto</th>
+              <th class="px-2 py-2 bg-orange-500 text-white text-left">Qtd.</th>
+              <th class="px-2 py-2 bg-orange-500 text-white text-left">Valor Unit.</th>
+              <th class="px-2 py-2 bg-orange-500 text-white text-left">Valor Total</th>
             </tr>
-            </thead>
-            <tbody>
-              @for (item of cartItems(); track item.id) {
-                <tr class="border-b dark:border-gray-700">
-                  <td class="px-4 py-3">{{ item.quantity }}</td>
-                  <td class="px-4 py-3">{{ item.product.productName }}</td>
-                  <td class="px-4 py-3">R$ {{ item.unitPrice.toFixed(2).replace('.', ',') }}</td>
-                  <td class="px-4 py-3 font-semibold text-gray-900 dark:text-white">
-                    R$ {{ item.totalPrice.toFixed(2).replace('.', ',') }}
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
+          </thead>
+          <tbody>
+            @for (item of cartItems(); track item.id) {
+              <tr class="border-b border-gray-200">
+                <td class="px-2 py-3">{{ item.product.id || '-' }}</td>
+                <td class="px-2 py-3">{{ item.product.productName }}</td>
+                <td class="px-2 py-3">{{ item.quantity }}</td>
+                <td class="px-2 py-3">R$ {{ item.unitPrice.toFixed(2).replace('.', ',') }}</td>
+                <td class="px-2 py-3 font-semibold">R$ {{ item.totalPrice.toFixed(2).replace('.', ',') }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
 
         <!-- Total -->
-        <div class="mt-4 text-lg font-semibold text-gray-900 dark:text-white">
-          TOTAL: R$ {{ calculateTotal().toFixed(2).replace('.', ',') }}
+        <div class="mt-6 text-right">
+          <p class="text-lg font-bold">TOTAL: R$ {{ calculateTotal().toFixed(2).replace('.', ',') }}</p>
         </div>
       }
     }
   </div>
+</div>
+
+<!-- Download Button -->
+<div class="mt-8 text-center">
+  <button (click)="baixarComprovante()" class="px-6 py-2 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 transition-colors">
+    Baixar Comprovante
+  </button>
 </div>

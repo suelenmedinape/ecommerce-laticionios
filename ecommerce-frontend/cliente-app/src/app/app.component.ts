@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
         filter(event => event instanceof NavigationEnd) // Filtra apenas NavigationEnd
       )
       .subscribe((event: any) => {
-        const hiddenRoutes = ['/login', '/register']; // Rotas onde o navbar não aparece
+        const hiddenRoutes = ['/login', '/register', '/comprovante']; // Rotas onde o navbar não aparece
         this.showNavbar = !hiddenRoutes.includes(event.url);
       });
   }
