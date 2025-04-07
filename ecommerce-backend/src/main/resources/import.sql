@@ -1,5 +1,5 @@
 -- Inserir produtor
-INSERT INTO tb_producer (id, cnpj, email, name, password, phone, role) VALUES (1, '12345678901', 'adm@email.com', 'Cliente Um', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', '1111111111', 'ROLE_ADMIN');
+INSERT INTO tb_producer (id, cnpj, email, name, password, phone, role) VALUES (1, '12345678901', 'adm@email.com', 'Claudio Oliveira', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', '1111111111', 'ROLE_ADMIN');
 
 INSERT INTO tb_product (product_name, price, description, quantity, category) VALUES ('Queijo Um', 10.0, 'Descrição do Queijo Um', 20, 'QUEIJO');
 INSERT INTO tb_product (product_name, price, description, quantity, category) VALUES ('Queijo Dois', 19.67, 'Descrição do Queijo Dois', 10, 'QUEIJO');
@@ -20,10 +20,10 @@ INSERT INTO tb_product (product_name, price, description, quantity, category) VA
 INSERT INTO tb_product (product_name, price, description, quantity, category) VALUES ('Doce de Leite Tres', 9.4, 'Descrição do Doce de Leite tres', 12, 'DOCE_DE_LEITE');
 
 
-INSERT INTO tb_client (name, email, password, role) VALUES ('User Um', 'userum@gmail.com', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', 'ROLE_CLIENT');
-INSERT INTO tb_client (name, email, password, role) VALUES ('User Dois', 'userdois@gmail.com', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', 'ROLE_CLIENT');
-INSERT INTO tb_client (name, email, password, role) VALUES ('User Três', 'usertrês@gmail.com', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', 'ROLE_CLIENT');
-INSERT INTO tb_client (name, email, password, role) VALUES ('User Quatro', 'userquatro@gmail.com', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', 'ROLE_CLIENT');
+INSERT INTO tb_client (name, email, password, role) VALUES ('João Pedro', 'joaopedro@gmail.com', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', 'ROLE_CLIENT');
+INSERT INTO tb_client (name, email, password, role) VALUES ('Alex', 'alexcarlos@gmail.com', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', 'ROLE_CLIENT');
+INSERT INTO tb_client (name, email, password, role) VALUES ('Fernanda Silva', 'fernandasilva@gmail.com', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', 'ROLE_CLIENT');
+INSERT INTO tb_client (name, email, password, role) VALUES ('Sarah Monteiro', 'sarahmonteiro@gmail.com', '$2a$10$gNNzbIzg4ruJ4AtLc5ztHuaYz8J9e8ieSlFUcqE0lDR3YGaCSLGBe', 'ROLE_CLIENT');
 
 
 INSERT INTO tb_cart (client_id) VALUES (1), (2), (3), (4);
