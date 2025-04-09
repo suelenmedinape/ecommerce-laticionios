@@ -55,12 +55,7 @@ npm install -g @angular/cli
 ### 3. Instale dependências adicionais para o frontend:
 
 ```bash
-npm install tailwindcss @tailwindcss/postcss postcss --force #(Terminal do Projeto)
-npm install flowbite #(Terminal do Projeto)
-ng generate @angular/core:control-flow #(Terminal do Projeto)
-
-npm install ngx-cookie-service --save 
-npm install jwt-decode
+npm install
 ```
 
 ---
