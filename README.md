@@ -55,6 +55,7 @@ npm install -g @angular/cli
 ### 3. Instale dependências adicionais para o frontend:
 
 ```bash
+ng generate @angular/core:control-flow
 npm install
 ```
 
